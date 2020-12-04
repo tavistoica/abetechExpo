@@ -28,6 +28,6 @@ export const SET_USER_EMAIL = "SET_USER_EMAIL";
 export const SET_USER_PHONE = "SET_USER_PHONE";
 export const AUTH_ERROR = "AUTH_ERROR";
 export const CHANGE_SLIDER_INDEX = "CHANGE_SLIDER_INDEX";
-export const SET_ADDRESS = "SET_ADDRESS";
+export const ADD_ADDRESS = "ADD_ADDRESS";
 export const DELETE_ADDRESS = "DELETE_ADDRESS";
 export const GET_ADDRESSES = "GET_ADDRESSES";

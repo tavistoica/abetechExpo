@@ -11,7 +11,7 @@ import {
   SET_USER_EMAIL,
   SET_USER_PHONE,
   SET_USER_CREATED_DATE,
-  SET_ADDRESS,
+  ADD_ADDRESS,
   GET_ADDRESSES,
   DELETE_ADDRESS,
   AUTH_ERROR,
@@ -70,7 +70,8 @@ export default (state = initialState, action) => {
         addresses: action.payload,
         errorMessage: null,
       };
-    case SET_ADDRESS:
+    case ADD_ADDRESS:
+      console.log("action", action.payload);
       return {
         ...state,
         addresses: action.payload,

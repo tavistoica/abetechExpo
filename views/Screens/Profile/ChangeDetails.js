@@ -272,7 +272,6 @@ class ChangeDetails extends React.Component {
                 textAlignVertical: "center",
                 textAlign: "center",
                 width: "100%",
-                marginTop: "10%",
               }}
             >
               <TouchableOpacity

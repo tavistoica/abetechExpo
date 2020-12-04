@@ -22,7 +22,7 @@ import {
 const bottomMenuBeforePlatformCheck = (props) => {
   return (
     <>
-      <TouchableHighlight
+      <TouchableOpacity
         style={styles.drawerItem}
         onPress={async () => {
           // props.removeUser();
@@ -35,7 +35,7 @@ const bottomMenuBeforePlatformCheck = (props) => {
           size={26}
           style={styles.drawerItem_icon}
         />
-      </TouchableHighlight>
+      </TouchableOpacity>
       <TouchableOpacity
         style={styles.drawerItem}
         onPress={async () => {

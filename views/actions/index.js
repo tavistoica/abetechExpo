@@ -28,6 +28,8 @@ import {
   SET_USER_EMAIL,
   SET_USER_PHONE,
   SET_USER_CREATED_DATE,
+  DELETE_ADDRESS,
+  ADD_ADDRESS,
   CHANGE_SLIDER_INDEX,
   AUTH_ERROR,
 } from "./types";
@@ -402,6 +404,55 @@ export const logUser = (email, password) => {
         type: LOG_USER,
         payload: response,
       });
+    } catch (error) {
+      return dispatch({
+        type: AUTH_ERROR,
+        payload: error,
+      });
+    }
+  };
+};
+
+export const deleteAddress = (user_id, address_id) => {
+  return async (dispatch) => {
+    try {
+      console.log(user_id);
+      const response = await HttpHelper.doPost("users/deleteAddress", {
+        user_id,
+        address_id,
+      });
+      if (Array.isArray(response.data)) {
+        console.log("response.data", response.data);
+        dispatch({
+          type: DELETE_ADDRESS,
+          payload: response.data,
+        });
+      }
+    } catch (error) {
+      return dispatch({
+        type: AUTH_ERROR,
+        payload: error,
+      });
+    }
+  };
+};
+
+export const addAddress = (user_id, address) => {
+  return async (dispatch) => {
+    try {
+      console.log("address", address);
+      console.log(user_id);
+      const response = await HttpHelper.doPost("users/addAddress", {
+        user_id,
+        address,
+      });
+      if (Array.isArray(response.data)) {
+        console.log("kkeke", Array.isArray(response.data));
+        dispatch({
+          type: ADD_ADDRESS,
+          payload: response.data,
+        });
+      }
     } catch (error) {
       return dispatch({
         type: AUTH_ERROR,
