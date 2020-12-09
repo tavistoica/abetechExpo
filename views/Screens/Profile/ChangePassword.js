@@ -25,6 +25,7 @@ import Feather from "react-native-vector-icons/Feather";
 import AntDesignIcon from "react-native-vector-icons/AntDesign";
 import { connect } from "react-redux";
 import * as actions from "../../actions";
+import SideViewHeader from "../../Component/SideViewHeader";
 
 class ChangePassword extends React.Component {
   constructor(props) {
@@ -260,26 +261,20 @@ class ChangePassword extends React.Component {
               flexDirection: "column",
             }}
           >
-            <TouchableOpacity
-              onPress={() => {
-                this.props.navigation.navigate("edit_profile");
-              }}
-              style={styles.menu}
-            >
-              <Feather name="arrow-left" size={32} color={Third_color()} />
-            </TouchableOpacity>
+            <SideViewHeader
+              name="Change password"
+              redirect={"edit_profile"}
+              navigation={this.props.navigation}
+            />
             {this.renderContent()}
           </SafeAreaView>
         ) : (
           <View style={{ flex: 1, flexDirection: "column" }}>
-            <TouchableOpacity
-              onPress={() => {
-                this.props.close();
-              }}
-              style={styles.menu}
-            >
-              <Feather name="arrow-left" size={32} color={Third_color()} />
-            </TouchableOpacity>
+            <SideViewHeader
+              name="Change password"
+              redirect={"edit_profile"}
+              navigation={this.props.navigation}
+            />
             {this.renderContent()}
           </View>
         )}

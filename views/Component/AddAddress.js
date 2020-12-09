@@ -38,7 +38,7 @@ const AddAddress = (props) => {
         <TextInput
           onChangeText={(value) => setStreet(value)}
           placeholder="Enter street"
-          autoCapitalize="true"
+          autoCapitalize="words"
           style={styles.inputTxt}
         />
       </View>
@@ -46,7 +46,7 @@ const AddAddress = (props) => {
         <TextInput
           onChangeText={(value) => setCity(value)}
           placeholder="Enter city"
-          autoCapitalize="true"
+          autoCapitalize="words"
           style={styles.inputTxt}
         />
       </View>
@@ -54,7 +54,7 @@ const AddAddress = (props) => {
         <TextInput
           onChangeText={(value) => setCounty(value)}
           placeholder="Enter county"
-          autoCapitalize="true"
+          autoCapitalize="words"
           style={styles.inputTxt}
         />
       </View>
@@ -62,7 +62,7 @@ const AddAddress = (props) => {
         <TextInput
           onChangeText={(value) => setCountry(value)}
           placeholder="Enter county"
-          autoCapitalize="true"
+          autoCapitalize="words"
           style={styles.inputTxt}
         />
       </View>

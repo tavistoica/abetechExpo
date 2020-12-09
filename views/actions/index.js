@@ -440,14 +440,11 @@ export const deleteAddress = (user_id, address_id) => {
 export const addAddress = (user_id, address) => {
   return async (dispatch) => {
     try {
-      console.log("address", address);
-      console.log(user_id);
       const response = await HttpHelper.doPost("users/addAddress", {
         user_id,
         address,
       });
       if (Array.isArray(response.data)) {
-        console.log("kkeke", Array.isArray(response.data));
         dispatch({
           type: ADD_ADDRESS,
           payload: response.data,
@@ -564,6 +561,28 @@ export const registerUser = (
       dispatch({
         type: AUTH_ERROR,
         payload: error.err,
+      });
+    }
+  };
+};
+
+export const addCard = (user_id, card) => {
+  return async (dispatch) => {
+    try {
+      const response = await HttpHelper.doPost("users/addCard", {
+        user_id,
+        card,
+      });
+      if (Array.isArray(response.data)) {
+        dispatch({
+          type: ADD_CARD,
+          payload: response.data,
+        });
+      }
+    } catch (error) {
+      return dispatch({
+        type: AUTH_ERROR,
+        payload: error,
       });
     }
   };

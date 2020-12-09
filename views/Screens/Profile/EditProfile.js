@@ -228,7 +228,7 @@ class EditProfile extends React.Component {
                 <ScrollView style={{ width: width(100), padding: 10 }}>
                   {this.listItem("Order History")}
                   {this.listItem("Manage Addresses", "manageAddresses")}
-                  {this.listItem("Manage Payment Methods")}
+                  {this.listItem("Manage Payment Methods", "manageCards")}
                   {this.listItem("Change Password", "changePassword")}
                   {this.listItem("Technical Support")}
                 </ScrollView>

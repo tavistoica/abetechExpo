@@ -25,6 +25,7 @@ import Feather from "react-native-vector-icons/Feather";
 import AntDesignIcon from "react-native-vector-icons/AntDesign";
 import { connect } from "react-redux";
 import * as actions from "../../actions";
+import SideViewHeader from "../../Component/SideViewHeader";
 
 class ChangeDetails extends React.Component {
   constructor(props) {
@@ -130,7 +131,7 @@ class ChangeDetails extends React.Component {
           photoUrl: "https://www.gradebacker.com" + global.image,
           loading: false,
         });
-      } else if (data.user == null) {
+      } else if (data.user === null) {
         this.setState({ status: Msg_Register_Failed, loading: false });
       } else {
         if (
@@ -274,14 +275,11 @@ class ChangeDetails extends React.Component {
                 width: "100%",
               }}
             >
-              <TouchableOpacity
-                onPress={() => {
-                  this.props.navigation.navigate("edit_profile");
-                }}
-                style={{ flex: 1, marginLeft: "5%" }}
-              >
-                <Feather name="arrow-left" size={32} color={Third_color()} />
-              </TouchableOpacity>
+              <SideViewHeader
+                name="Change details"
+                redirect={"edit_profile"}
+                navigation={this.props.navigation}
+              />
               <View
                 style={{
                   flex: 3,
@@ -299,14 +297,11 @@ class ChangeDetails extends React.Component {
           </SafeAreaView>
         ) : (
           <View style={{ flex: 1, flexDirection: "column" }}>
-            <TouchableOpacity
-              onPress={() => {
-                this.props.close();
-              }}
-              style={styles.menu}
-            >
-              <Feather name="arrow-left" size={32} color={Third_color()} />
-            </TouchableOpacity>
+            <SideViewHeader
+              name="Change details"
+              redirect={"edit_profile"}
+              navigation={this.props.navigation}
+            />
             {this.renderContent()}
           </View>
         )}

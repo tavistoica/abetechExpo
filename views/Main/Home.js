@@ -52,6 +52,7 @@ import DiscoveryPage from "../Screens/DiscoverPage";
 import ChangeDetails from "../Screens/Profile/ChangeDetails";
 import ChangePassword from "../Screens/Profile/ChangePassword";
 import ManageAddresses from "../Screens/Profile/ManageAddresses";
+import ManageCards from "../Screens/Profile/ManageCards";
 
 // LogBox.ignoreWarnings([
 //   "Non-serializable values were found in the navigation state",
@@ -94,6 +95,7 @@ class Home extends React.Component {
             <Drawer.Screen name="changeDetails" component={ChangeDetails} />
             <Drawer.Screen name="changePassword" component={ChangePassword} />
             <Drawer.Screen name="manageAddresses" component={ManageAddresses} />
+            <Drawer.Screen name="manageCards" component={ManageCards} />
           </Drawer.Navigator>
         </Provider>
         <BottomMenu {...this.props} />

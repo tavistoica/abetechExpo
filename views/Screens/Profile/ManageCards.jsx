@@ -16,13 +16,13 @@ import {
   FlatList,
   SafeAreaView,
 } from "react-native";
-import Address from "../../Component/Address";
-import AddAddress from "../../Component/AddAddress";
+import CardComponent from "../../Component/Cards/CardComponent";
+import AddCard from "../../Component/Cards/AddCard";
 import RBSheet from "react-native-raw-bottom-sheet";
 import { height } from "react-native-dimension";
 import SideViewHeader from "../../Component/SideViewHeader";
 
-const ManageAddresses = (props) => {
+const ManageCards = (props) => {
   let AddressModal = null;
 
   const openModal = () => {
@@ -30,10 +30,6 @@ const ManageAddresses = (props) => {
   };
   const closeModal = () => {
     AddressModal.close();
-  };
-
-  const redirect = () => {
-    props.navigation.navigate("edit_profile");
   };
 
   return (
@@ -46,7 +42,7 @@ const ManageAddresses = (props) => {
         />
         <ScrollView style={{ height: "100%" }}>
           <FlatList
-            data={props.auth.addresses}
+            data={props.auth.cards}
             renderItem={({ item, index }) => (
               <View
                 style={{
@@ -55,13 +51,13 @@ const ManageAddresses = (props) => {
                   marginHorizontal: 10,
                 }}
               >
-                <Address
-                  address={{
+                <CardComponent
+                  card={{
                     id: item.id,
-                    city: item.city,
-                    street: item.street,
-                    county: item.county,
-                    country: item.country,
+                    cardNumber: item.cardNumber,
+                    cardName: item.cardName,
+                    month: item.month,
+                    year: item.year,
                   }}
                 />
               </View>
@@ -76,7 +72,7 @@ const ManageAddresses = (props) => {
               justifyContent: "center",
             }}
           >
-            <Button title="+ Add Address" onPress={() => openModal()} />
+            <Button title="+ Add Card" onPress={() => openModal()} />
           </View>
         </ScrollView>
         <RBSheet
@@ -95,7 +91,7 @@ const ManageAddresses = (props) => {
             },
           }}
         >
-          <AddAddress closeModal={closeModal} />
+          <AddCard closeModal={closeModal} />
         </RBSheet>
       </SafeAreaView>
     </>
@@ -111,4 +107,4 @@ const mapStatetoProps = (state) => {
 export default connect(
   mapStatetoProps,
   actions
-)(ManageAddresses);
+)(ManageCards);

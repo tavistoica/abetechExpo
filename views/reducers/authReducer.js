@@ -15,6 +15,7 @@ import {
   GET_ADDRESSES,
   DELETE_ADDRESS,
   AUTH_ERROR,
+  ADD_CARD,
 } from "../actions/types";
 
 const initialState = {
@@ -26,6 +27,8 @@ const initialState = {
   pass: null,
   email: null,
   phone: null,
+  addresses: [],
+  cards: [],
   createdAt: null,
   errorMessage: null,
 };
@@ -44,6 +47,7 @@ export default (state = initialState, action) => {
         email: action.payload.data.email,
         phone: action.payload.data.phone,
         addresses: action.payload.data.addresses,
+        cards: action.payload.data.cards,
         createdAt: action.payload.data.createdAt,
       };
     case REGISTER_USER:
@@ -61,7 +65,15 @@ export default (state = initialState, action) => {
         pass: null,
         email: null,
         phone: null,
+        cards: [],
+        addresses: [],
         createdAt: null,
+        errorMessage: null,
+      };
+    case ADD_CARD:
+      return {
+        ...state,
+        cards: action.payload,
         errorMessage: null,
       };
     case GET_ADDRESSES:
