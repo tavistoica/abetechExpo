@@ -32,3 +32,4 @@ export const ADD_ADDRESS = "ADD_ADDRESS";
 export const DELETE_ADDRESS = "DELETE_ADDRESS";
 export const GET_ADDRESSES = "GET_ADDRESSES";
 export const ADD_CARD = "ADD_CARD";
+export const DELETE_CARD = "DELETE_CARD";

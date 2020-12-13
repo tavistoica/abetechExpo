@@ -42,13 +42,18 @@ const AddCard = (props) => {
     const cardTypeObj = creditCardType(value)[0];
     setCvvLenght(cardTypeObj.code.size);
     setNumberLength(cardTypeObj.lengths[0]);
-    setType(cardTypeObj.type);
-    console.log(type);
+    setType(cardTypeObj ? cardTypeObj.type : "unknown");
   };
 
   const AddCardButton = () => {
-    console.log({ cardName, cardNumber, ccv, month, year });
-    props.addCard(props.auth.id, { cardName, cardNumber, ccv, month, year });
+    props.addCard(props.auth.id, {
+      cardName,
+      cardNumber,
+      ccv,
+      month,
+      year,
+      type,
+    });
     props.closeModal();
   };
 

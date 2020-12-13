@@ -30,6 +30,8 @@ import {
   SET_USER_CREATED_DATE,
   DELETE_ADDRESS,
   ADD_ADDRESS,
+  DELETE_CARD,
+  ADD_CARD,
   CHANGE_SLIDER_INDEX,
   AUTH_ERROR,
 } from "./types";
@@ -425,6 +427,28 @@ export const deleteAddress = (user_id, address_id) => {
         console.log("response.data", response.data);
         dispatch({
           type: DELETE_ADDRESS,
+          payload: response.data,
+        });
+      }
+    } catch (error) {
+      return dispatch({
+        type: AUTH_ERROR,
+        payload: error,
+      });
+    }
+  };
+};
+
+export const deleteCard = (user_id, card_id) => {
+  return async (dispatch) => {
+    try {
+      const response = await HttpHelper.doPost("users/deleteCard", {
+        user_id,
+        card_id,
+      });
+      if (Array.isArray(response.data)) {
+        dispatch({
+          type: DELETE_CARD,
           payload: response.data,
         });
       }

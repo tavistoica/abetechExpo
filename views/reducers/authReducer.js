@@ -1,3 +1,4 @@
+// import { actionTypes } from "redux-form";
 import {
   LOG_USER,
   REGISTER_USER,
@@ -16,6 +17,7 @@ import {
   DELETE_ADDRESS,
   AUTH_ERROR,
   ADD_CARD,
+  DELETE_CARD,
 } from "../actions/types";
 
 const initialState = {
@@ -76,6 +78,12 @@ export default (state = initialState, action) => {
         cards: action.payload,
         errorMessage: null,
       };
+    case DELETE_CARD:
+      return {
+        ...state,
+        cards: action.payload,
+        errorMessage: null,
+      };
     case GET_ADDRESSES:
       return {
         ...state,
@@ -83,7 +91,6 @@ export default (state = initialState, action) => {
         errorMessage: null,
       };
     case ADD_ADDRESS:
-      console.log("action", action.payload);
       return {
         ...state,
         addresses: action.payload,

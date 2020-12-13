@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import * as actions from "../../actions";
 import {
@@ -31,7 +31,7 @@ const ManageCards = (props) => {
   const closeModal = () => {
     AddressModal.close();
   };
-
+  console.log("props", props.auth);
   return (
     <>
       <SafeAreaView>
@@ -58,6 +58,7 @@ const ManageCards = (props) => {
                     cardName: item.cardName,
                     month: item.month,
                     year: item.year,
+                    type: item.type,
                   }}
                 />
               </View>

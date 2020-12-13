@@ -21,12 +21,15 @@ import * as actions from "../../actions";
 import Feather from "react-native-vector-icons/Feather";
 
 const CardComponent = (props) => {
-  console.log(props);
   return (
     <View style={styles.Container}>
       <View style={{ flexDirection: "row", justifyContent: "center" }}>
         <View style={{ flex: 6, flexDirection: "column" }}>
-          <Text style={styles.StreetStyle}>{props.card.cardNumber}</Text>
+          <Text style={styles.StreetStyle}>
+            {props.card.type}
+            {" ****"}
+            {props.card.cardNumber.substr(props.card.cardNumber.length - 4)}
+          </Text>
           <Text style={styles.others}>{props.card.cardName}</Text>
           <Text style={styles.others}>
             {props.card.month}/{props.card.year}
@@ -34,7 +37,7 @@ const CardComponent = (props) => {
         </View>
         <TouchableOpacity
           style={{ flex: 1, justifyContent: "center" }}
-          onPress={() => props.deleteAddress(props.auth.id, props.address.id)}
+          onPress={() => props.deleteCard(props.auth.id, props.card.id)}
         >
           <Feather name="trash" size={32} color={"red"} />
         </TouchableOpacity>
