@@ -1,48 +1,15 @@
 import React from "react";
-import {
-  BackHandler,
-  Share,
-  View,
-  Text,
-  Dimensions,
-  Button,
-  LogBox,
-  StatusBar,
-  ImageBackground,
-  TextInput,
-  StyleSheet,
-  ScrollView,
-  Image,
-  TouchableOpacity,
-} from "react-native";
-
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import Modal from "react-native-modal";
-import AntDesign from "react-native-vector-icons/AntDesign";
-import FontAwesome from "react-native-vector-icons/FontAwesome";
-import MaterialIcons from "react-native-vector-icons/MaterialIcons";
-import Entypo from "react-native-vector-icons/Entypo";
-import { GlobalImgs } from "@assets/imgs";
-import { width, height, totalSize } from "react-native-dimension";
+import { Dimensions, StatusBar, StyleSheet } from "react-native";
+import { width, height } from "react-native-dimension";
 import { createDrawerNavigator } from "@react-navigation/drawer";
-import { Avatar } from "react-native-elements";
 import EditProfile from "../Screens/Profile/EditProfile";
 import ProductList from "../Screens/ProductList";
 import ProductDetailCard from "../Screens/ProductDetailCard";
 import ProductDetailShow from "../Screens/ProductDetailShow";
 import Chat from "../Screens/Chat";
 import { _retrieveData, _storeData, _removeData } from "../../Helper/Util";
-import HttpHelper from "../../Helper/HttpHelper";
 import Favs from "../Screens/Favs";
 import MyCart from "../Screens/MyCart";
-import {
-  Main_color,
-  Primary_color,
-  Secondary_color,
-  Third_color,
-  Fourth_color,
-} from "../../Helper/Common";
-import SideMenu from "../Component/sideMenu";
 import { connect } from "react-redux";
 import * as actions from "../../actions";
 import { Provider } from "react-redux";
@@ -74,7 +41,6 @@ class Home extends React.Component {
               Dimensions.get("window").width >= 768 ? "permanent" : "front"
             }
             drawerStyle={styles.drawerStyle}
-            drawerContent={(props) => <SideMenu {...props} />}
             overlayColor={20}
           >
             <Drawer.Screen name="product_list" component={ProductList} />

@@ -3,7 +3,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 // custom import
 import Splash from "./Screens/Splash";
-import Home from "./Main/Home";
+import Home from "./Screens/Home";
 
 const Stack = createStackNavigator();
 export default function Route() {
