@@ -18,14 +18,12 @@ import {
   Fourth_color,
 } from "../../Helper/Common";
 import Spinner from "react-native-loading-spinner-overlay";
-import Modal from "react-native-modal";
 import CartProduct from "../Component/CartProduct";
 import HttpHelper from "../../Helper/HttpHelper";
 import { setStripeConf } from "../../Helper/FirebaseHelper";
-import Bottom from "./ProductDetails/Bottom";
 import stripe from "tipsi-stripe";
 import { connect } from "react-redux";
-import * as actions from "../actions";
+import * as actions from "../../actions";
 
 class MyCart extends React.Component {
   constructor(props) {
@@ -43,7 +41,6 @@ class MyCart extends React.Component {
 
   async stripeConf() {
     const settings = await setStripeConf();
-    console.log("settings", settings);
     if (settings) {
       this.setState({ payment_enabled: settings.payment_enabled });
       stripe.setOptions({
@@ -74,7 +71,6 @@ class MyCart extends React.Component {
   };
 
   goDetail = (item) => {
-    // this.props.navigation.navigate('product_detail', {product_item : item, products : this.state.products});
     this.setState({ showModal: true, cur_product: item });
   };
 
@@ -187,7 +183,6 @@ class MyCart extends React.Component {
       <>
         <View
           style={{
-            // flex: ,
             flexDirection: "row",
             fontSize: 15,
             fontWeight: "bold",
@@ -219,8 +214,7 @@ class MyCart extends React.Component {
               justifyContent: "flex-end",
             }}
           >
-            {" "}
-            ${this.props.total}
+            {` ${this.props.total}`}
           </Text>
         </View>
         <Button
@@ -234,7 +228,7 @@ class MyCart extends React.Component {
             />
           }
           disabled={!this.state.payment_enabled}
-          title="   CheckOut"
+          title="CheckOut"
         />
       </>
     );
@@ -244,11 +238,6 @@ class MyCart extends React.Component {
     return (
       <>
         <Spinner visible={this.state.loading} />
-        {/* {Platform.OS === "ios" ? (
-          <SafeAreaView style={styles.header}>{this.header()}</SafeAreaView>
-        ) : (
-          <View style={styles.header}>{this.header()}</View>
-        )} */}
         <View style={styles.container}>
           {this.props.cart.length === 0 ? (
             <Text style={{ fontSize: 14, fontWeight: "bold", marginTop: 5 }}>
@@ -311,7 +300,6 @@ class MyCart extends React.Component {
         )}
       </>
     );
-    // return <View style={{ flex: 1, flexDirection: "column" }} />;
   }
 }
 
@@ -319,7 +307,6 @@ const styles = StyleSheet.create({
   CheckoutAndTotal: {
     flexDirection: "column",
     justifyContent: "flex-start",
-    // justifyContent: 'flex-end',
     width: "100%",
     marginBottom: 20,
   },

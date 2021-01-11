@@ -1,41 +1,41 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import React from 'react';
+import React from "react";
 import {
   View,
   Text,
   StyleSheet,
   ImageBackground,
   TouchableOpacity,
-} from 'react-native';
-import {Avatar} from 'react-native-elements';
-import {GlobalImgs} from '@assets/imgs';
-import {Secondary_color} from '../../Helper/Common';
-import AntDesign from 'react-native-vector-icons/AntDesign';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import {width, height} from 'react-native-dimension';
-import Entypo from 'react-native-vector-icons/Entypo';
-import HttpHelper from '../../Helper/HttpHelper';
-import {connect} from 'react-redux';
-import * as actions from '../actions';
+} from "react-native";
+import { Avatar } from "react-native-elements";
+import { GlobalImgs } from "@assets/imgs";
+import { Secondary_color } from "../../Helper/Common";
+import AntDesign from "react-native-vector-icons/AntDesign";
+import MaterialIcons from "react-native-vector-icons/MaterialIcons";
+import { width, height } from "react-native-dimension";
+import Entypo from "react-native-vector-icons/Entypo";
+import HttpHelper from "../../Helper/HttpHelper";
+import { connect } from "react-redux";
+import * as actions from "../../actions";
 
-const goNewContact = async props => {
+const goNewContact = async (props) => {
   HttpHelper.doPost(
-    'create_contact',
+    "create_contact",
     {
       user_id: props.auth.id,
       user_data: props.auth.data,
     },
-    async data => {
-      if (data.status === 'success') {
+    async (data) => {
+      if (data.status === "success") {
         props.setContactId(data.contact_id);
-        props.navigation.navigate('chat', {
+        props.navigation.navigate("chat", {
           contact_id: props.auth.contact_id,
         });
       }
     },
-    err => {
+    (err) => {
       alert(err);
-    },
+    }
   );
 };
 
@@ -43,19 +43,21 @@ function SideMenu(props) {
   return (
     <>
       <ImageBackground
-        style={{width: '100%', height: height(100), shadowColor: '#ff0000'}}
-        imageStyle={{borderTopRightRadius: 40, borderBottomRightRadius: 40}}
-        source={GlobalImgs.bg}>
+        style={{ width: "100%", height: height(100), shadowColor: "#ff0000" }}
+        imageStyle={{ borderTopRightRadius: 40, borderBottomRightRadius: 40 }}
+        source={GlobalImgs.bg}
+      >
         <View style={styles.userInfo}>
           <TouchableOpacity
             style={styles.drawerItem}
             onPress={() => {
-              props.navigation.navigate('edit_profile');
-            }}>
+              props.navigation.navigate("edit_profile");
+            }}
+          >
             <View style={styles.avatar}>
               <Avatar
                 rounded
-                containerStyle={{borderWidth: 2, borderColor: '#fff'}}
+                containerStyle={{ borderWidth: 2, borderColor: "#fff" }}
                 size={width(25)}
                 source={
                   props.auth.photo == null || props.auth.photo.original == null
@@ -68,9 +70,10 @@ function SideMenu(props) {
               <Text
                 style={{
                   fontSize: 18,
-                  fontWeight: 'bold',
+                  fontWeight: "bold",
                   color: Secondary_color(),
-                }}>
+                }}
+              >
                 {props.auth.first_name} {props.auth.last_name}
               </Text>
             </View>
@@ -79,45 +82,48 @@ function SideMenu(props) {
         <TouchableOpacity
           style={styles.drawerItem}
           onPress={() => {
-            props.navigation.navigate('product_list');
-          }}>
+            props.navigation.navigate("product_list");
+          }}
+        >
           <Entypo
             name="shopping-bag"
             color={Secondary_color()}
             size={24}
             style={styles.drawerItem_icon}
           />
-          <Text style={[styles.drawerItem_txt, {color: Secondary_color()}]}>
+          <Text style={[styles.drawerItem_txt, { color: Secondary_color() }]}>
             View Products
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.drawerItem}
           onPress={() => {
-            props.navigation.navigate('favs');
-          }}>
+            props.navigation.navigate("favs");
+          }}
+        >
           <MaterialIcons
             name="favorite-border"
             color={Secondary_color()}
             size={24}
             style={styles.drawerItem_icon}
           />
-          <Text style={[styles.drawerItem_txt, {color: Secondary_color()}]}>
+          <Text style={[styles.drawerItem_txt, { color: Secondary_color() }]}>
             Favorites
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.drawerItem}
           onPress={() => {
-            props.navigation.navigate('mycart');
-          }}>
+            props.navigation.navigate("mycart");
+          }}
+        >
           <AntDesign
             name="shoppingcart"
             color={Secondary_color()}
             size={24}
             style={styles.drawerItem_icon}
           />
-          <Text style={[styles.drawerItem_txt, {color: Secondary_color()}]}>
+          <Text style={[styles.drawerItem_txt, { color: Secondary_color() }]}>
             My Cart
           </Text>
         </TouchableOpacity>
@@ -126,22 +132,23 @@ function SideMenu(props) {
           onPress={() => {
             if (
               props.auth.contact_id === null ||
-              props.auth.contact_id === ''
+              props.auth.contact_id === ""
             ) {
               goNewContact(props);
             } else {
-              props.navigation.navigate('chat', {
+              props.navigation.navigate("chat", {
                 contact_id: props.auth.contact_id,
               });
             }
-          }}>
+          }}
+        >
           <Entypo
             name="chat"
             color={Secondary_color()}
             size={24}
             style={styles.drawerItem_icon}
           />
-          <Text style={[styles.drawerItem_txt, {color: Secondary_color()}]}>
+          <Text style={[styles.drawerItem_txt, { color: Secondary_color() }]}>
             Message
           </Text>
         </TouchableOpacity>
@@ -149,15 +156,16 @@ function SideMenu(props) {
           style={styles.drawerItem}
           onPress={async () => {
             props.removeUser();
-            props.navigation.navigate('login');
-          }}>
+            props.navigation.navigate("login");
+          }}
+        >
           <AntDesign
             name="logout"
             color={Secondary_color()}
             size={24}
             style={styles.drawerItem_icon}
           />
-          <Text style={[styles.drawerItem_txt, {color: Secondary_color()}]}>
+          <Text style={[styles.drawerItem_txt, { color: Secondary_color() }]}>
             Logout
           </Text>
         </TouchableOpacity>
@@ -168,12 +176,12 @@ function SideMenu(props) {
 
 const styles = StyleSheet.create({
   avatar: {
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
   },
   drawerStyle: {
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     borderTopRightRadius: 40,
     borderBottomRightRadius: 40,
     width: width(70),
@@ -181,14 +189,14 @@ const styles = StyleSheet.create({
   userInfo: {
     marginTop: height(8),
     marginBottom: height(2),
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
   },
   drawerItem: {
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    alignItems: "center",
     padding: 15,
   },
   drawerItem_icon: {
@@ -196,13 +204,13 @@ const styles = StyleSheet.create({
   },
   drawerItem_txt: {
     fontSize: 20,
-    fontWeight: 'bold',
-    borderBottomColor: '#B034CD',
+    fontWeight: "bold",
+    borderBottomColor: "#B034CD",
     borderBottomWidth: 1,
   },
 });
 
-const mapStatetoProps = state => {
+const mapStatetoProps = (state) => {
   return {
     auth: state.auth,
   };
@@ -210,5 +218,5 @@ const mapStatetoProps = state => {
 
 export default connect(
   mapStatetoProps,
-  actions,
+  actions
 )(SideMenu);

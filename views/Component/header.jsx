@@ -2,20 +2,14 @@ import React from "react";
 import {
   View,
   StyleSheet,
-  TouchableOpacity,
   TextInput,
   Platform,
   SafeAreaView,
-  Text,
 } from "react-native";
 import { width } from "react-native-dimension";
 import { Main_color, Secondary_color } from "../../Helper/Common";
-import Entypo from "react-native-vector-icons/Entypo";
-import Feather from "react-native-vector-icons/Feather";
-import Octicons from "react-native-vector-icons/Octicons";
 import { connect } from "react-redux";
-import * as actions from "../actions";
-import FilterMenu from "./filterMenu";
+import * as actions from "../../actions";
 
 class Header extends React.Component {
   constructor(props) {

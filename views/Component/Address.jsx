@@ -17,7 +17,7 @@ import {
   Fourth_color,
 } from "../../Helper/Common";
 import { connect } from "react-redux";
-import * as actions from "../actions";
+import * as actions from "../../actions";
 import Feather from "react-native-vector-icons/Feather";
 
 const Address = (props) => {

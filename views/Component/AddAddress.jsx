@@ -16,7 +16,7 @@ import {
 import { width } from "react-native-dimension";
 import { ScrollView } from "react-native-gesture-handler";
 import { connect } from "react-redux";
-import * as actions from "../actions";
+import * as actions from "../../actions";
 
 const AddAddress = (props) => {
   let [street, setStreet] = useState("");

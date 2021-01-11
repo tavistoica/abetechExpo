@@ -1,21 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
-import * as actions from "../../actions";
-import {
-  View,
-  Text,
-  StyleSheet,
-  ImageBackground,
-  StatusBar,
-  ScrollView,
-  TouchableOpacity,
-  Image,
-  TextInput,
-  Platform,
-  Button,
-  FlatList,
-  SafeAreaView,
-} from "react-native";
+import * as actions from "../../../actions";
+import { View, ScrollView, Button, FlatList, SafeAreaView } from "react-native";
 import Address from "../../Component/Address";
 import AddAddress from "../../Component/AddAddress";
 import RBSheet from "react-native-raw-bottom-sheet";
@@ -30,10 +16,6 @@ const ManageAddresses = (props) => {
   };
   const closeModal = () => {
     AddressModal.close();
-  };
-
-  const redirect = () => {
-    props.navigation.navigate("edit_profile");
   };
 
   return (

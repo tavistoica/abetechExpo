@@ -36,9 +36,9 @@ import {
   Fourth_color,
 } from "../../Helper/Common";
 import { connect } from "react-redux";
-import Register from "../Auth/Register";
+import Register from "./Register";
 import RBSheet from "react-native-raw-bottom-sheet";
-import * as actions from "../actions";
+import * as actions from "../../actions";
 
 class SignIn extends React.Component {
   constructor(props) {

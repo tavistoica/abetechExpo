@@ -3,68 +3,58 @@ import {
   View,
   Text,
   StyleSheet,
-  Share,
-  ImageBackground,
-  ActivityIndicator,
-  StatusBar,
   TouchableOpacity,
-  Image,
-  TextInput,
   ScrollView,
-  FlatList,
   SafeAreaView,
-  ViewBase,
   Platform,
 } from "react-native";
-import {
-  Input,
-  Button,
-  Divider,
-  Avatar,
-  Header,
-  Card,
-} from "react-native-elements";
-import { GlobalImgs, HomeImgs } from "@assets/imgs";
+import { Divider } from "react-native-elements";
 import Feather from "react-native-vector-icons/Feather";
 import AntDesignIcon from "react-native-vector-icons/AntDesign";
-import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import { width, height, totalSize } from "react-native-dimension";
-import { LinearGradient } from "expo-linear-gradient";
-import { SliderBox } from "react-native-image-slider-box";
 import {
   Main_color,
   Primary_color,
   Secondary_color,
   Third_color,
   Fourth_color,
-} from "../../../Helper/Common";
+} from "../../Helper/Common";
+import { SliderBox } from "react-native-image-slider-box";
 import { connect } from "react-redux";
 import * as actions from "../../actions";
 
-class Bottom extends React.Component {
+class ProductDetailShow extends React.Component {
   constructor(props) {
     super(props);
     this.props = props;
     this.state = {
       images: [],
+      item: this.props.route.params.product,
     };
   }
 
   componentDidMount() {
     let tmp_images = [];
-    this.props.item.data.photos.map((photo, index) => {
+    this.state.item.data.photos.map((photo, index) => {
       tmp_images.push({ uri: photo.original });
     });
     this.setState({ images: tmp_images });
+
+    this.focusListener = this.props.navigation.addListener("focus", () => {
+      if (this.props.route.params.btnflag === false) {
+        global.cur_page_name = "product_detail_show";
+      }
+    });
   }
 
   UNSAFE_componentWillReceiveProps(props) {
     this.props = props;
+    let item = this.props.route.params.product;
     let tmp_images = [];
-    this.props.item.data.photos.map((photo, index) => {
+    item.data.photos.map((photo, index) => {
       tmp_images.push({ uri: photo.original });
     });
-    this.setState({ images: tmp_images });
+    this.setState({ images: tmp_images, item: item });
   }
 
   header = () => {
@@ -80,21 +70,15 @@ class Bottom extends React.Component {
         </TouchableOpacity>
         <View
           style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
-        >
-          {/* <Text
-            style={{ fontSize: 20, color: Third_color(), fontWeight: "bold" }}
-          >
-            Product Detail
-          </Text> */}
-        </View>
+        />
         {this.props.page === "cart" ? (
           <TouchableOpacity style={{ width: 30, marginRight: 10 }} />
         ) : (
           <TouchableOpacity
             style={{ width: 30, marginRight: 10 }}
             onPress={() => {
-              console.log("props.item", this.props.item);
-              this.props.setCart(this.props.item);
+              console.log("props.item", this.state.item);
+              this.props.setCart(this.state.item);
               this.props.cartTotal();
             }}
           >
@@ -122,14 +106,11 @@ class Bottom extends React.Component {
             <SliderBox
               ImageComponentStyle={{
                 width: "100%",
-                height: height(50),
+                height: height(40),
                 backgroundColor: "#fff",
                 marginTop: 5,
               }}
               images={this.state.images}
-              // style = {{backgroundColor : '#f00'}}
-              // sliderBoxHeight={200}
-              // onCurrentImagePressed={index=> console.warn(`image ${index} pressed`)}
               dotColor="#FFEE58"
               inactiveDotColor="#90A4AE"
               dotStyle={{
@@ -145,9 +126,8 @@ class Bottom extends React.Component {
               <Text style={[styles.info_title, { color: Fourth_color() }]}>
                 Title
               </Text>
-              <View style={{ flex: 1 }} />
               <Text style={[styles.info_data, { color: Third_color() }]}>
-                {this.props.item.data.title}
+                {this.state.item.data.title}
               </Text>
             </View>
             <Divider />
@@ -155,11 +135,10 @@ class Bottom extends React.Component {
               <Text style={[styles.info_title, { color: Fourth_color() }]}>
                 Price
               </Text>
-              <View style={{ flex: 1 }} />
-              {this.props.item.data.promotion_price == null ||
-              this.props.item.data.promotion_price == "" ? (
+              {this.state.item.data.promotion_price == null ||
+              this.state.item.data.promotion_price == "" ? (
                 <Text style={[styles.info_data, { color: Third_color() }]}>
-                  ${this.props.item.data.price}
+                  ${this.state.item.data.price}
                 </Text>
               ) : (
                 <Text style={[styles.info_data, { color: Third_color() }]}>
@@ -172,9 +151,9 @@ class Bottom extends React.Component {
                       },
                     ]}
                   >
-                    ${this.props.item.data.price}
+                    ${this.state.item.data.price}
                   </Text>
-                  / ${this.props.item.data.promotion_price}
+                  / ${this.state.item.data.promotion_price}
                 </Text>
               )}
             </View>
@@ -183,9 +162,8 @@ class Bottom extends React.Component {
               <Text style={[styles.info_title, { color: Fourth_color() }]}>
                 Brand
               </Text>
-              <View style={{ flex: 1 }} />
               <Text style={[styles.info_data, { color: Third_color() }]}>
-                {this.props.item.data.brand}
+                {this.state.item.data.brand}
               </Text>
             </View>
             <Divider />
@@ -193,9 +171,8 @@ class Bottom extends React.Component {
               <Text style={[styles.info_title, { color: Fourth_color() }]}>
                 Color
               </Text>
-              <View style={{ flex: 1 }} />
               <Text style={[styles.info_data, { color: Third_color() }]}>
-                {this.props.item.data.color}
+                {this.state.item.data.color}
               </Text>
             </View>
             <Divider />
@@ -205,7 +182,7 @@ class Bottom extends React.Component {
               </Text>
               <View style={{ flex: 1 }} />
               <Text style={[styles.info_data, { color: Third_color() }]}>
-                {this.props.item.data.size}
+                {this.state.item.data.size}
               </Text>
             </View>
             <Divider />
@@ -217,7 +194,7 @@ class Bottom extends React.Component {
             <Divider />
             <View style={styles.row}>
               <Text style={[styles.desc, { color: Third_color() }]}>
-                {this.props.item.data.description}
+                {this.state.item.data.description}
               </Text>
             </View>
             <View style={{ marginBottom: 60 }} />
@@ -232,9 +209,19 @@ const styles = StyleSheet.create({
   menu: {
     paddingLeft: 10,
   },
+  container: {
+    flex: 16,
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    paddingLeft: 30,
+    paddingRight: 30,
+    paddingTop: 30,
+    width: width(100),
+  },
   header: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: Main_color(),
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
@@ -256,7 +243,6 @@ const styles = StyleSheet.create({
   },
   info_data: {
     fontSize: 20,
-    // fontWeight : 'bold'
   },
   row: {
     width: "100%",
@@ -271,13 +257,17 @@ const styles = StyleSheet.create({
     flex: 16,
     width: width(100),
     padding: 10,
-    // paddingBottom: 60,
+    paddingBottom: 60,
+    backgroundColor: "#fff",
   },
 });
 
 const mapStateToProps = (state) => {
   return {
-    favorite: state.products,
+    products: state.products.products,
+    sliderIndex: state.products.sliderIndex,
+    sliderItem: state.products.sliderItem,
+    cart: state.cart,
     auth: state.auth,
   };
 };
@@ -285,4 +275,4 @@ const mapStateToProps = (state) => {
 export default connect(
   mapStateToProps,
   actions
-)(Bottom);
+)(ProductDetailShow);

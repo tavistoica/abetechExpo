@@ -1,15 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  Picker,
-  FlatList,
-  Platform,
-  SafeAreaView,
-} from "react-native";
+import { View, Text, StyleSheet, FlatList } from "react-native";
 import { width, height } from "react-native-dimension";
 import {
   Primary_color,
@@ -18,14 +9,14 @@ import {
   Third_color,
 } from "../../Helper/Common";
 import Spinner from "react-native-loading-spinner-overlay";
-import Modal from "react-native-modal";
 import Product from "../Component/Product";
-import HttpHelper from "../../Helper/HttpHelper";
 import { FAB } from "react-native-paper";
 import Header from "../Component/header";
 import { connect } from "react-redux";
-import * as actions from "../actions";
+import * as actions from "../../actions";
 import FilterMenu from "../Component/filterMenu";
+import { Query } from "react-apollo";
+import gql from "graphql-tag";
 
 class ProductList extends React.Component {
   constructor(props) {
@@ -79,67 +70,75 @@ class ProductList extends React.Component {
           setFilterVisibleFalse={this.setFilterVisibleFalse}
         />
       </View>
-      // <View style={styles.filter}>
-      //   <TouchableOpacity
-      //     onPress={() => this.setState({isVisibleFilterModal: true})}>
-      //     {/* <Octicons name="kebab-vertical" size={28} color={Secondary_color()} /> */}
-      //     <Text>Filter</Text>
-      //     <FilterMenu
-      //       isVisibleFilterModal={this.state.isVisibleFilterModal}
-      //       category={this.props.products.category}
-      //       categories={this.state.categories}
-      //       setFilterVisibleFalse={this.setFilterVisibleFalse}
-      //     />
-      //   </TouchableOpacity>
-      // </View>
     );
   };
 
   render() {
-    // console.log("prrr", this.props.products);
     return (
-      <View style={{ flex: 1, flexDirection: "column" }}>
-        <Spinner visible={this.state.loading} />
-        <Header navigation={this.props.navigation} />
-        <View style={styles.container}>
-          {this.props.products.products.length === 0 ? (
-            <Text style={{ fontSize: 14, fontWeight: "bold", marginTop: 5 }}>
-              Nothing to show
-            </Text>
-          ) : (
-            <FlatList
-              data={this.props.products.products}
-              renderItem={({ item, index }) => (
-                <View
-                  style={{
-                    flexDirection: "column",
-                    margin: 1,
-                  }}
-                >
-                  <Product
-                    onPress={this.goDetail}
-                    width={width(50)}
-                    item={item}
-                    index={index}
+      <Query
+        query={gql`
+          {
+            products {
+              title
+              brand
+              price
+              promotion_price
+              photos
+            }
+          }
+        `}
+      >
+        {({ loading, error, data }) => {
+          if (loading) return <p>Loading...</p>;
+          if (error) return <p>{error}</p>;
+          console.log("data", data);
+          return (
+            <View style={{ flex: 1, flexDirection: "column" }}>
+              <Spinner visible={this.state.loading} />
+              <Header navigation={this.props.navigation} />
+              <View style={styles.container}>
+                {data.products.length === 0 ? (
+                  <Text
+                    style={{ fontSize: 14, fontWeight: "bold", marginTop: 5 }}
+                  >
+                    Nothing to show
+                  </Text>
+                ) : (
+                  <FlatList
+                    data={data.products}
+                    renderItem={({ item, index }) => (
+                      <View
+                        style={{
+                          flexDirection: "column",
+                          margin: 1,
+                        }}
+                      >
+                        {console.log("kekekek", item)}
+
+                        <Product
+                          onPress={this.goDetail}
+                          width={width(50)}
+                          item={item}
+                          index={index}
+                        />
+                      </View>
+                    )}
+                    //Setting the number of column
+                    contentContainerStyle={{
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                    style={{ width: width(100) }}
+                    numColumns={2}
+                    keyExtractor={(item, index) => index.toString()}
                   />
-                </View>
-              )}
-              //Setting the number of column
-              contentContainerStyle={{
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-              style={{ width: width(100) }}
-              numColumns={2}
-              keyExtractor={(item, index) => index.toString()}
-            />
-          )}
-          {/* <View style={styles.fixedView}>
-            <FAB style={styles.fab} medium color="white" icon="filter" />
-          </View> */}
-          {this.filter()}
-        </View>
-      </View>
+                )}
+                {this.filter()}
+              </View>
+            </View>
+          );
+        }}
+      </Query>
     );
   }
 }

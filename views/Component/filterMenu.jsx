@@ -11,7 +11,7 @@ import Modal from "react-native-modal";
 import { width } from "react-native-dimension";
 import { Secondary_color, Primary_color } from "../../Helper/Common";
 import { connect } from "react-redux";
-import * as actions from "../actions";
+import * as actions from "../../actions";
 
 const filterCategory = (props, category) => {
   // this.setState({ loading: true, isVisibleFilterModal: false });

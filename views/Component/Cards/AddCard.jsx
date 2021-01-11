@@ -17,9 +17,10 @@ import {
 import { width } from "react-native-dimension";
 import { ScrollView } from "react-native-gesture-handler";
 import { connect } from "react-redux";
-import * as actions from "../../actions";
+import * as actions from "../../../actions";
 import MonthPicker from "../MonthPicker";
 import YearPicker from "../YearPicker";
+import PropTypes from "prop-types";
 
 const AddCard = (props) => {
   let [cardNumber, setCardNumber] = useState(null);
@@ -38,7 +39,6 @@ const AddCard = (props) => {
         .replace(/(\d{4})/g, "$1 ")
         .trim()
     );
-    // console.log(value);
     const cardTypeObj = creditCardType(value)[0];
     setCvvLenght(cardTypeObj.code.size);
     setNumberLength(cardTypeObj.lengths[0]);
@@ -196,3 +196,9 @@ export default connect(
   mapStatetoProps,
   actions
 )(AddCard);
+
+AddCard.propTypes = {
+  closeModal: PropTypes.func.isRequired,
+  addCard: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
+};

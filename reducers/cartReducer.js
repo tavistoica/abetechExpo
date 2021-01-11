@@ -1,4 +1,3 @@
-import { ActionSheet } from "native-base";
 import {
   GET_CART,
   DELETE_CART,
@@ -18,21 +17,11 @@ const initialState = {
 };
 
 export default (state = initialState, action) => {
-  const tempCart = state.cart;
   switch (action.type) {
     case GET_CART:
-      console.log("action", action.payload);
-      // const payload = action.payload;
-      // let initialTotal = 0;
-      // const initialTotal = payload.reduce((accumulator, item) => {
-      //   console.log('item', item);
-      //   const objItem = {...item};
-      //   accumulator + item.price * item.quantity;
-      // });
       return {
         ...state,
         cart: action.payload,
-        // cartTotal: initialTotal,
       };
     case DELETE_CART:
       return {

@@ -17,8 +17,9 @@ import {
   Fourth_color,
 } from "../../../Helper/Common";
 import { connect } from "react-redux";
-import * as actions from "../../actions";
+import * as actions from "../../../actions";
 import Feather from "react-native-vector-icons/Feather";
+import PropTypes from "prop-types";
 
 const CardComponent = (props) => {
   return (
@@ -72,3 +73,9 @@ export default connect(
   mapStatetoProps,
   actions
 )(CardComponent);
+
+CardComponent.propTypes = {
+  auth: PropTypes.func.isRequired,
+  category: PropTypes.object.isRequired,
+  card: PropTypes.object.isRequired,
+};

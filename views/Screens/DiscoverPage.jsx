@@ -18,14 +18,9 @@ import {
   Third_color,
 } from "../../Helper/Common";
 import Spinner from "react-native-loading-spinner-overlay";
-import Modal from "react-native-modal";
-import Product from "../Component/Product";
-import HttpHelper from "../../Helper/HttpHelper";
-import { FAB } from "react-native-paper";
 import Header from "../Component/header";
 import { connect } from "react-redux";
-import * as actions from "../actions";
-import FilterMenu from "../Component/filterMenu";
+import * as actions from "../../actions";
 
 class DiscoveryPage extends React.Component {
   constructor(props) {
@@ -38,7 +33,6 @@ class DiscoveryPage extends React.Component {
   }
 
   render() {
-    // console.log("prrr", this.props.products);
     return (
       <View style={{ flex: 1, flexDirection: "column" }}>
         <Spinner visible={this.state.loading} />
@@ -56,15 +50,11 @@ class DiscoveryPage extends React.Component {
                   <View
                     style={{
                       flexDirection: "row",
-                      // margin: 1,
-                      // textAlign: "center",
                       backgroundColor: Secondary_color(),
                       width: "100%",
-                      // height: "100%",
                       marginBottom: 1,
                       paddingVertical: 20,
                       textAlignVertical: "center",
-
                       color: "#fff",
                     }}
                   >
@@ -72,7 +62,6 @@ class DiscoveryPage extends React.Component {
                       style={{
                         width: "100%",
                         paddingLeft: 20,
-                        // height: "100%",
                         fontSize: 30,
                         textAlignVertical: "center",
                         marginBottom: 10,
@@ -91,7 +80,7 @@ class DiscoveryPage extends React.Component {
               }}
               style={{ width: width(100) }}
               numColumns={1}
-              keyExtractor={(item, index) => index.toString()}
+              keyExtractor={(_item, index) => index.toString()}
             />
           )}
         </View>

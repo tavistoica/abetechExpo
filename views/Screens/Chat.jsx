@@ -20,7 +20,7 @@ import LeftMsg from "../Component/LeftMsg";
 import RightMsg from "../Component/RightMsg";
 import { _getAllMsgs } from "../../Helper/FirebaseHelper";
 import HttpHelper from "../../Helper/HttpHelper";
-import MyModal from "../../customComponent/MyModal";
+import MyModal from "../Component/MyModal";
 import ImagePicker from "react-native-image-picker";
 import {
   Main_color,
@@ -28,7 +28,7 @@ import {
   Secondary_color,
 } from "../../Helper/Common";
 import { connect } from "react-redux";
-import * as actions from "../actions";
+import * as actions from "../../actions";
 
 class Chat extends React.Component {
   constructor(props) {
@@ -96,7 +96,6 @@ class Chat extends React.Component {
       },
       (data) => {
         if (data.data === "success") {
-          // alert('success')
           this.setState({ msg: "" });
         }
         this.setState({ loading: false });

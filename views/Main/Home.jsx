@@ -44,7 +44,7 @@ import {
 } from "../../Helper/Common";
 import SideMenu from "../Component/sideMenu";
 import { connect } from "react-redux";
-import * as actions from "../actions";
+import * as actions from "../../actions";
 import { Provider } from "react-redux";
 import { store } from "../../configureStore";
 import BottomMenu from "../Component/BottomMenu";
@@ -53,10 +53,6 @@ import ChangeDetails from "../Screens/Profile/ChangeDetails";
 import ChangePassword from "../Screens/Profile/ChangePassword";
 import ManageAddresses from "../Screens/Profile/ManageAddresses";
 import ManageCards from "../Screens/Profile/ManageCards";
-
-// LogBox.ignoreWarnings([
-//   "Non-serializable values were found in the navigation state",
-// ]);
 
 const Drawer = createDrawerNavigator();
 

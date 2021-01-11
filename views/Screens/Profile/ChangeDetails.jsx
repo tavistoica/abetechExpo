@@ -3,14 +3,9 @@ import {
   View,
   Text,
   StyleSheet,
-  ImageBackground,
-  StatusBar,
-  ScrollView,
   TouchableOpacity,
-  Image,
   TextInput,
   Platform,
-  FlatList,
   SafeAreaView,
 } from "react-native";
 import {
@@ -20,14 +15,13 @@ import {
   Third_color,
   Fourth_color,
 } from "../../../Helper/Common";
-import { width, height, totalSize } from "react-native-dimension";
-import Feather from "react-native-vector-icons/Feather";
+import { width, height } from "react-native-dimension";
 import AntDesignIcon from "react-native-vector-icons/AntDesign";
 import { connect } from "react-redux";
-import * as actions from "../../actions";
+import * as actions from "../../../actions";
 import SideViewHeader from "../../Component/SideViewHeader";
 
-class ChangePassword extends React.Component {
+class ChangeDetails extends React.Component {
   constructor(props) {
     super(props);
 
@@ -131,7 +125,7 @@ class ChangePassword extends React.Component {
           photoUrl: "https://www.gradebacker.com" + global.image,
           loading: false,
         });
-      } else if (data.user == null) {
+      } else if (data.user === null) {
         this.setState({ status: Msg_Register_Failed, loading: false });
       } else {
         if (
@@ -186,10 +180,12 @@ class ChangePassword extends React.Component {
     return (
       <View style={{ marginTop: "30%", marginHorizontal: "10%" }}>
         <View style={styles.formItem}>
+          <AntDesignIcon size={24} color="#3434ff77" name="user" />
           <TextInput
             onChangeText={(value) => this.setState({ name: value })}
-            placeholder="Old Password"
+            placeholder="Your name"
             autoCapitalize="none"
+            value={this.props.auth.first_name}
             style={styles.inputTxt}
           />
         </View>
@@ -199,11 +195,13 @@ class ChangePassword extends React.Component {
           </Text>
         ) : null}
         <View style={styles.formItem}>
+          <AntDesignIcon size={24} color="#3434ff77" name="mail" />
           <TextInput
             onChangeText={(value) => this.setState({ email: value })}
-            placeholder="New Password"
+            placeholder="Your email"
             autoCorrect={true}
             autoCapitalize="none"
+            value={this.props.auth.email}
             style={styles.inputTxt}
           />
         </View>
@@ -213,10 +211,12 @@ class ChangePassword extends React.Component {
           </Text>
         ) : null}
         <View style={styles.formItem}>
+          <AntDesignIcon size={24} color="#3434ff77" name="phone" />
           <TextInput
             onChangeText={(value) => this.setState({ phone: value })}
-            placeholder="Repeat Password"
+            placeholder="Your phone"
             autoCapitalize="none"
+            value={this.props.auth.phone}
             style={styles.inputTxt}
           />
         </View>
@@ -261,17 +261,38 @@ class ChangePassword extends React.Component {
               flexDirection: "column",
             }}
           >
-            <SideViewHeader
-              name="Change password"
-              redirect={"edit_profile"}
-              navigation={this.props.navigation}
-            />
+            <View
+              style={{
+                flexDirection: "row",
+                textAlignVertical: "center",
+                textAlign: "center",
+                width: "100%",
+              }}
+            >
+              <SideViewHeader
+                name="Change details"
+                redirect={"edit_profile"}
+                navigation={this.props.navigation}
+              />
+              <View
+                style={{
+                  flex: 3,
+                  textAlign: "center",
+                  textAlignVertical: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <Text style={{ fontWeight: "bold", fontSize: 15 }}>
+                  Manage Account Details
+                </Text>
+              </View>
+            </View>
             {this.renderContent()}
           </SafeAreaView>
         ) : (
           <View style={{ flex: 1, flexDirection: "column" }}>
             <SideViewHeader
-              name="Change password"
+              name="Change details"
               redirect={"edit_profile"}
               navigation={this.props.navigation}
             />
@@ -367,4 +388,4 @@ const mapStateToProps = (state) => {
 export default connect(
   mapStateToProps,
   actions
-)(ChangePassword);
+)(ChangeDetails);

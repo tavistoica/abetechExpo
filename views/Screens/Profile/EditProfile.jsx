@@ -3,33 +3,25 @@ import {
   View,
   Text,
   StyleSheet,
-  ImageBackground,
-  StatusBar,
   ScrollView,
   TouchableOpacity,
-  Image,
-  TextInput,
   Platform,
-  FlatList,
   SafeAreaView,
 } from "react-native";
-import { Input, Button, Avatar } from "react-native-elements";
-import { GlobalImgs, HomeImgs } from "@assets/imgs";
-import { width, height, totalSize } from "react-native-dimension";
-import Entypo from "react-native-vector-icons/Entypo";
+import { Avatar } from "react-native-elements";
+import { GlobalImgs } from "@assets/imgs";
+import { width, height } from "react-native-dimension";
 import ImagePicker from "react-native-image-picker";
-import MyModal from "../../../customComponent/MyModal";
+import MyModal from "../../Component/MyModal";
 import { FAB } from "react-native-paper";
-import { api_base_url, Msg_Register_Failed } from "../../../Helper/Constant";
 import {
   _retrieveData,
   _storeData,
   _getUserDetail,
 } from "../../../Helper/Util";
 import Spinner from "react-native-loading-spinner-overlay";
-import axios from "axios";
 import { connect } from "react-redux";
-import * as actions from "../../actions";
+import * as actions from "../../../actions";
 import {
   Main_color,
   Primary_color,
@@ -37,9 +29,7 @@ import {
   Third_color,
   Fourth_color,
 } from "../../../Helper/Common";
-import Register from "../../Auth/Register";
 import SignIn from "../../Auth/SignIn";
-import RBSheet from "react-native-raw-bottom-sheet";
 
 class EditProfile extends React.Component {
   constructor(props) {

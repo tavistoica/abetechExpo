@@ -1,21 +1,7 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { connect } from "react-redux";
-import * as actions from "../../actions";
-import {
-  View,
-  Text,
-  StyleSheet,
-  ImageBackground,
-  StatusBar,
-  ScrollView,
-  TouchableOpacity,
-  Image,
-  TextInput,
-  Platform,
-  Button,
-  FlatList,
-  SafeAreaView,
-} from "react-native";
+import * as actions from "../../../actions";
+import { View, ScrollView, Button, FlatList, SafeAreaView } from "react-native";
 import CardComponent from "../../Component/Cards/CardComponent";
 import AddCard from "../../Component/Cards/AddCard";
 import RBSheet from "react-native-raw-bottom-sheet";
@@ -31,7 +17,6 @@ const ManageCards = (props) => {
   const closeModal = () => {
     AddressModal.close();
   };
-  console.log("props", props.auth);
   return (
     <>
       <SafeAreaView>
@@ -81,11 +66,9 @@ const ManageCards = (props) => {
             AddressModal = ref;
           }}
           height={height(50)}
-          // openDuration={250}
           closeOnDragDown={true}
           customStyles={{
             container: {
-              // justifyContent: "center",
               alignItems: "center",
               borderTopLeftRadius: 20,
               borderTopRightRadius: 20,

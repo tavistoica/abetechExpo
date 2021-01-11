@@ -8,19 +8,15 @@ import {
   Platform,
 } from "react-native";
 import { width } from "react-native-dimension";
-import Entypo from "react-native-vector-icons/Entypo";
 import Spinner from "react-native-loading-spinner-overlay";
 import Main from "./ProductDetails/Main";
 import HttpHelper from "../../Helper/HttpHelper";
 import { _storeData } from "../../Helper/Util";
 import CardStack, { Card } from "react-native-card-stack-swiper";
-// import Toast from "react-native-simple-toast";
 import { Main_color, Secondary_color, Third_color } from "../../Helper/Common";
 import { connect } from "react-redux";
-import * as actions from "../actions";
+import * as actions from "../../actions";
 import Feather from "react-native-vector-icons/Feather";
-
-import BottomMenu from "../Component/BottomMenu";
 
 class ProductDetailCard extends React.Component {
   constructor(props) {
@@ -54,7 +50,7 @@ class ProductDetailCard extends React.Component {
     });
   };
 
-  shouldComponentUpdate(nextProps, nextState) {
+  shouldComponentUpdate(nextProps, _nextState) {
     console.log(this.state.product_index, nextProps.route.params.product_index);
     console.log(
       this.state.product_index != nextProps.route.params.product_index
@@ -66,17 +62,6 @@ class ProductDetailCard extends React.Component {
     console.log("Component re-rendered.");
   }
 
-  // UNSAFE_componentWillReceiveProps(props) {
-  //   this.props = props;
-  //   this.setState({
-  //     // first_padding: 55,
-  //     products: [],
-  //     product_item: this.props.route.params.product_item,
-  //     product_index: this.props.route.params.product_index,
-  //   });
-  //   this.getProducts(this.props.route.params.product_item);
-  // }
-
   getProducts = (cur_item) => {
     this.setState({ loading: true });
 
@@ -87,7 +72,6 @@ class ProductDetailCard extends React.Component {
         break;
       }
     }
-    // console.log('products', this.props.products.length);
     this.setState({
       loading: false,
       product_index: cur_index,
@@ -155,19 +139,12 @@ class ProductDetailCard extends React.Component {
   };
 
   // see detail
-  onSwipedTop = (product) => {
-    // console.log('product', product)
-    // this.setState({
-    //     cur_product : product,
-    //     showModal : true
-    // })
-  };
+  onSwipedTop = (product) => {};
 
   // add to cart
   onSwipedBottom = (product) => {
     this.props.setCart(product);
     this.props.cartTotal();
-    // Toast.show("This product is added to cart.", Toast.SHORT);
     this.removeProductFromStack(product);
   };
 
@@ -177,7 +154,6 @@ class ProductDetailCard extends React.Component {
   // add favorite
   onSwipedRight = (product) => {
     this.props.setFavorite(this.props.auth.id, product.id);
-    // Toast.show("This product added to favorites.", Toast.SHORT);
     this.removeProductFromStack(product);
   };
 
@@ -218,19 +194,6 @@ class ProductDetailCard extends React.Component {
         >
           <Feather name="arrow-left" size={32} color="#fff" />
         </TouchableOpacity>
-        {/* <View
-          style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
-        > */}
-        {/* <Text
-            style={{
-              fontSize: 20,
-              color: Secondary_color(),
-              fontWeight: "bold",
-            }}
-          >
-            Product Detail
-          </Text> */}
-        {/* </View> */}
       </>
     );
   };
@@ -244,7 +207,6 @@ class ProductDetailCard extends React.Component {
               flex: 16,
               justifyContent: "center",
               alignItems: "center",
-              // marginTop: "14%",
               maxHeight: "60%",
             }}
             cardContainerStyle={{ maxHeight: "60%" }}
@@ -261,7 +223,6 @@ class ProductDetailCard extends React.Component {
             {this.props.products.map((product, index) => (
               <Card
                 style={{
-                  // flex: 1,
                   justifyContent: "center",
                   alignItems: "center",
                 }}

@@ -17,9 +17,8 @@ import Modal from "react-native-modal";
 import Product from "../Component/Product";
 import HttpHelper from "../../Helper/HttpHelper";
 import Bottom from "./ProductDetails/Bottom";
-// import Toast from "react-native-simple-toast";
 import { connect } from "react-redux";
-import * as actions from "../actions";
+import * as actions from "../../actions";
 
 class Favs extends React.Component {
   constructor(props) {
@@ -33,11 +32,7 @@ class Favs extends React.Component {
   }
 
   componentDidMount = () => {
-    // this.props.getFavorite(this.props.auth.id);
     this.getFavProducts();
-    // this.focusListener = this.props.navigation.addListener('focus', () => {
-    //   this.getFavProducts();
-    // });
   };
 
   getFavProducts = () => {
@@ -58,7 +53,6 @@ class Favs extends React.Component {
       },
       (data) => {
         this.del_favorite(product);
-        // Toast.show("This product is added to cart.", Toast.SHORT);
       },
       (err) => {
         alert(err);
@@ -118,11 +112,6 @@ class Favs extends React.Component {
   content() {
     return (
       <>
-        {/* {Platform.OS === "ios" ? (
-      <SafeAreaView style={styles.header}>{this.header()}</SafeAreaView>
-    ) : (
-      <View style={styles.header}>{this.header()}</View>
-    )} */}
         <View style={styles.container}>
           <Spinner visible={this.state.loading} />
           {this.props.favorite.length === 0 ? (
@@ -180,7 +169,6 @@ class Favs extends React.Component {
   }
 
   render() {
-    console.log("favorites", this.props.favorite);
     return (
       <>
         {Platform.OS === "ios" ? (
@@ -218,7 +206,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingLeft: 30,
     paddingRight: 30,
-    // paddingTop: 40,
     width: width(100),
   },
   banner_container: {

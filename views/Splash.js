@@ -1,22 +1,11 @@
 import React from "react";
-import {
-  View,
-  Image,
-  ImageBackground,
-  Alert,
-  StatusBar,
-  LogBox,
-} from "react-native";
+import { View, Image, ImageBackground, Alert, StatusBar } from "react-native";
 import { GlobalImgs } from "@assets/imgs";
 import { _getAppSetting } from "../Helper/FirebaseHelper";
 import Spinner from "react-native-loading-spinner-overlay";
 import { width, height } from "react-native-dimension";
 import { connect } from "react-redux";
-import * as actions from "./actions";
-
-// LogBox.ignoreWarnings([
-//   "Non-serializable values were found in the navigation state",
-// ]);
+import * as actions from "../actions";
 
 class Splash extends React.Component {
   constructor(props) {

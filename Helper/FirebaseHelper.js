@@ -13,7 +13,6 @@ const firebaseConfig = {
 };
 
 if (!firebase.apps.length) {
-  console.log("keee");
   firebase.initializeApp(firebaseConfig);
 }
 

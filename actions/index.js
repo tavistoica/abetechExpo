@@ -35,8 +35,8 @@ import {
   CHANGE_SLIDER_INDEX,
   AUTH_ERROR,
 } from "./types";
-import HttpHelper from "../../Helper/HttpHelper";
-import { store } from "../../configureStore";
+import HttpHelper from "../Helper/HttpHelper";
+import { store } from "../configureStore";
 
 export const getProducts = (body) => {
   return async (dispatch) => {

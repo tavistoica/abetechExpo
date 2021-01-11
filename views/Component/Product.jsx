@@ -9,7 +9,7 @@ import {
 import { Card, Button, Icon } from "react-native-elements";
 import { Third_color, Fourth_color } from "../../Helper/Common";
 import { connect } from "react-redux";
-import * as actions from "../actions";
+import * as actions from "../../actions";
 import Toast from "react-native-toast-message";
 
 class Product extends React.Component {
@@ -78,12 +78,12 @@ class Product extends React.Component {
               <ImageBackground
                 source={{
                   uri:
-                    this.props.item.data.photos == null ||
-                    this.props.item.data.photos.length == null ||
-                    this.props.item.data.photos.length === 0 ||
-                    this.props.item.data.photos[0] == null
+                    this.props.item.photos == null ||
+                    this.props.item.photos.length == null ||
+                    this.props.item.photos.length === 0 ||
+                    this.props.item.photos[0] == null
                       ? ""
-                      : this.props.item.data.photos[0].original,
+                      : this.props.item.photos[0].original,
                 }}
                 indicatorProps={{
                   size: 30,
@@ -98,7 +98,7 @@ class Product extends React.Component {
                   resizeMode: "contain",
                 }}
               >
-                {this.props.item.data.promotion_price ? (
+                {this.props.item.promotion_price ? (
                   <View
                     style={{
                       position: "absolute",
@@ -113,7 +113,7 @@ class Product extends React.Component {
                     }}
                   >
                     <Text style={{ color: "#fff", fontWeight: "bold" }}>
-                      {console.log(this.props.item.data.promotion_price)}On Sale
+                      {console.log(this.props.item.promotion_price)}On Sale
                     </Text>
                   </View>
                 ) : null}
@@ -125,7 +125,7 @@ class Product extends React.Component {
                   style={[styles.title, { color: Third_color() }]}
                   // numberOfLines={2}
                 >
-                  {this.props.item.data.title}
+                  {this.props.item.title}
                 </Text>
               </View>
               <View style={[styles.info, { paddingTop: "5%" }]}>
@@ -133,11 +133,11 @@ class Product extends React.Component {
                   style={[styles.brand, { color: Third_color() }]}
                   numberOfLines={1}
                 >
-                  {this.props.item.data.brand}
+                  {this.props.item.brand}
                 </Text>
               </View>
-              {this.props.item.data.promotion_price === null ||
-              this.props.item.data.promotion_price === "" ? (
+              {this.props.item.promotion_price === null ||
+              this.props.item.promotion_price === "" ? (
                 <View style={styles.info}>
                   <Text
                     style={[
@@ -145,7 +145,7 @@ class Product extends React.Component {
                       { color: "red", paddingBottom: "3%", paddingTop: "3%" },
                     ]}
                   >
-                    ${this.props.item.data.price}
+                    ${this.props.item.price}
                   </Text>
                 </View>
               ) : (
@@ -159,7 +159,7 @@ class Product extends React.Component {
                         },
                       ]}
                     >
-                      ${this.props.item.data.price}
+                      ${this.props.item.price}
                     </Text>
                     <Text
                       style={[
@@ -169,9 +169,9 @@ class Product extends React.Component {
                       ]}
                     >
                       (-
-                      {((this.props.item.data.price -
-                        this.props.item.data.promotion_price) /
-                        this.props.item.data.price) *
+                      {((this.props.item.price -
+                        this.props.item.promotion_price) /
+                        this.props.item.price) *
                         100}
                       %)
                     </Text>
@@ -183,7 +183,7 @@ class Product extends React.Component {
                         { color: "red", paddingBottom: "5%" },
                       ]}
                     >
-                      ${this.props.item.data.promotion_price}
+                      ${this.props.item.promotion_price}
                     </Text>
                   </View>
                 </View>
