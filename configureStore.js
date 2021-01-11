@@ -8,7 +8,7 @@ import { composeWithDevTools } from "redux-devtools-extension";
 const persistConfig = {
   key: "root",
   storage: AsyncStorage,
-  blacklist: ["navigation", "products"], // navigation will not be persisted
+  blacklist: ["navigation", "products"], // navigation and products will not be persisted
 };
 
 const persistedReducer = persistReducer(persistConfig, reducers);

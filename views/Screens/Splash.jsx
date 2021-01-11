@@ -1,11 +1,11 @@
 import React from "react";
 import { View, Image, ImageBackground, Alert, StatusBar } from "react-native";
 import { GlobalImgs } from "@assets/imgs";
-import { _getAppSetting } from "../Helper/FirebaseHelper";
+import { _getAppSetting } from "../../Helper/FirebaseHelper";
 import Spinner from "react-native-loading-spinner-overlay";
 import { width, height } from "react-native-dimension";
 import { connect } from "react-redux";
-import * as actions from "../actions";
+import * as actions from "../../actions";
 
 class Splash extends React.Component {
   constructor(props) {
@@ -29,7 +29,6 @@ class Splash extends React.Component {
       return;
     }
     global.setting = setting;
-    console.log("setting : ", global.setting);
     this.setState({ loading: false, logo: setting.logo.original });
     var that = this;
     setTimeout(function() {
@@ -38,11 +37,7 @@ class Splash extends React.Component {
   };
 
   goMain = async () => {
-    // if (this.props.auth.id === null) {
-    //   this.props.navigation.replace("login");
-    // } else {
     this.props.navigation.replace("home");
-    // }
   };
 
   render() {
