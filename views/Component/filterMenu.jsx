@@ -14,7 +14,6 @@ import { connect } from "react-redux";
 import * as actions from "../../actions";
 
 const filterCategory = (props, category) => {
-  // this.setState({ loading: true, isVisibleFilterModal: false });
   props.setFilterVisibleFalse();
   const body = category === "all" ? {} : { category: category };
   props.getProducts(body);
@@ -39,7 +38,6 @@ const FilterMenu = (props) => {
       style={{
         width: width(100),
         height: "60%",
-        // backgroundColor: "#fff",
         margin: 0,
         padding: 0,
         justifyContent: "center",
@@ -48,15 +46,11 @@ const FilterMenu = (props) => {
     >
       <View
         style={{
-          // backgroundColor: "#fff",
           width: width(86),
-          // paddingTop: 20,
           justifyContent: "center",
           alignItems: "center",
-          // backgroundColor: Secondary_color(),
         }}
       >
-        {/* <Text style={{ fontSize: 16, fontWeight: "bold" }}>Add Filter</Text> */}
         <Text
           style={{
             fontSize: 20,
@@ -83,14 +77,12 @@ const FilterMenu = (props) => {
         >
           <Picker
             selectedValue={category.category}
-            // style={styles.dropdownPickerStyle}
             mode="dropdown"
             onValueChange={(itemValue) => {
               console.log(itemValue);
               setCategory({ category: itemValue });
               console.log("category", category);
             }}
-            // {filters}
           >
             <Picker.Item key={255} label="All" value="all" selectedValue />
             {props.category.map((item, i) => {

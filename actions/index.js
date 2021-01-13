@@ -34,6 +34,8 @@ import {
   ADD_CARD,
   CHANGE_SLIDER_INDEX,
   AUTH_ERROR,
+  UPDATE_USER,
+  UPDATE_USER_ERROR,
 } from "./types";
 import HttpHelper from "../Helper/HttpHelper";
 import { store } from "../configureStore";
@@ -41,9 +43,7 @@ import { store } from "../configureStore";
 export const getProducts = (body) => {
   return async (dispatch) => {
     try {
-      console.log("lekeke");
       const response = await HttpHelper.doPost("product/get", body);
-      console.log("resp", response);
       if (response.data === null || response.data === undefined) {
         dispatch({
           type: GET_PRODUCTS,
@@ -333,6 +333,30 @@ export const clearCart = (body) => {
       } else {
         dispatch({
           type: CART_ERROR,
+          payload: error.data,
+        });
+      }
+    }
+  };
+};
+
+export const updateUser = (body) => {
+  return async (dispatch) => {
+    try {
+      const respone = await HttpHelper.doPost("users/update", body);
+      dispatch({
+        type: UPDATE_USER,
+        payload: respone.data,
+      });
+    } catch (error) {
+      if (error.status === 400) {
+        dispatch({
+          type: UPDATE_USER_ERROR,
+          payload: error.data.details[0].message,
+        });
+      } else {
+        dispatch({
+          type: UPDATE_USER_ERROR,
           payload: error.data,
         });
       }

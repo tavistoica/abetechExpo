@@ -91,7 +91,6 @@ class ProductList extends React.Component {
         {({ loading, error, data }) => {
           if (loading) return <p>Loading...</p>;
           if (error) return <p>{error}</p>;
-          console.log("data", data);
           return (
             <View style={{ flex: 1, flexDirection: "column" }}>
               <Spinner visible={this.state.loading} />
@@ -113,8 +112,6 @@ class ProductList extends React.Component {
                           margin: 1,
                         }}
                       >
-                        {console.log("kekekek", item)}
-
                         <Product
                           onPress={this.goDetail}
                           width={width(50)}

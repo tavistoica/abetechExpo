@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, Image, ImageBackground, Alert, StatusBar } from "react-native";
 import { GlobalImgs } from "@assets/imgs";
 import { _getAppSetting } from "../../Helper/FirebaseHelper";
@@ -7,76 +7,61 @@ import { width, height } from "react-native-dimension";
 import { connect } from "react-redux";
 import * as actions from "../../actions";
 
-class Splash extends React.Component {
-  constructor(props) {
-    super(props);
-    this.props = props;
-    this.state = {
-      loading: false,
-      logo: "",
-    };
-  }
+const Splash = (props) => {
+  const [logo, setLogo] = useState("");
+  const [loading, setLoading] = useState(true);
 
-  componentDidMount() {
-    this.loadSetting();
-  }
-
-  loadSetting = async () => {
-    this.setState({ loading: true });
+  const loadSetting = async () => {
     let setting = await _getAppSetting();
     if (setting == null) {
       Alert("Sorry, we could not get setting information.");
       return;
     }
     global.setting = setting;
-    this.setState({ loading: false, logo: setting.logo.original });
-    var that = this;
-    setTimeout(function() {
-      that.goMain();
+    setLogo(setting.logo.original);
+    setLoading(false);
+    setTimeout(() => {
+      props.navigation.replace("home");
     }, 2500);
   };
 
-  goMain = async () => {
-    this.props.navigation.replace("home");
-  };
+  loadSetting();
 
-  render() {
-    return (
-      <>
-        {this.state.loading === true ? (
-          <Spinner visible={true} />
-        ) : (
-          <>
-            <StatusBar hidden />
-            <ImageBackground
-              style={{ width: "100%", height: "100%", resizeMode: "contain" }}
-              source={GlobalImgs.bg}
+  return (
+    <>
+      {loading === true ? (
+        <Spinner visible={true} />
+      ) : (
+        <>
+          <StatusBar hidden />
+          <ImageBackground
+            style={{ width: "100%", height: "100%", resizeMode: "contain" }}
+            // source={GlobalImgs.bg}
+          >
+            <View
+              style={{
+                flex: 1,
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
             >
-              <View
+              <Image
                 style={{
-                  flex: 1,
-                  flexDirection: "column",
-                  justifyContent: "center",
-                  alignItems: "center",
+                  width: width(50),
+                  height: width(50),
+                  marginBottom: height(20),
+                  resizeMode: "cover",
                 }}
-              >
-                <Image
-                  style={{
-                    width: width(50),
-                    height: width(50),
-                    marginBottom: height(20),
-                    resizeMode: "cover",
-                  }}
-                  source={{ uri: this.state.logo }}
-                />
-              </View>
-            </ImageBackground>
-          </>
-        )}
-      </>
-    );
-  }
-}
+                source={{ uri: logo }}
+              />
+            </View>
+          </ImageBackground>
+        </>
+      )}
+    </>
+  );
+};
 
 const mapStatetoProps = (state) => {
   return {

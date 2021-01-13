@@ -20,7 +20,29 @@ import { connect } from "react-redux";
 import * as actions from "../../actions";
 import Feather from "react-native-vector-icons/Feather";
 
-const Address = (props) => {
+interface Address {
+  street: string;
+  city: string;
+  country: string;
+  county: string;
+  id: string;
+}
+
+interface Auth {
+  id: string;
+}
+
+interface State {
+  auth: Auth;
+}
+
+interface Props {
+  address: Address;
+  auth: Auth;
+  deleteAddress: (UserId: string, AddressId: string) => any;
+}
+
+const Address = (props: Props) => {
   console.log(props);
   return (
     <View style={styles.Container}>
@@ -57,9 +79,8 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapStatetoProps = (state) => {
+const mapStatetoProps = (state: State) => {
   return {
-    category: state.products.category,
     auth: state.auth,
   };
 };

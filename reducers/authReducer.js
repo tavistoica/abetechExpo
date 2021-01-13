@@ -16,6 +16,8 @@ import {
   GET_ADDRESSES,
   DELETE_ADDRESS,
   AUTH_ERROR,
+  UPDATE_USER,
+  UPDATE_USER_ERROR,
   ADD_CARD,
   DELETE_CARD,
 } from "../actions/types";
@@ -33,6 +35,7 @@ const initialState = {
   cards: [],
   createdAt: null,
   errorMessage: null,
+  updateUserErrorMessage: null,
 };
 
 export default (state = initialState, action) => {
@@ -57,6 +60,20 @@ export default (state = initialState, action) => {
         ...state,
         id: action.payload,
       };
+    case UPDATE_USER_ERROR:
+      return {
+        ...state,
+        updateUserErrorMessage: action.payload,
+      };
+    case UPDATE_USER:
+      return {
+        ...state,
+        first_name: action.payload.first_name,
+        last_name: action.payload.last_name,
+        phone: action.payload.phone,
+        email: action.payload.email,
+        updateUserErrorMessage: null,
+      };
     case REMOVE_USER:
       return {
         id: null,
@@ -71,6 +88,7 @@ export default (state = initialState, action) => {
         addresses: [],
         createdAt: null,
         errorMessage: null,
+        updateUserErrorMessage: null,
       };
     case ADD_CARD:
       return {

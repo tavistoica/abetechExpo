@@ -33,3 +33,5 @@ export const DELETE_ADDRESS = "DELETE_ADDRESS";
 export const GET_ADDRESSES = "GET_ADDRESSES";
 export const ADD_CARD = "ADD_CARD";
 export const DELETE_CARD = "DELETE_CARD";
+export const UPDATE_USER_ERROR = "UPDATE_USER_ERROR";
+export const UPDATE_USER = "UPDATE_USER";

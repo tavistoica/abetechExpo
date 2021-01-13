@@ -25,7 +25,6 @@ const bottomMenuBeforePlatformCheck = (props) => {
       <TouchableOpacity
         style={styles.drawerItem}
         onPress={async () => {
-          // props.removeUser();
           props.navigation.navigate("product_list");
         }}
       >
@@ -39,7 +38,6 @@ const bottomMenuBeforePlatformCheck = (props) => {
       <TouchableOpacity
         style={styles.drawerItem}
         onPress={async () => {
-          // props.removeUser();
           props.navigation.navigate("favs");
         }}
       >
@@ -81,7 +79,6 @@ const bottomMenuBeforePlatformCheck = (props) => {
       <TouchableOpacity
         style={styles.drawerItem}
         onPress={async () => {
-          // props.removeUser();
           props.navigation.navigate("edit_profile");
         }}
       >
@@ -119,7 +116,6 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
   },
   headerIos: {
-    // flex: 1,
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
@@ -129,7 +125,6 @@ const styles = StyleSheet.create({
     backgroundColor: Main_color(),
   },
   headerAndroid: {
-    // flex: 1,
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",

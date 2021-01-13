@@ -20,214 +20,110 @@ import AntDesignIcon from "react-native-vector-icons/AntDesign";
 import { connect } from "react-redux";
 import * as actions from "../../../actions";
 import SideViewHeader from "../../Component/SideViewHeader";
+import Toast from "react-native-toast-message";
 
-class ChangeDetails extends React.Component {
-  constructor(props) {
-    super(props);
+const ChangeDetails = (props) => {
+  const [firstName, setFirstName] = useState(props.auth.first_name);
+  const [lastName, setLastName] = useState(props.auth.last_name);
+  const [email, setEmail] = useState(props.auth.email);
+  const [phone, setPhone] = useState(props.auth.phone);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
-    this.state = {
-      name: this.props.auth.username,
-      email: this.props.auth.email,
-      phone: this.props.auth.phone,
-      pass: "",
-      confirmpass: "",
-      err_msg_name: "",
-      err_msg_email: "",
-      err_msg_phone: "",
-      err_msg_pass: "",
-      err_msg_confirmpass: "",
-      status: "",
-      loading: false,
-      isModalVisible: false,
-      photoUrl: "https://www.gradebacker.com" + global.image,
-      base64Image: "",
-    };
-  }
+  const setBodyObject = () => {
+    const obj = {};
+    if (firstName !== props.auth.first_name) obj["first_name"] = firstName;
+    if (lastName !== props.auth.last_name) obj["last_name"] = lastName;
+    if (email !== props.auth.email) obj["email"] = email;
+    if (phone !== props.auth.phone) obj["phone"] = phone;
+    if (Object.keys(obj).length !== 0) {
+      console.log(obj);
+      obj["user_id"] = props.auth.id;
+    }
+    return obj;
+  };
 
-  doUpdate = async () => {
-    this.setState({
-      err_msg_name: "",
-      err_msg_email: "",
-      err_msg_phone: "",
-      err_msg_pass: "",
-      err_msg_confirmpass: "",
-    });
-    if (this.state.name === "") {
-      this.setState({ err_msg_name: "Please input username." });
+  const doUpdate = async () => {
+    setError("");
+    console.log("firstname", firstName);
+    if (firstName === "" || firstName === undefined) {
+      setError("Please input first name.");
+      return;
+    } else if (lastName === "" || lastName === undefined) {
+      setError("Please input last name");
+      return;
+    } else if (email === "" || email === undefined) {
+      setError("Please input email.");
+      return;
+    } else if (phone === "" || phone === undefined) {
+      setError("Please input phone number.");
       return;
     }
-    if (this.state.email === "") {
-      this.setState({ err_msg_email: "Please input email." });
-      return;
-    }
-    if (this.state.phone === "") {
-      this.setState({ err_msg_phone: "Please input phone number." });
-      return;
-    }
-    if (this.state.pass === "") {
-      this.setState({ err_msg_pass: "Please input password." });
-      return;
-    }
-    if (this.state.confirmpass === "") {
-      this.setState({ err_msg_confirmpass: "Please confirm password." });
-      return;
-    }
-    if (this.state.confirmpass !== this.state.pass) {
-      this.setState({ err_msg_confirmpass: "Please confirm password." });
-      return;
-    }
-
-    this.setState({
-      err_msg_name: "",
-      err_msg_email: "",
-      err_msg_phone: "",
-      err_msg_pass: "",
-      err_msg_confirmpass: "",
-      status: "",
-      loading: true,
-    });
-
-    try {
-      let response = await axios({
-        method: "post",
-        url: api_base_url + "update",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        data: {
-          user_id: this.props.auth.id,
-          username: this.state.name,
-          password: this.state.pass,
-          email: this.state.email,
-          phone: this.state.phone,
-          name: this.state.name,
-          base64Image: this.state.base64Image,
-        },
-      });
-
-      let data = await response.data;
-
-      if (data.user != null && data.user !== 0) {
-        // success
-        let user_detail = await _getUserDetail(data.user);
-        if (user_detail != null) {
-          global.username = user_detail.username;
-          global.email = user_detail.youremail;
-          global.phone = user_detail.phone;
-          global.image = user_detail.image;
-        }
-        this.setState({
-          status: "Update success!",
-          name: global.username,
-          email: global.email,
-          phone: global.phone,
-          photoUrl: "https://www.gradebacker.com" + global.image,
-          loading: false,
+    setLoading(true);
+    const bodyObject = setBodyObject();
+    console.log("bod", bodyObject);
+    if (Object.keys(bodyObject).length !== 0) {
+      await props.updateUser(bodyObject);
+      if (!props.auth.updateUserErrorMessage)
+        Toast.show({
+          text1: "Account succesfully updated!",
+          position: "top",
+          visibilityTime: 1000,
+          autoHide: true,
+          topOffset: 80,
         });
-      } else if (data.user === null) {
-        this.setState({ status: Msg_Register_Failed, loading: false });
-      } else {
-        if (
-          data.reponse.username != null &&
-          data.reponse.username.length != null &&
-          data.reponse.username.length > 0
-        ) {
-          this.setState({
-            status: Msg_Register_Failed,
-            err_msg_name: data.reponse.username[0],
-            loading: false,
-          });
-        }
-        if (
-          data.reponse.email != null &&
-          data.reponse.email.length != null &&
-          data.reponse.email.length > 0
-        ) {
-          this.setState({
-            err_msg_email: data.reponse.email[0],
-            loading: false,
-          });
-        }
-        if (
-          data.reponse.phone != null &&
-          data.reponse.phone.length != null &&
-          data.reponse.phone.length > 0
-        ) {
-          this.setState({
-            err_msg_phone: data.reponse.phone[0],
-            loading: false,
-          });
-        }
-        if (
-          data.reponse.password != null &&
-          data.reponse.password.length != null &&
-          data.reponse.password.length > 0
-        ) {
-          this.setState({
-            err_msg_pass: data.reponse.password[0],
-            loading: false,
-          });
-        }
-        this.setState({ status: Msg_Register_Failed, loading: false });
-      }
-    } catch (err) {
-      this.setState({ status: err.message, loading: false });
     }
   };
 
-  renderContent() {
+  const renderContent = () => {
     return (
       <View style={{ marginTop: "30%", marginHorizontal: "10%" }}>
+        {error !== "" ? (
+          <Text style={{ color: "#ff0000", textAlign: "center" }}>{error}</Text>
+        ) : null}
         <View style={styles.formItem}>
           <AntDesignIcon size={24} color="#3434ff77" name="user" />
           <TextInput
-            onChangeText={(value) => this.setState({ name: value })}
-            placeholder="Your name"
-            autoCapitalize="none"
-            value={this.props.auth.first_name}
+            onChangeText={setFirstName}
+            placeholder="first name"
+            autoCapitalize="words"
+            value={firstName}
             style={styles.inputTxt}
           />
         </View>
-        {this.state.err_msg_name !== "" ? (
-          <Text style={{ color: "#ff0000", textAlign: "center" }}>
-            {this.state.err_msg_name}
-          </Text>
-        ) : null}
+        <View style={styles.formItem}>
+          <AntDesignIcon size={24} color="#3434ff77" name="user" />
+          <TextInput
+            onChangeText={setLastName}
+            placeholder="last name"
+            autoCapitalize="words"
+            value={lastName}
+            style={styles.inputTxt}
+          />
+        </View>
         <View style={styles.formItem}>
           <AntDesignIcon size={24} color="#3434ff77" name="mail" />
           <TextInput
-            onChangeText={(value) => this.setState({ email: value })}
-            placeholder="Your email"
-            autoCorrect={true}
+            onChangeText={setEmail}
+            placeholder="email"
             autoCapitalize="none"
-            value={this.props.auth.email}
+            value={email}
             style={styles.inputTxt}
           />
         </View>
-        {this.state.err_msg_email != "" ? (
-          <Text style={{ color: "#ff0000", textAlign: "center" }}>
-            {this.state.err_msg_email}
-          </Text>
-        ) : null}
         <View style={styles.formItem}>
           <AntDesignIcon size={24} color="#3434ff77" name="phone" />
           <TextInput
-            onChangeText={(value) => this.setState({ phone: value })}
-            placeholder="Your phone"
+            onChangeText={setPhone}
+            placeholder="phone"
             autoCapitalize="none"
-            value={this.props.auth.phone}
+            value={phone}
             style={styles.inputTxt}
           />
         </View>
-        {this.state.err_msg_phone != "" ? (
-          <Text style={{ color: "#ff0000", textAlign: "center" }}>
-            {this.state.err_msg_phone}
-          </Text>
-        ) : null}
         <View style={{ padding: 30, width: "100%", marginBottom: 20 }}>
           <TouchableOpacity
-            onPress={this.doUpdate}
+            onPress={doUpdate}
             style={{
               justifyContent: "center",
               alignItems: "center",
@@ -249,60 +145,36 @@ class ChangeDetails extends React.Component {
         </View>
       </View>
     );
-  }
-
-  render() {
-    return (
-      <>
-        {Platform.OS === "ios" ? (
-          <SafeAreaView
-            style={{
-              flex: 1,
-              flexDirection: "column",
-            }}
-          >
-            <View
-              style={{
-                flexDirection: "row",
-                textAlignVertical: "center",
-                textAlign: "center",
-                width: "100%",
-              }}
-            >
-              <SideViewHeader
-                name="Change details"
-                redirect={"edit_profile"}
-                navigation={this.props.navigation}
-              />
-              <View
-                style={{
-                  flex: 3,
-                  textAlign: "center",
-                  textAlignVertical: "center",
-                  justifyContent: "center",
-                }}
-              >
-                <Text style={{ fontWeight: "bold", fontSize: 15 }}>
-                  Manage Account Details
-                </Text>
-              </View>
-            </View>
-            {this.renderContent()}
-          </SafeAreaView>
-        ) : (
-          <View style={{ flex: 1, flexDirection: "column" }}>
-            <SideViewHeader
-              name="Change details"
-              redirect={"edit_profile"}
-              navigation={this.props.navigation}
-            />
-            {this.renderContent()}
-          </View>
-        )}
-      </>
-    );
-  }
-}
+  };
+  return (
+    <>
+      {Platform.OS === "ios" ? (
+        <SafeAreaView
+          style={{
+            flex: 1,
+            flexDirection: "column",
+          }}
+        >
+          <SideViewHeader
+            name="Change details"
+            redirect={"edit_profile"}
+            navigation={props.navigation}
+          />
+          {renderContent()}
+        </SafeAreaView>
+      ) : (
+        <View style={{ flex: 1, flexDirection: "column" }}>
+          <SideViewHeader
+            name="Change details"
+            redirect={"edit_profile"}
+            navigation={props.navigation}
+          />
+          {renderContent()}
+        </View>
+      )}
+    </>
+  );
+};
 
 const styles = StyleSheet.create({
   fixedView: {
@@ -316,10 +188,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: "column",
-    // justifyContent: "flex-start",
     alignItems: "center",
-    // paddingLeft: 30,
-    // paddingRight: 30,
     paddingTop: 30,
     paddingBottom: 10,
     borderTopLeftRadius: 20,
@@ -380,7 +249,6 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => {
   return {
-    favorite: state.products,
     auth: state.auth,
   };
 };

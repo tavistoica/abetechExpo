@@ -39,7 +39,6 @@ class EditProfile extends React.Component {
       status: "",
       loading: false,
       isModalVisible: false,
-      photoUrl: "https://www.gradebacker.com" + global.image,
       base64Image: "",
     };
   }
@@ -69,7 +68,6 @@ class EditProfile extends React.Component {
           console.log("User tapped custom button: ", response.customButton);
         } else {
           this.setState({
-            photoUrl: response.uri,
             base64Image: response.data,
           });
         }
@@ -94,7 +92,6 @@ class EditProfile extends React.Component {
         } else if (response.customButton) {
         } else {
           this.setState({
-            photoUrl: response.uri,
             base64Image: response.data,
           });
         }
@@ -118,11 +115,8 @@ class EditProfile extends React.Component {
         <View
           style={{
             flexDirection: "row",
-            // margin: 1,
-            // textAlign: "center",
             backgroundColor: Secondary_color(),
             width: "100%",
-            // height: "100%",
             marginBottom: 1,
             paddingVertical: 12,
             textAlignVertical: "center",
@@ -133,12 +127,9 @@ class EditProfile extends React.Component {
           <Text
             style={{
               width: "100%",
-              // paddingLeft: 20,
-              // height: "100%",
               fontSize: 20,
               textAlign: "center",
               textAlignVertical: "center",
-              // marginBottom: 10,
               color: "#fff",
             }}
           >

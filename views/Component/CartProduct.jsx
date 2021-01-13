@@ -1,237 +1,212 @@
-import React from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  ImageBackground,
-  StatusBar,
-  TouchableOpacity,
-  TextInput,
-  ActivityIndicator,
-} from 'react-native';
-import {Input, Icon, Button, Avatar, Card} from 'react-native-elements';
-import {GlobalImgs, HomeImgs} from '@assets/imgs';
-import Image from 'react-native-image-progress';
-import {width} from 'react-native-dimension';
+import React, { useState } from "react";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { Icon, Button } from "react-native-elements";
+import Image from "react-native-image-progress";
+import { width } from "react-native-dimension";
 import {
   Main_color,
   Primary_color,
   Secondary_color,
   Third_color,
   Fourth_color,
-} from '../../Helper/Common';
+} from "../../Helper/Common";
+import Spinner from "react-native-loading-spinner-overlay";
 
-export default class CartProduct extends React.Component {
-  constructor(props) {
-    super(props);
-    this.props = props;
-    this.state = {
-      loading: true,
-    };
-  }
+const CartProduct = (props) => {
+  const [loading, setLoading] = useState(true);
 
-  UNSAFE_componentWillReceiveProps(props) {
-    this.props = props;
-    console.log('props', props.item);
-  }
-
-  onPress = () => {
-    this.props.onPress(this.props.item);
+  const onPress = () => {
+    props.onPress(props.item);
   };
 
-  onLoaded = () => {
-    this.setState({loading: false});
+  const onLoaded = () => {
+    setLoading(false);
   };
 
-  onLongPressItem = () => {
-    // this.props.onLongPressItem(this.props.item);
-  };
-
-  render() {
-    return (
-      <TouchableOpacity
-        activeOpacity={0.9}
+  return (
+    <TouchableOpacity
+      activeOpacity={0.9}
+      style={{
+        flexDirection: "row",
+        justifyContent: "center",
+        alignItems: "center",
+        height: 120,
+        width: width(95),
+        padding: 0,
+      }}
+      onPress={onPress}
+      elevation={2}
+    >
+      <Spinner visible={loading} />
+      <View
         style={{
-          flexDirection: 'row',
-          justifyContent: 'center',
-          alignItems: 'center',
-          height: 120,
-          width: width(95),
-          padding: 0,
+          width: 110,
+          height: 110,
+          borderRadius: 20,
+          justifyContent: "center",
+          alignItems: "center",
         }}
-        //    onLongPress = {this.onLongPressItem}
-        onPress={this.onPress}
-        elevation={2}>
-        {/* <Card   containerStyle = {{justifyContent : 'center',backgroundColor : '#f0f',flexDirection : 'row', alignItems : 'center',  margin : 0, width: width(95), height : 120,borderRadius: 10, padding : 3,}}>  */}
-        <View
-          style={{
-            width: 110,
-            height: 110,
-            borderRadius: 20,
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
-          <Image
-            source={{
-              uri:
-                this.props.item.data.photos == null ||
-                this.props.item.data.photos.length == null ||
-                this.props.item.data.photos.length == 0 ||
-                this.props.item.data.photos[0] == null
-                  ? ''
-                  : this.props.item.data.photos[0].original,
-            }}
-            indicatorProps={{
-              size: 30,
-              borderWidth: 0,
-              color: 'rgba(150, 150, 150, 1)',
-              unfilledColor: 'rgba(200, 200, 200, 0.2)',
-            }}
-            style={{
-              flex: 1,
-              width: 110,
-              height: 110,
-              aspectRatio: 1,
-              borderRadius: 20,
-              resizeMode: 'contain',
-            }}
-          />
-        </View>
-        <View
+      >
+        <Image
+          source={{
+            uri:
+              props.item.data.photos == null ||
+              props.item.data.photos.length == null ||
+              props.item.data.photos.length == 0 ||
+              props.item.data.photos[0] == null
+                ? ""
+                : props.item.data.photos[0].original,
+          }}
+          indicatorProps={{
+            size: 30,
+            borderWidth: 0,
+            color: "rgba(150, 150, 150, 1)",
+            unfilledColor: "rgba(200, 200, 200, 0.2)",
+          }}
           style={{
             flex: 1,
-            padding: 8,
-            flexDirection: 'column',
-            justifyContent: 'flex-start',
-            alignItems: 'flex-start',
-          }}>
-          <View style={styles.info}>
-            <Text
-              style={[styles.title, {color: Third_color()}]}
-              numberOfLines={1}>
-              {this.props.item.data.title}
+            width: 110,
+            height: 110,
+            aspectRatio: 1,
+            borderRadius: 20,
+            resizeMode: "contain",
+          }}
+        />
+      </View>
+      <View
+        style={{
+          flex: 1,
+          padding: 8,
+          flexDirection: "column",
+          justifyContent: "flex-start",
+          alignItems: "flex-start",
+        }}
+      >
+        <View style={styles.info}>
+          <Text
+            style={[styles.title, { color: Third_color() }]}
+            numberOfLines={1}
+          >
+            {props.item.data.title}
+          </Text>
+          <View style={{ flexDirection: "row" }}>
+            <Text style={styles.brand} numberOfLines={1}>
+              {props.item.data.brand}
             </Text>
-            <View style={{flexDirection: 'row'}}>
-              <Text style={styles.brand} numberOfLines={1}>
-                {this.props.item.data.brand}
+            <View style={{ flex: 1 }} />
+            {props.item.data.promotion_price == null ||
+            props.item.data.promotion_price == "" ? (
+              <Text style={[styles.price, { color: Fourth_color() }]}>
+                ${props.item.data.price}
               </Text>
-              <View style={{flex: 1}} />
-              {this.props.item.data.promotion_price == null ||
-              this.props.item.data.promotion_price == '' ? (
-                <Text style={[styles.price, {color: Fourth_color()}]}>
-                  ${this.props.item.data.price}
-                </Text>
-              ) : (
-                <Text style={[styles.price, {color: Fourth_color()}]}>
-                  ${this.props.item.data.promotion_price}
-                </Text>
-              )}
-            </View>
+            ) : (
+              <Text style={[styles.price, { color: Fourth_color() }]}>
+                ${props.item.data.promotion_price}
+              </Text>
+            )}
           </View>
-          <View style={{flex: 1}} />
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'flex-end',
-              width: '100%',
-              alignItems: 'center',
-            }}>
-            <View style={{flexDirection: 'row', marginRight: 16}}>
-              <Button
-                // title="Outline button"
-                type="outline"
-                icon={
-                  <Icon
-                    size={18}
-                    color={Third_color()}
-                    name="minus"
-                    type="font-awesome"
-                  />
-                }
-                onPress={() => this.props.onMinus(this.props.item)}
-              />
-
-              <Text
-                style={[
-                  styles.brand,
-                  {
-                    color: Third_color(),
-                    textAlignVertical: 'center',
-                    width: 28,
-                    textAlign: 'center',
-                  },
-                ]}
-                numberOfLines={1}>
-                {this.props.item.quantity}
-              </Text>
-              <Button
-                // title="Outline button"
-                type="outline"
-                icon={
-                  <Icon
-                    size={18}
-                    color={Third_color()}
-                    name="plus"
-                    type="font-awesome"
-                  />
-                }
-                onPress={() => this.props.onPlus(this.props.item)}
-              />
-            </View>
+        </View>
+        <View style={{ flex: 1 }} />
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "flex-end",
+            width: "100%",
+            alignItems: "center",
+          }}
+        >
+          <View style={{ flexDirection: "row", marginRight: 16 }}>
             <Button
-              // title="Outline button"
               type="outline"
               icon={
                 <Icon
                   size={18}
                   color={Third_color()}
-                  name="trash"
+                  name="minus"
                   type="font-awesome"
                 />
               }
-              onPress={() => this.props.onRmv(this.props.item)}
+              onPress={() => props.onMinus(props.item)}
+            />
+            <Text
+              style={[
+                styles.brand,
+                {
+                  color: Third_color(),
+                  textAlignVertical: "center",
+                  width: 28,
+                  textAlign: "center",
+                },
+              ]}
+              numberOfLines={1}
+            >
+              {props.item.quantity}
+            </Text>
+            <Button
+              type="outline"
+              icon={
+                <Icon
+                  size={18}
+                  color={Third_color()}
+                  name="plus"
+                  type="font-awesome"
+                />
+              }
+              onPress={() => props.onPlus(props.item)}
             />
           </View>
+          <Button
+            type="outline"
+            icon={
+              <Icon
+                size={18}
+                color={Third_color()}
+                name="trash"
+                type="font-awesome"
+              />
+            }
+            onPress={() => props.onRmv(props.item)}
+          />
         </View>
-
-        {/* </Card> */}
-      </TouchableOpacity>
-    );
-  }
-}
+      </View>
+    </TouchableOpacity>
+  );
+};
 
 const styles = StyleSheet.create({
   bgImg: {
-    width: '100%',
-    height: '100%',
-    resizeMode: 'cover',
-    justifyContent: 'flex-end',
-    alignItems: 'flex-start',
+    width: "100%",
+    height: "100%",
+    resizeMode: "cover",
+    justifyContent: "flex-end",
+    alignItems: "flex-start",
   },
   container: {
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: '100%',
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    width: "100%",
   },
   title: {
-    fontWeight: 'bold',
-    width: '100%',
+    fontWeight: "bold",
+    width: "100%",
     fontSize: 16,
-    textAlign: 'left',
+    textAlign: "left",
   },
   brand: {},
   price: {
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginLeft: 8,
   },
   info: {
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
     marginTop: 5,
     paddingLeft: 4,
     paddingRight: 4,
-    width: '100%',
+    width: "100%",
   },
 });
+
+export default CartProduct;

@@ -11,7 +11,7 @@ import {
 import { Divider } from "react-native-elements";
 import Feather from "react-native-vector-icons/Feather";
 import AntDesignIcon from "react-native-vector-icons/AntDesign";
-import { width, height, totalSize } from "react-native-dimension";
+import { width, height } from "react-native-dimension";
 import {
   Main_color,
   Primary_color,
@@ -77,7 +77,6 @@ class ProductDetailShow extends React.Component {
           <TouchableOpacity
             style={{ width: 30, marginRight: 10 }}
             onPress={() => {
-              console.log("props.item", this.state.item);
               this.props.setCart(this.state.item);
               this.props.cartTotal();
             }}
