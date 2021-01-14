@@ -1,0 +1,212 @@
+import React, { useState } from "react";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { Icon, Button } from "react-native-elements";
+import Image from "react-native-image-progress";
+import { width } from "react-native-dimension";
+import {
+  Main_color,
+  Primary_color,
+  Secondary_color,
+  Third_color,
+  Fourth_color,
+} from "../../Helper/Common";
+import Spinner from "react-native-loading-spinner-overlay";
+
+const CartProduct = (props) => {
+  const [loading, setLoading] = useState(true);
+
+  const onPress = () => {
+    props.onPress(props.item);
+  };
+
+  const onLoaded = () => {
+    setLoading(false);
+  };
+
+  return (
+    <TouchableOpacity
+      activeOpacity={0.9}
+      style={{
+        flexDirection: "row",
+        justifyContent: "center",
+        alignItems: "center",
+        height: 120,
+        width: width(95),
+        padding: 0,
+      }}
+      onPress={onPress}
+      elevation={2}
+    >
+      <Spinner visible={loading} />
+      <View
+        style={{
+          width: 110,
+          height: 110,
+          borderRadius: 20,
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Image
+          source={{
+            uri:
+              props.item.data.photos == null ||
+              props.item.data.photos.length == null ||
+              props.item.data.photos.length == 0 ||
+              props.item.data.photos[0] == null
+                ? ""
+                : props.item.data.photos[0].original,
+          }}
+          indicatorProps={{
+            size: 30,
+            borderWidth: 0,
+            color: "rgba(150, 150, 150, 1)",
+            unfilledColor: "rgba(200, 200, 200, 0.2)",
+          }}
+          style={{
+            flex: 1,
+            width: 110,
+            height: 110,
+            aspectRatio: 1,
+            borderRadius: 20,
+            resizeMode: "contain",
+          }}
+        />
+      </View>
+      <View
+        style={{
+          flex: 1,
+          padding: 8,
+          flexDirection: "column",
+          justifyContent: "flex-start",
+          alignItems: "flex-start",
+        }}
+      >
+        <View style={styles.info}>
+          <Text
+            style={[styles.title, { color: Third_color() }]}
+            numberOfLines={1}
+          >
+            {props.item.data.title}
+          </Text>
+          <View style={{ flexDirection: "row" }}>
+            <Text style={styles.brand} numberOfLines={1}>
+              {props.item.data.brand}
+            </Text>
+            <View style={{ flex: 1 }} />
+            {props.item.data.promotion_price == null ||
+            props.item.data.promotion_price == "" ? (
+              <Text style={[styles.price, { color: Fourth_color() }]}>
+                ${props.item.data.price}
+              </Text>
+            ) : (
+              <Text style={[styles.price, { color: Fourth_color() }]}>
+                ${props.item.data.promotion_price}
+              </Text>
+            )}
+          </View>
+        </View>
+        <View style={{ flex: 1 }} />
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "flex-end",
+            width: "100%",
+            alignItems: "center",
+          }}
+        >
+          <View style={{ flexDirection: "row", marginRight: 16 }}>
+            <Button
+              type="outline"
+              icon={
+                <Icon
+                  size={18}
+                  color={Third_color()}
+                  name="minus"
+                  type="font-awesome"
+                />
+              }
+              onPress={() => props.onMinus(props.item)}
+            />
+            <Text
+              style={[
+                styles.brand,
+                {
+                  color: Third_color(),
+                  textAlignVertical: "center",
+                  width: 28,
+                  textAlign: "center",
+                },
+              ]}
+              numberOfLines={1}
+            >
+              {props.item.quantity}
+            </Text>
+            <Button
+              type="outline"
+              icon={
+                <Icon
+                  size={18}
+                  color={Third_color()}
+                  name="plus"
+                  type="font-awesome"
+                />
+              }
+              onPress={() => props.onPlus(props.item)}
+            />
+          </View>
+          <Button
+            type="outline"
+            icon={
+              <Icon
+                size={18}
+                color={Third_color()}
+                name="trash"
+                type="font-awesome"
+              />
+            }
+            onPress={() => props.onRmv(props.item)}
+          />
+        </View>
+      </View>
+    </TouchableOpacity>
+  );
+};
+
+const styles = StyleSheet.create({
+  bgImg: {
+    width: "100%",
+    height: "100%",
+    resizeMode: "cover",
+    justifyContent: "flex-end",
+    alignItems: "flex-start",
+  },
+  container: {
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    width: "100%",
+  },
+  title: {
+    fontWeight: "bold",
+    width: "100%",
+    fontSize: 16,
+    textAlign: "left",
+  },
+  brand: {},
+  price: {
+    fontWeight: "bold",
+    marginLeft: 8,
+  },
+  info: {
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 5,
+    paddingLeft: 4,
+    paddingRight: 4,
+    width: "100%",
+  },
+});
+
+export default CartProduct;

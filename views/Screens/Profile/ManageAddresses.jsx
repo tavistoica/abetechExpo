@@ -2,13 +2,13 @@ import React from "react";
 import { connect } from "react-redux";
 import * as actions from "../../../actions";
 import { View, ScrollView, Button, FlatList, SafeAreaView } from "react-native";
-import CardComponent from "../../Component/Cards/CardComponent";
-import AddCard from "../../Component/Cards/AddCard";
+import Address from "../../Component/Address";
+import AddAddress from "../../Component/AddAddress";
 import RBSheet from "react-native-raw-bottom-sheet";
 import { height } from "react-native-dimension";
 import SideViewHeader from "../../Component/SideViewHeader";
 
-const ManageCards = (props) => {
+const ManageAddresses = (props) => {
   let AddressModal = null;
 
   const openModal = () => {
@@ -17,6 +17,7 @@ const ManageCards = (props) => {
   const closeModal = () => {
     AddressModal.close();
   };
+
   return (
     <>
       <SafeAreaView>
@@ -27,7 +28,7 @@ const ManageCards = (props) => {
         />
         <ScrollView style={{ height: "100%" }}>
           <FlatList
-            data={props.auth.cards}
+            data={props.auth.addresses}
             renderItem={({ item, index }) => (
               <View
                 style={{
@@ -36,14 +37,13 @@ const ManageCards = (props) => {
                   marginHorizontal: 10,
                 }}
               >
-                <CardComponent
-                  card={{
+                <Address
+                  address={{
                     id: item.id,
-                    cardNumber: item.cardNumber,
-                    cardName: item.cardName,
-                    month: item.month,
-                    year: item.year,
-                    type: item.type,
+                    city: item.city,
+                    street: item.street,
+                    county: item.county,
+                    country: item.country,
                   }}
                 />
               </View>
@@ -58,7 +58,7 @@ const ManageCards = (props) => {
               justifyContent: "center",
             }}
           >
-            <Button title="+ Add Card" onPress={() => openModal()} />
+            <Button title="+ Add Address" onPress={() => openModal()} />
           </View>
         </ScrollView>
         <RBSheet
@@ -66,16 +66,18 @@ const ManageCards = (props) => {
             AddressModal = ref;
           }}
           height={height(50)}
+          // openDuration={250}
           closeOnDragDown={true}
           customStyles={{
             container: {
+              // justifyContent: "center",
               alignItems: "center",
               borderTopLeftRadius: 20,
               borderTopRightRadius: 20,
             },
           }}
         >
-          <AddCard closeModal={closeModal} />
+          <AddAddress closeModal={closeModal} />
         </RBSheet>
       </SafeAreaView>
     </>
@@ -91,4 +93,4 @@ const mapStatetoProps = (state) => {
 export default connect(
   mapStatetoProps,
   actions
-)(ManageCards);
+)(ManageAddresses);

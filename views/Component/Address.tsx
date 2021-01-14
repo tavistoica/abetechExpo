@@ -15,30 +15,47 @@ import {
   Secondary_color,
   Third_color,
   Fourth_color,
-} from "../../../Helper/Common";
+} from "../../Helper/Common";
 import { connect } from "react-redux";
-import * as actions from "../../../actions";
+import * as actions from "../../actions";
 import Feather from "react-native-vector-icons/Feather";
-import PropTypes from "prop-types";
 
-const CardComponent = (props) => {
+interface Address {
+  street: string;
+  city: string;
+  country: string;
+  county: string;
+  id: string;
+}
+
+interface Auth {
+  id: string;
+}
+
+interface State {
+  auth: Auth;
+}
+
+interface Props {
+  address: Address;
+  auth: Auth;
+  deleteAddress: (UserId: string, AddressId: string) => any;
+}
+
+const Address = (props: Props) => {
+  console.log(props);
   return (
     <View style={styles.Container}>
       <View style={{ flexDirection: "row", justifyContent: "center" }}>
         <View style={{ flex: 6, flexDirection: "column" }}>
-          <Text style={styles.StreetStyle}>
-            {props.card.type}
-            {" ****"}
-            {props.card.cardNumber.substr(props.card.cardNumber.length - 4)}
-          </Text>
-          <Text style={styles.others}>{props.card.cardName}</Text>
-          <Text style={styles.others}>
-            {props.card.month}/{props.card.year}
-          </Text>
+          <Text style={styles.StreetStyle}>{props.address.street}</Text>
+          <Text style={styles.others}>City: {props.address.city}</Text>
+          <Text style={styles.others}>County: {props.address.county}</Text>
+          <Text style={styles.others}>Country: {props.address.country}</Text>
         </View>
         <TouchableOpacity
           style={{ flex: 1, justifyContent: "center" }}
-          onPress={() => props.deleteCard(props.auth.id, props.card.id)}
+          onPress={() => props.deleteAddress(props.auth.id, props.address.id)}
         >
           <Feather name="trash" size={32} color={"red"} />
         </TouchableOpacity>
@@ -62,9 +79,8 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapStatetoProps = (state) => {
+const mapStatetoProps = (state: State) => {
   return {
-    category: state.products.category,
     auth: state.auth,
   };
 };
@@ -72,10 +88,4 @@ const mapStatetoProps = (state) => {
 export default connect(
   mapStatetoProps,
   actions
-)(CardComponent);
-
-CardComponent.propTypes = {
-  auth: PropTypes.func.isRequired,
-  category: PropTypes.object.isRequired,
-  card: PropTypes.object.isRequired,
-};
+)(Address);
