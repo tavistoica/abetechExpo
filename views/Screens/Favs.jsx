@@ -1,12 +1,10 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
   StyleSheet,
   TouchableOpacity,
   FlatList,
-  SafeAreaView,
-  Platform,
 } from "react-native";
 import { width, height } from "react-native-dimension";
 import Entypo from "react-native-vector-icons/Entypo";
@@ -15,60 +13,28 @@ import { Main_color, Secondary_color } from "../../Helper/Common";
 import Spinner from "react-native-loading-spinner-overlay";
 import Modal from "react-native-modal";
 import Product from "../Component/Product";
-import HttpHelper from "../../Helper/HttpHelper";
 import Bottom from "./ProductDetails/Bottom";
 import { connect } from "react-redux";
 import * as actions from "../../actions";
+import OsWrapper from "../Component/OsWrapper";
 
-class Favs extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      status: "",
-      loading: false,
-      showModal: false,
-      cur_product: {},
-    };
-  }
+const Favs = (props) => {
+  const [loading, setLoading] = useState(true);
+  const [showModal, setShowModal] = useState(false);
+  const [currrentProduct, setCurrentProduct] = useState({});
 
-  componentDidMount = () => {
-    this.getFavProducts();
+  useEffect(() => {
+    props.getFavorite(props.auth.id);
+    setLoading(false);
+  }, []);
+
+  const clearFavs = () => {
+    props.deleteFavorite(props.auth.id, null);
   };
 
-  getFavProducts = () => {
-    console.log(this.props.auth.id);
-    this.props.getFavorite(this.props.auth.id);
-  };
-
-  clearFavs = () => {
-    this.props.deleteFavorite(this.props.auth.id, null);
-  };
-
-  onAddCart = (product) => {
-    HttpHelper.doPost(
-      "add_cart",
-      {
-        user_id: this.props.auth.id,
-        product_id: product.id,
-      },
-      (data) => {
-        this.del_favorite(product);
-      },
-      (err) => {
-        alert(err);
-      }
-    );
-  };
-
-  del_favorite = (product, user) => {
-    this.props.deleteFavorite(user, product.id);
-    console.log(this.props.favorite);
-    if (this.props.favorite !== undefined && this.props.favorite.length > 0)
-      this.props.getFavorite(this.props.auth.id);
-  };
-
-  goDetail = (item) => {
-    this.setState({ showModal: true, cur_product: item });
+  const goDetail = (product) => {
+    setShowModal(true);
+    setCurrentProduct(product);
   };
 
   header = () => {
@@ -76,7 +42,7 @@ class Favs extends React.Component {
       <>
         <TouchableOpacity
           onPress={() => {
-            this.props.navigation.openDrawer();
+            props.navigation.openDrawer();
           }}
           style={styles.menu}
         >
@@ -97,7 +63,7 @@ class Favs extends React.Component {
         </View>
         <TouchableOpacity
           style={{ width: 30, marginRight: 10 }}
-          onPress={() => this.clearFavs()}
+          onPress={() => props.deleteFavorite(props.auth.id, null)}
         >
           <MaterialCommunityIcons
             name="layers-remove"
@@ -109,81 +75,61 @@ class Favs extends React.Component {
     );
   };
 
-  content() {
-    return (
-      <>
-        <View style={styles.container}>
-          <Spinner visible={this.state.loading} />
-          {this.props.favorite.length === 0 ? (
-            <Text style={{ fontSize: 14, fontWeight: "bold", marginTop: 5 }}>
-              Nothing to show
-            </Text>
-          ) : (
-            <FlatList
-              data={this.props.favorite}
-              renderItem={({ item, index }) => (
-                <View style={{ flexDirection: "column", margin: 5 }}>
-                  <Product
-                    onPress={this.goDetail}
-                    width={width(45)}
-                    item={item}
-                    index={index}
-                  />
-                </View>
-              )}
-              //Setting the number of column
-              contentContainerStyle={{
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-              style={{ width: width(100) }}
-              numColumns={2}
-              keyExtractor={(item, index) => index.toString()}
-            />
-          )}
-        </View>
-        <Modal
-          isVisible={this.state.showModal}
-          style={{
-            width: width(100),
-            height: height(100),
-            backgroundColor: "#fff",
-            margin: 0,
-            padding: 0,
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <Bottom
-            item={this.state.cur_product}
-            width={width(90)}
-            page="favs"
-            onAddCart={this.onAddCart}
-            close={() => {
-              this.setState({ showModal: false });
-            }}
-          />
-        </Modal>
-      </>
-    );
-  }
-
-  render() {
-    return (
-      <>
-        {Platform.OS === "ios" ? (
-          <SafeAreaView style={{ flex: 1, flexDirection: "column" }}>
-            {this.content()}
-          </SafeAreaView>
+  return (
+    <OsWrapper>
+      <View style={styles.container}>
+        <Spinner visible={loading} />
+        {props.favorite.length === 0 ? (
+          <Text style={{ fontSize: 14, fontWeight: "bold", marginTop: 5 }}>
+            Nothing to show
+          </Text>
         ) : (
-          <View style={{ flex: 1, flexDirection: "column" }}>
-            {this.content()}
-          </View>
+          <FlatList
+            data={props.favorite}
+            renderItem={({ item, index }) => (
+              <View style={{ flexDirection: "column", margin: 5 }}>
+                <Product
+                  onPress={goDetail}
+                  width={width(45)}
+                  item={item}
+                  index={index}
+                />
+              </View>
+            )}
+            //Setting the number of column
+            contentContainerStyle={{
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+            style={{ width: width(100) }}
+            numColumns={2}
+            keyExtractor={(item, index) => index.toString()}
+          />
         )}
-      </>
-    );
-  }
-}
+      </View>
+      <Modal
+        isVisible={showModal}
+        style={{
+          width: width(100),
+          height: height(100),
+          backgroundColor: "#fff",
+          margin: 0,
+          padding: 0,
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Bottom
+          item={currrentProduct}
+          width={width(90)}
+          page="favs"
+          onAddCart={props.setCart(currrentProduct)}
+          close={() => setShowModal(false)}
+        />
+      </Modal>
+    </OsWrapper>
+  );
+};
 
 const styles = StyleSheet.create({
   menu: {

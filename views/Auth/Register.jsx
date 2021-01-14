@@ -25,7 +25,7 @@ import { GlobalImgs, HomeImgs } from "@assets/imgs";
 import AntDesignIcon from "react-native-vector-icons/AntDesign";
 import { width, height, totalSize } from "react-native-dimension";
 import ImagePicker from "react-native-image-picker";
-import MyModal from "../Component/MyModal";
+import CustomModal from "../Component/CustomModal";
 import {
   api_base_url,
   Msg_Register_Success,
@@ -263,7 +263,7 @@ export default class Register extends React.Component {
     return (
       <View style={{ flex: 1, flexDirection: "column" }}>
         <Spinner visible={this.state.loading} />
-        <MyModal
+        <CustomModal
           isModalVisible={this.state.isModalVisible}
           onModalResult={this.onModalResult}
           title="Select Avatar"

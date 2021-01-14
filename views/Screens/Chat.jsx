@@ -20,7 +20,7 @@ import LeftMsg from "../Component/LeftMsg";
 import RightMsg from "../Component/RightMsg";
 import { _getAllMsgs } from "../../Helper/FirebaseHelper";
 import HttpHelper from "../../Helper/HttpHelper";
-import MyModal from "../Component/MyModal";
+import CustomModal from "../Component/CustomModal";
 import ImagePicker from "react-native-image-picker";
 import {
   Main_color,
@@ -256,7 +256,7 @@ class Chat extends React.Component {
   render() {
     return (
       <View style={{ flex: 1, height: height(100), flexDirection: "column" }}>
-        <MyModal
+        <CustomModal
           isModalVisible={this.state.isModalVisible}
           onModalResult={this.onModalResult}
           title="Select Image"

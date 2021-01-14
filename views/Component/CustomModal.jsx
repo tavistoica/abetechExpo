@@ -3,7 +3,7 @@ import { View, Text, StyleSheet } from "react-native";
 import { Button } from "react-native-elements";
 import Modal from "react-native-modal";
 
-const MyModal = (props) => {
+const CustomModal = (props) => {
   const [isModalVisible, setIsModalVisibile] = useState(props.isModalVisible);
 
   const onModalResult = (res) => {
@@ -46,4 +46,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default MyModal;
+export default CustomModal;

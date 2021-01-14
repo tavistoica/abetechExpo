@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, FlatList } from "react-native";
 import { width, height } from "react-native-dimension";
 import {
@@ -10,20 +10,15 @@ import {
 } from "../../Helper/Common";
 import Spinner from "react-native-loading-spinner-overlay";
 import Product from "../Component/Product";
-import { FAB } from "react-native-paper";
 import Header from "../Component/header";
 import { connect } from "react-redux";
 import * as actions from "../../actions";
-import FilterMenu from "../Component/filterMenu";
+import FilterButton from "./ProductDetails/FilterButton";
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
 
 const ProductList = (props) => {
   const [loading, setLoading] = useState(false);
-  const [isFilterModalVisible, setIsFilterModalVisible] = useState(false);
-  const [categories, setCategories] = useState([]);
-
-  this.props.getProducts({});
 
   const goDetail = (item, index) => {
     console.log(item, index);
@@ -33,13 +28,6 @@ const ProductList = (props) => {
       product_index: index,
       products: props.products.products,
     });
-  };
-
-  const filterCategory = () => {
-    setLoading(true);
-    setIsFilterModalVisible(false);
-    let body = category === "all" ? {} : { category };
-    props.getProducts(body);
   };
 
   return (
@@ -57,12 +45,12 @@ const ProductList = (props) => {
       `}
     >
       {({ loading, error, data }) => {
-        if (loading) return <p>Loading...</p>;
-        if (error) return <p>{error}</p>;
+        if (loading) return <Spinner visible={loading} />;
+        // if (error) return <p>{error}</p>;
         return (
           <View style={{ flex: 1, flexDirection: "column" }}>
-            <Spinner visible={this.state.loading} />
-            <Header navigation={this.props.navigation} />
+            <Spinner visible={loading} />
+            <Header navigation={props.navigation} />
             <View style={styles.container}>
               {data.products.length === 0 ? (
                 <Text
@@ -81,7 +69,7 @@ const ProductList = (props) => {
                       }}
                     >
                       <Product
-                        onPress={this.goDetail}
+                        onPress={goDetail}
                         width={width(50)}
                         item={item}
                         index={index}
@@ -98,7 +86,7 @@ const ProductList = (props) => {
                   keyExtractor={(item, index) => index.toString()}
                 />
               )}
-              {this.filter()}
+              <FilterButton setLoading={setLoading} />
             </View>
           </View>
         );
@@ -116,17 +104,6 @@ const styles = StyleSheet.create({
     paddingLeft: 30,
     paddingRight: 30,
     width: width(100),
-  },
-  fixedView: {
-    position: "absolute",
-    margin: 16,
-    right: 0,
-    bottom: "0%",
-    flexDirection: "row",
-    justifyContent: "flex-end",
-  },
-  fab: {
-    backgroundColor: Main_color(),
   },
   banner_container: {
     flex: 1,

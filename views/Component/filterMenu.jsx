@@ -13,12 +13,6 @@ import { Secondary_color, Primary_color } from "../../Helper/Common";
 import { connect } from "react-redux";
 import * as actions from "../../actions";
 
-const filterCategory = (props, category) => {
-  props.setFilterVisibleFalse();
-  const body = category === "all" ? {} : { category: category };
-  props.getProducts(body);
-};
-
 const FilterMenu = (props) => {
   let [category, setCategory] = useState({ category: "all" });
   const filterHeight = Platform.OS === "ios" ? "45%" : "20%";
@@ -27,13 +21,19 @@ const FilterMenu = (props) => {
     props.getCategory();
   }, []);
 
+  const filterCategory = (props, category) => {
+    props.setIsFilterModalVisible(false);
+    const body = category === "all" ? {} : { category: category };
+    props.getProducts(body);
+  };
+
   return (
     <Modal
-      isVisible={props.isVisibleFilterModal}
+      isVisible={props.IsFilterModalVisible}
       transparent={true}
       animationType="slide"
       onBackdropPress={() => {
-        props.setFilterVisibleFalse();
+        props.setIsFilterModalVisible(false);
       }}
       style={{
         width: width(100),
@@ -79,12 +79,11 @@ const FilterMenu = (props) => {
             selectedValue={category.category}
             mode="dropdown"
             onValueChange={(itemValue) => {
-              console.log(itemValue);
               setCategory({ category: itemValue });
-              console.log("category", category);
             }}
           >
             <Picker.Item key={255} label="All" value="all" selectedValue />
+            {console.log(props.category)}
             {props.category.map((item, i) => {
               return (
                 <Picker.Item

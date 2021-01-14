@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Image, ImageBackground, Alert, StatusBar } from "react-native";
 import { GlobalImgs } from "@assets/imgs";
 import { _getAppSetting } from "../../Helper/FirebaseHelper";
@@ -11,6 +11,10 @@ const Splash = (props) => {
   const [logo, setLogo] = useState("");
   const [loading, setLoading] = useState(true);
 
+  useEffect(() => {
+    props.getCategory();
+  }, []);
+
   const loadSetting = async () => {
     let setting = await _getAppSetting();
     if (setting == null) {
@@ -21,7 +25,7 @@ const Splash = (props) => {
     setLogo(setting.logo.original);
     setLoading(false);
     setTimeout(() => {
-      props.navigation.replace("home");
+      props.navigation.replace("product_list");
     }, 2500);
   };
 
@@ -66,6 +70,7 @@ const Splash = (props) => {
 const mapStatetoProps = (state) => {
   return {
     auth: state.auth,
+    products: state.products,
   };
 };
 

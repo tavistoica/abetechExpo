@@ -12,7 +12,7 @@ import { Avatar } from "react-native-elements";
 import { GlobalImgs } from "@assets/imgs";
 import { width, height } from "react-native-dimension";
 import ImagePicker from "react-native-image-picker";
-import MyModal from "../../Component/MyModal";
+import CustomModal from "../../Component/CustomModal";
 import { FAB } from "react-native-paper";
 import {
   _retrieveData,
@@ -158,7 +158,7 @@ class EditProfile extends React.Component {
       <>
         <View style={{ flex: 16, flexDirection: "column" }}>
           <Spinner visible={this.state.loading} />
-          <MyModal
+          <CustomModal
             isModalVisible={this.state.isModalVisible}
             onModalResult={this.onModalResult}
             title="Select Avatar"

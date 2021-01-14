@@ -1,16 +1,7 @@
-import React, { useEffect } from "react";
-import {
-  View,
-  TouchableOpacity,
-  Text,
-  StyleSheet,
-  SafeAreaView,
-  Platform,
-  TouchableHighlight,
-} from "react-native";
+import React from "react";
+import { TouchableOpacity, StyleSheet } from "react-native";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
-import Entypo from "react-native-vector-icons/Entypo";
 import { width } from "react-native-dimension";
 import {
   Secondary_color,
@@ -18,14 +9,21 @@ import {
   Main_color,
   Third_color,
 } from "../../Helper/Common";
+import OsWrapper from "./OsWrapper";
+import * as RootNavigation from "./RootNavigation";
 
-const bottomMenuBeforePlatformCheck = (props) => {
+const BottomMenu = (props) => {
+  console.log("props", props);
   return (
-    <>
+    <OsWrapper
+      styleIOS={styles.headerIos}
+      styleAndroid={styles.headerAndroid}
+      backColor={Main_color()}
+    >
       <TouchableOpacity
         style={styles.drawerItem}
         onPress={async () => {
-          props.navigation.navigate("product_list");
+          RootNavigation.navigate("product_list");
         }}
       >
         <MaterialIcons
@@ -38,7 +36,7 @@ const bottomMenuBeforePlatformCheck = (props) => {
       <TouchableOpacity
         style={styles.drawerItem}
         onPress={async () => {
-          props.navigation.navigate("favs");
+          RootNavigation.navigate("favs");
         }}
       >
         <MaterialIcons
@@ -51,8 +49,7 @@ const bottomMenuBeforePlatformCheck = (props) => {
       <TouchableOpacity
         style={styles.drawerItem}
         onPress={async () => {
-          // props.removeUser();
-          props.navigation.navigate("discoveryPage");
+          RootNavigation.navigate("discoveryPage");
         }}
       >
         <MaterialIcons
@@ -65,8 +62,7 @@ const bottomMenuBeforePlatformCheck = (props) => {
       <TouchableOpacity
         style={styles.drawerItem}
         onPress={async () => {
-          // props.removeUser();
-          props.navigation.navigate("mycart");
+          RootNavigation.navigate("mycart");
         }}
       >
         <AntDesign
@@ -79,7 +75,7 @@ const bottomMenuBeforePlatformCheck = (props) => {
       <TouchableOpacity
         style={styles.drawerItem}
         onPress={async () => {
-          props.navigation.navigate("edit_profile");
+          RootNavigation.navigate("edit_profile");
         }}
       >
         <MaterialIcons
@@ -89,25 +85,7 @@ const bottomMenuBeforePlatformCheck = (props) => {
           style={styles.drawerItem_icon}
         />
       </TouchableOpacity>
-    </>
-  );
-};
-
-const BottomMenu = (props) => {
-  return (
-    <>
-      {Platform.OS === "ios" ? (
-        <SafeAreaView
-          style={[styles.headerIos, { backgroundColor: Main_color() }]}
-        >
-          {bottomMenuBeforePlatformCheck(props)}
-        </SafeAreaView>
-      ) : (
-        <View style={[styles.headerAndroid, { backgroundColor: Main_color() }]}>
-          {bottomMenuBeforePlatformCheck(props)}
-        </View>
-      )}
-    </>
+    </OsWrapper>
   );
 };
 
@@ -140,47 +118,8 @@ const styles = StyleSheet.create({
     paddingRight: 20,
     paddingLeft: 20,
   },
-  drawerItemDiscovery: {
-    flexDirection: "row",
-    justifyContent: "flex-start",
-    alignItems: "center",
-    paddingRight: 20,
-    paddingLeft: 20,
-    marginBottom: 10,
-  },
   drawerItem_icon: {
     marginRight: 7,
-  },
-  msg_list: {
-    flex: 1,
-    width: "100%",
-    flexDirection: "column",
-  },
-  msg_input: {
-    flex: 1,
-    height: 55,
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: Main_color(),
-    width: width(100),
-  },
-  inputTxt: {
-    textAlignVertical: "center",
-    borderColor: "#fff",
-    width: width(70),
-    height: "70%",
-    textAlign: "left",
-    backgroundColor: "#fff",
-    borderRadius: 8,
-    marginLeft: 10,
-    marginRight: 10,
-  },
-  btn: {
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: 40,
-    width: width(10),
   },
 });
 
