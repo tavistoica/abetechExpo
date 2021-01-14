@@ -18,127 +18,94 @@ import FilterMenu from "../Component/filterMenu";
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
 
-class ProductList extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      loading: false,
-      isVisibleFilterModal: false,
-      categories: [],
-    };
-  }
+const ProductList = (props) => {
+  const [loading, setLoading] = useState(false);
+  const [isFilterModalVisible, setIsFilterModalVisible] = useState(false);
+  const [categories, setCategories] = useState([]);
 
-  componentDidMount() {
-    this.props.getProducts({});
-  }
+  this.props.getProducts({});
 
-  goDetail = (item, index) => {
+  const goDetail = (item, index) => {
     console.log(item, index);
-    this.props.changeSliderItemAndIndex(item, index);
-    this.props.navigation.navigate("product_detail", {
+    props.changeSliderItemAndIndex(item, index);
+    props.navigation.navigate("product_detail", {
       product_item: item,
       product_index: index,
-      products: this.props.products.products,
+      products: props.products.products,
     });
   };
 
-  filterCategory = () => {
-    this.setState({ loading: true, isVisibleFilterModal: false });
-    let body =
-      this.state.category === "all" ? {} : { category: this.state.category };
-    this.props.getProducts(body);
+  const filterCategory = () => {
+    setLoading(true);
+    setIsFilterModalVisible(false);
+    let body = category === "all" ? {} : { category };
+    props.getProducts(body);
   };
 
-  setFilterVisibleFalse = () => {
-    this.setState({ isVisibleFilterModal: false });
-  };
-
-  filter = () => {
-    return (
-      <View style={styles.fixedView}>
-        <FAB
-          style={styles.fab}
-          medium
-          color="white"
-          icon="filter"
-          onPress={() => this.setState({ isVisibleFilterModal: true })}
-        />
-        <FilterMenu
-          isVisibleFilterModal={this.state.isVisibleFilterModal}
-          category={this.props.products.category}
-          categories={this.state.categories}
-          setFilterVisibleFalse={this.setFilterVisibleFalse}
-        />
-      </View>
-    );
-  };
-
-  render() {
-    return (
-      <Query
-        query={gql`
-          {
-            products {
-              title
-              brand
-              price
-              promotion_price
-              photos
-            }
+  return (
+    <Query
+      query={gql`
+        {
+          products {
+            title
+            brand
+            price
+            promotion_price
+            photos
           }
-        `}
-      >
-        {({ loading, error, data }) => {
-          if (loading) return <p>Loading...</p>;
-          if (error) return <p>{error}</p>;
-          return (
-            <View style={{ flex: 1, flexDirection: "column" }}>
-              <Spinner visible={this.state.loading} />
-              <Header navigation={this.props.navigation} />
-              <View style={styles.container}>
-                {data.products.length === 0 ? (
-                  <Text
-                    style={{ fontSize: 14, fontWeight: "bold", marginTop: 5 }}
-                  >
-                    Nothing to show
-                  </Text>
-                ) : (
-                  <FlatList
-                    data={data.products}
-                    renderItem={({ item, index }) => (
-                      <View
-                        style={{
-                          flexDirection: "column",
-                          margin: 1,
-                        }}
-                      >
-                        <Product
-                          onPress={this.goDetail}
-                          width={width(50)}
-                          item={item}
-                          index={index}
-                        />
-                      </View>
-                    )}
-                    //Setting the number of column
-                    contentContainerStyle={{
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}
-                    style={{ width: width(100) }}
-                    numColumns={2}
-                    keyExtractor={(item, index) => index.toString()}
-                  />
-                )}
-                {this.filter()}
-              </View>
+        }
+      `}
+    >
+      {({ loading, error, data }) => {
+        if (loading) return <p>Loading...</p>;
+        if (error) return <p>{error}</p>;
+        return (
+          <View style={{ flex: 1, flexDirection: "column" }}>
+            <Spinner visible={this.state.loading} />
+            <Header navigation={this.props.navigation} />
+            <View style={styles.container}>
+              {data.products.length === 0 ? (
+                <Text
+                  style={{ fontSize: 14, fontWeight: "bold", marginTop: 5 }}
+                >
+                  Nothing to show
+                </Text>
+              ) : (
+                <FlatList
+                  data={data.products}
+                  renderItem={({ item, index }) => (
+                    <View
+                      style={{
+                        flexDirection: "column",
+                        margin: 1,
+                      }}
+                    >
+                      <Product
+                        onPress={this.goDetail}
+                        width={width(50)}
+                        item={item}
+                        index={index}
+                      />
+                    </View>
+                  )}
+                  //Setting the number of column
+                  contentContainerStyle={{
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                  style={{ width: width(100) }}
+                  numColumns={2}
+                  keyExtractor={(item, index) => index.toString()}
+                />
+              )}
+              {this.filter()}
             </View>
-          );
-        }}
-      </Query>
-    );
-  }
-}
+          </View>
+        );
+      }}
+    </Query>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {

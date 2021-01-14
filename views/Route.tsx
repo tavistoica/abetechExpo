@@ -1,7 +1,6 @@
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-// custom import
 import Splash from "./Screens/Splash";
 import Home from "./Screens/Home";
 
@@ -10,7 +9,6 @@ export default function Route() {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        // this options hide all header
         screenOptions={{
           headerShown: false,
         }}
