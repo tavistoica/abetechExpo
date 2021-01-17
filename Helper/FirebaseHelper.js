@@ -1,16 +1,6 @@
 import * as firebase from "firebase";
 import "firebase/firestore";
-
-const firebaseConfig = {
-  apiKey: "AIzaSyBDVgELSaiPsUxlY8hPa5SZXEzDt8t1gAg",
-  authDomain: "abetech-app.firebaseapp.com",
-  databaseURL: "https://abetech-app.firebaseio.com",
-  projectId: "abetech-app",
-  storageBucket: "abetech-app.appspot.com",
-  messagingSenderId: "sender-id",
-  appId: "1:250630133346:android:c6b2635edf26d77626633b",
-  measurementId: "G-measurement-id",
-};
+import { firebaseConfig } from "./Constant";
 
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);

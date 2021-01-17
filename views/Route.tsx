@@ -10,11 +10,11 @@ import ChangeDetails from "./Screens/Profile/ChangeDetails";
 import ChangePassword from "./Screens/Profile/ChangePassword";
 import ManageAddresses from "./Screens/Profile/ManageAddresses";
 import ManageCards from "./Screens/Profile/ManageCards";
-import EditProfile from "./Screens/Profile/EditProfile";
 import ProductList from "./Screens/ProductList";
 import ProductDetailCard from "./Screens/ProductDetailCard";
 import ProductDetailShow from "./Screens/ProductDetailShow";
 import Chat from "./Screens/Chat";
+import Profile from "./Screens/Profile";
 import { navigationRef } from "./Component/RootNavigation";
 
 const Stack = createStackNavigator();
@@ -33,7 +33,7 @@ export default function Route() {
         <Stack.Screen name="favs" component={Favs} />
         <Stack.Screen name="mycart" component={MyCart} />
         <Stack.Screen name="chat" component={Chat} />
-        <Stack.Screen name="edit_profile" component={EditProfile} />
+        <Stack.Screen name="profile" component={Profile} />
         <Stack.Screen name="detailshow" component={ProductDetailShow} />
         <Stack.Screen name="discoveryPage" component={DiscoveryPage} />
         <Stack.Screen name="changeDetails" component={ChangeDetails} />

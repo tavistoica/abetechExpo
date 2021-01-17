@@ -21,7 +21,7 @@ import {
   Divider,
   CheckBox,
 } from "react-native-elements";
-import { GlobalImgs, HomeImgs } from "@assets/imgs";
+import { GlobalImgs, HomeImgs } from "../../assets/imgs";
 import AntDesignIcon from "react-native-vector-icons/AntDesign";
 import { width, height, totalSize } from "react-native-dimension";
 import ImagePicker from "react-native-image-picker";
@@ -39,13 +39,6 @@ import {
 } from "../../Helper/Util";
 import Spinner from "react-native-loading-spinner-overlay";
 import Modal from "react-native-modal";
-import {
-  Main_color,
-  Primary_color,
-  Secondary_color,
-  Third_color,
-  Fourth_color,
-} from "../../Helper/Common";
 import axios from "axios";
 
 export default class Register extends React.Component {
@@ -151,10 +144,6 @@ export default class Register extends React.Component {
 
       let data = await response.data;
       if (data.id != null) {
-        // success
-        // await _storeData('user', data);
-        // global.user = data;
-
         this.setState({ status: Msg_Register_Success, loading: false });
         this.setState({ showHelpModal: true });
       } else {
@@ -281,7 +270,7 @@ export default class Register extends React.Component {
               <AntDesignIcon
                 name="closecircleo"
                 size={22}
-                color={global.setting.color.primary_color}
+                color={this.props.settings.colors.primary_color}
               />
             </TouchableOpacity>
           </View>
@@ -423,11 +412,17 @@ export default class Register extends React.Component {
                     onPress={this.doRegister}
                     style={[
                       styles.button,
-                      { backgroundColor: Primary_color() },
+                      {
+                        backgroundColor: this.props.settings.colors
+                          .primary_color,
+                      },
                     ]}
                   >
                     <Text
-                      style={[styles.buttonText, { color: Secondary_color() }]}
+                      style={[
+                        styles.buttonText,
+                        { color: this.props.settings.colors.secondary_color },
+                      ]}
                     >
                       Register
                     </Text>

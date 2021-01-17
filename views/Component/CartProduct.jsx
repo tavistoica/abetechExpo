@@ -3,13 +3,6 @@ import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { Icon, Button } from "react-native-elements";
 import Image from "react-native-image-progress";
 import { width } from "react-native-dimension";
-import {
-  Main_color,
-  Primary_color,
-  Secondary_color,
-  Third_color,
-  Fourth_color,
-} from "../../Helper/Common";
 import Spinner from "react-native-loading-spinner-overlay";
 
 const CartProduct = (props) => {
@@ -84,7 +77,7 @@ const CartProduct = (props) => {
       >
         <View style={styles.info}>
           <Text
-            style={[styles.title, { color: Third_color() }]}
+            style={[styles.title, { color: props.settings.colors.third_color }]}
             numberOfLines={1}
           >
             {props.item.data.title}
@@ -96,11 +89,21 @@ const CartProduct = (props) => {
             <View style={{ flex: 1 }} />
             {props.item.data.promotion_price == null ||
             props.item.data.promotion_price == "" ? (
-              <Text style={[styles.price, { color: Fourth_color() }]}>
+              <Text
+                style={[
+                  styles.price,
+                  { color: props.settings.colors.fourth_color },
+                ]}
+              >
                 ${props.item.data.price}
               </Text>
             ) : (
-              <Text style={[styles.price, { color: Fourth_color() }]}>
+              <Text
+                style={[
+                  styles.price,
+                  { color: props.settings.colors.fourth_color },
+                ]}
+              >
                 ${props.item.data.promotion_price}
               </Text>
             )}
@@ -121,7 +124,7 @@ const CartProduct = (props) => {
               icon={
                 <Icon
                   size={18}
-                  color={Third_color()}
+                  color={props.settings.colors.third_color}
                   name="minus"
                   type="font-awesome"
                 />
@@ -132,7 +135,7 @@ const CartProduct = (props) => {
               style={[
                 styles.brand,
                 {
-                  color: Third_color(),
+                  color: props.settings.colors.third_color,
                   textAlignVertical: "center",
                   width: 28,
                   textAlign: "center",
@@ -147,7 +150,7 @@ const CartProduct = (props) => {
               icon={
                 <Icon
                   size={18}
-                  color={Third_color()}
+                  color={props.settings.colors.third_color}
                   name="plus"
                   type="font-awesome"
                 />
@@ -160,7 +163,7 @@ const CartProduct = (props) => {
             icon={
               <Icon
                 size={18}
-                color={Third_color()}
+                color={props.settings.colors.third_color}
                 name="trash"
                 type="font-awesome"
               />

@@ -23,7 +23,7 @@ const ManageAddresses = (props) => {
       <SafeAreaView>
         <SideViewHeader
           name="Manage Cards"
-          redirect={"edit_profile"}
+          redirect={"profile"}
           navigation={props.navigation}
         />
         <ScrollView style={{ height: "100%" }}>

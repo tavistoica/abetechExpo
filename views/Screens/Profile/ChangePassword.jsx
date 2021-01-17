@@ -261,7 +261,7 @@ class ChangePassword extends React.Component {
           >
             <SideViewHeader
               name="Change password"
-              redirect={"edit_profile"}
+              redirect={"profile"}
               navigation={this.props.navigation}
             />
             {this.renderContent()}
@@ -270,7 +270,7 @@ class ChangePassword extends React.Component {
           <View style={{ flex: 1, flexDirection: "column" }}>
             <SideViewHeader
               name="Change password"
-              redirect={"edit_profile"}
+              redirect={"profile"}
               navigation={this.props.navigation}
             />
             {this.renderContent()}

@@ -2,12 +2,6 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, FlatList } from "react-native";
 import { width, height } from "react-native-dimension";
-import {
-  Primary_color,
-  Secondary_color,
-  Main_color,
-  Third_color,
-} from "../../Helper/Common";
 import Spinner from "react-native-loading-spinner-overlay";
 import Product from "../Component/Product";
 import Header from "../Component/header";
@@ -50,7 +44,7 @@ const ProductList = (props) => {
         return (
           <View style={{ flex: 1, flexDirection: "column" }}>
             <Spinner visible={loading} />
-            <Header navigation={props.navigation} />
+            <Header {...props} />
             <View style={styles.container}>
               {data.products.length === 0 ? (
                 <Text
@@ -86,7 +80,7 @@ const ProductList = (props) => {
                   keyExtractor={(item, index) => index.toString()}
                 />
               )}
-              <FilterButton setLoading={setLoading} />
+              <FilterButton setLoading={setLoading} {...props} />
             </View>
           </View>
         );
@@ -165,6 +159,7 @@ const styles = StyleSheet.create({
 const mapStatetoProps = (state) => {
   return {
     products: state.products,
+    settings: state.settings,
   };
 };
 

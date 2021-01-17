@@ -1,21 +1,5 @@
 import React from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  ImageBackground,
-  StatusBar,
-  TouchableOpacity,
-  TextInput,
-  ActivityIndicator,
-} from "react-native";
-import {
-  Main_color,
-  Primary_color,
-  Secondary_color,
-  Third_color,
-  Fourth_color,
-} from "../../Helper/Common";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { connect } from "react-redux";
 import * as actions from "../../actions";
 import Feather from "react-native-vector-icons/Feather";
@@ -34,18 +18,38 @@ interface Auth {
 
 interface State {
   auth: Auth;
+  settings: Settings;
+}
+
+interface Colors {
+  fourth_color: string;
+  main_color: string;
+  primary_color: string;
+  secondary_color: string;
+  third_color: string;
+}
+
+interface Settings {
+  colors: Colors;
+  logo: string;
+  errorMessage: string;
 }
 
 interface Props {
   address: Address;
   auth: Auth;
+  settings: Settings;
   deleteAddress: (UserId: string, AddressId: string) => any;
 }
 
 const Address = (props: Props) => {
-  console.log(props);
   return (
-    <View style={styles.Container}>
+    <View
+      style={[
+        styles.Container,
+        { backgroundColor: props.settings.colors.secondary_color },
+      ]}
+    >
       <View style={{ flexDirection: "row", justifyContent: "center" }}>
         <View style={{ flex: 6, flexDirection: "column" }}>
           <Text style={styles.StreetStyle}>{props.address.street}</Text>
@@ -66,7 +70,6 @@ const Address = (props: Props) => {
 
 const styles = StyleSheet.create({
   Container: {
-    backgroundColor: Secondary_color(),
     paddingLeft: 10,
     paddingVertical: 10,
   },
@@ -82,6 +85,7 @@ const styles = StyleSheet.create({
 const mapStatetoProps = (state: State) => {
   return {
     auth: state.auth,
+    settings: state.settings,
   };
 };
 

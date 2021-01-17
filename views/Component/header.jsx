@@ -7,9 +7,6 @@ import {
   SafeAreaView,
 } from "react-native";
 import { width } from "react-native-dimension";
-import { Main_color, Secondary_color } from "../../Helper/Common";
-import { connect } from "react-redux";
-import * as actions from "../../actions";
 import OsWrapper from "./OsWrapper";
 
 const Header = (props) => {
@@ -22,7 +19,7 @@ const Header = (props) => {
   };
 
   return (
-    <OsWrapper>
+    <OsWrapper backColor={props.settings.colors.main_color}>
       <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
         <TextInput
           onChangeText={(value) => setSearchText(value)}
@@ -32,7 +29,10 @@ const Header = (props) => {
           placeholderTextColor="grey"
           autoCorrect={false}
           autoCapitalize="none"
-          style={[styles.inputTxt, { borderColor: Main_color() }]}
+          style={[
+            styles.inputTxt,
+            { borderColor: props.settings.colors.main_color },
+          ]}
         />
       </View>
     </OsWrapper>
@@ -59,13 +59,4 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapStatetoProps = (state) => {
-  return {
-    products: state.products.products,
-  };
-};
-
-export default connect(
-  mapStatetoProps,
-  actions
-)(Header);
+export default Header;

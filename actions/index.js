@@ -36,9 +36,18 @@ import {
   AUTH_ERROR,
   UPDATE_USER,
   UPDATE_USER_ERROR,
+  GET_APP_SETTINGS,
+  SETTINGS_ERROR,
 } from "./types";
 import HttpHelper from "../Helper/HttpHelper";
 import { store } from "../configureStore";
+import * as firebase from "firebase";
+import "firebase/firestore";
+import { firebaseConfig } from "../Helper/Constant";
+
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+}
 
 export const getProducts = (body) => {
   return async (dispatch) => {
@@ -222,31 +231,6 @@ export const getCart = () => {
 
       dispatch({ type: GET_CART, payload: currentCart });
     }
-    // try {
-    //   const response = await HttpHelper.doPost('get_cart', {
-    //     user_id: body,
-    //   });
-    //   let tempData = response.data;
-    //   tempData.forEach(item => {
-    //     item.quantity = 1;
-    //   });
-    //   dispatch({
-    //     type: GET_CART,
-    //     payload: tempData,
-    //   });
-    // } catch (error) {
-    //   if (error.status === 400) {
-    //     dispatch({
-    //       type: CART_ERROR,
-    //       payload: error.data.details[0].message,
-    //     });
-    //   } else {
-    //     dispatch({
-    //       type: CART_ERROR,
-    //       payload: error.data,
-    //     });
-    //   }
-    // }
   };
 };
 
@@ -630,6 +614,36 @@ export const addCard = (user_id, card) => {
     } catch (error) {
       return dispatch({
         type: AUTH_ERROR,
+        payload: error,
+      });
+    }
+  };
+};
+export const getAppSettings = () => {
+  return async (dispatch) => {
+    try {
+      const colors = await firebase
+        .firestore()
+        .collection("setting")
+        .doc("color")
+        .get();
+      const logo = await firebase
+        .firestore()
+        .collection("setting")
+        .doc("logo")
+        .get();
+      let settings = {
+        colors: colors.data(),
+        logo: logo.data(),
+      };
+      return dispatch({
+        type: GET_APP_SETTINGS,
+        payload: settings,
+      });
+    } catch (error) {
+      console.log("eroare?", error);
+      return dispatch({
+        type: SETTINGS_ERROR,
         payload: error,
       });
     }

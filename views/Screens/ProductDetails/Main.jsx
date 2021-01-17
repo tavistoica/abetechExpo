@@ -15,7 +15,6 @@ import {
   SafeAreaView,
 } from "react-native";
 import { Input, Button, Avatar, Header, Card } from "react-native-elements";
-import { GlobalImgs, HomeImgs } from "@assets/imgs";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import AntDesignIcon from "react-native-vector-icons/AntDesign";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";

@@ -1,21 +1,5 @@
 import React from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  ImageBackground,
-  StatusBar,
-  TouchableOpacity,
-  TextInput,
-  ActivityIndicator,
-} from "react-native";
-import {
-  Main_color,
-  Primary_color,
-  Secondary_color,
-  Third_color,
-  Fourth_color,
-} from "../../../Helper/Common";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { connect } from "react-redux";
 import * as actions from "../../../actions";
 import Feather from "react-native-vector-icons/Feather";
@@ -23,7 +7,12 @@ import PropTypes from "prop-types";
 
 const CardComponent = (props) => {
   return (
-    <View style={styles.Container}>
+    <View
+      style={[
+        styles.Container,
+        { backgroundColor: props.settings.colors.Secondary_color },
+      ]}
+    >
       <View style={{ flexDirection: "row", justifyContent: "center" }}>
         <View style={{ flex: 6, flexDirection: "column" }}>
           <Text style={styles.StreetStyle}>
@@ -49,7 +38,6 @@ const CardComponent = (props) => {
 
 const styles = StyleSheet.create({
   Container: {
-    backgroundColor: Secondary_color(),
     paddingLeft: 10,
     paddingVertical: 10,
   },
@@ -66,6 +54,7 @@ const mapStatetoProps = (state) => {
   return {
     category: state.products.category,
     auth: state.auth,
+    settings: state.settings,
   };
 };
 
@@ -77,5 +66,6 @@ export default connect(
 CardComponent.propTypes = {
   auth: PropTypes.func.isRequired,
   category: PropTypes.object.isRequired,
+  settings: PropTypes.object.isRequired,
   card: PropTypes.object.isRequired,
 };

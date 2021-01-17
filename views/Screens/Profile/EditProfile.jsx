@@ -1,35 +1,18 @@
 import React from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
-  TouchableOpacity,
-  Platform,
-  SafeAreaView,
-} from "react-native";
-import { Avatar } from "react-native-elements";
-import { GlobalImgs } from "@assets/imgs";
-import { width, height } from "react-native-dimension";
+import { View, Text, StyleSheet, ScrollView } from "react-native";
+import { width } from "react-native-dimension";
 import ImagePicker from "react-native-image-picker";
 import CustomModal from "../../Component/CustomModal";
-import { FAB } from "react-native-paper";
 import {
   _retrieveData,
   _storeData,
   _getUserDetail,
 } from "../../../Helper/Util";
 import Spinner from "react-native-loading-spinner-overlay";
-import { connect } from "react-redux";
-import * as actions from "../../../actions";
-import {
-  Main_color,
-  Primary_color,
-  Secondary_color,
-  Third_color,
-  Fourth_color,
-} from "../../../Helper/Common";
-import SignIn from "../../Auth/SignIn";
+import ListItem from "../../Component/ListItem";
+import OsWrapper from "../../Component/OsWrapper";
+import LogoutButton from "../../Component/LogoutButton";
+import UserAvatar from "../../Component/UserAvatar";
 
 class EditProfile extends React.Component {
   constructor(props) {
@@ -105,41 +88,6 @@ class EditProfile extends React.Component {
     this.setState({ isModalVisible: true });
   };
 
-  listItem = (text, redirect) => {
-    return (
-      <TouchableOpacity
-        onPress={() => {
-          this.props.navigation.navigate(redirect);
-        }}
-      >
-        <View
-          style={{
-            flexDirection: "row",
-            backgroundColor: Secondary_color(),
-            width: "100%",
-            marginBottom: 1,
-            paddingVertical: 12,
-            textAlignVertical: "center",
-
-            color: "#fff",
-          }}
-        >
-          <Text
-            style={{
-              width: "100%",
-              fontSize: 20,
-              textAlign: "center",
-              textAlignVertical: "center",
-              color: "#fff",
-            }}
-          >
-            {text}
-          </Text>
-        </View>
-      </TouchableOpacity>
-    );
-  };
-
   onModalResult = (res) => {
     this.setState({ isModalVisible: false });
     if (res === -1) {
@@ -153,9 +101,9 @@ class EditProfile extends React.Component {
     }
   };
 
-  profileContent = () => {
+  render() {
     return (
-      <>
+      <OsWrapper>
         <View style={{ flex: 16, flexDirection: "column" }}>
           <Spinner visible={this.state.loading} />
           <CustomModal
@@ -165,37 +113,10 @@ class EditProfile extends React.Component {
             buttons={["Take Photo from Camera", "Select from Image Library"]}
           />
           <View style={styles.container}>
-            <View style={styles.fixedView}>
-              <FAB
-                style={styles.fab}
-                small
-                color="white"
-                icon="login"
-                onPress={() => {
-                  this.props.removeUser();
-                  this.props.clearCart();
-                  this.props.deleteFavorite();
-                }}
-              />
-            </View>
+            <LogoutButton {...this.props} />
             <View style={styles.banner_container}>
               <View style={styles.searchBar}>
-                <View>
-                  <Avatar
-                    rounded
-                    onPress={() => this.showModal()}
-                    containerStyle={{ borderWidth: 2, borderColor: "#fff" }}
-                    size={width(25)}
-                    source={
-                      this.props.auth.photo == null ||
-                      this.props.auth.photo.original == null
-                        ? GlobalImgs.default_user
-                        : {
-                            uri: this.props.auth.photo.original,
-                          }
-                    }
-                  />
-                </View>
+                <UserAvatar {...this.props} />
                 <Text
                   style={{ marginTop: 10, fontSize: 20, fontWeight: "bold" }}
                 >
@@ -204,57 +125,45 @@ class EditProfile extends React.Component {
                 <Text style={{ marginTop: 5, marginBottom: 10, fontSize: 15 }}>
                   {`${this.props.auth.email} `}
                 </Text>
-                {this.listItem("Manage Account Details", "changeDetails")}
+                <ListItem
+                  text={"Manage Account Details"}
+                  redirect={"changeDetails"}
+                  {...this.props}
+                />
 
                 <ScrollView style={{ width: width(100), padding: 10 }}>
-                  {this.listItem("Order History")}
-                  {this.listItem("Manage Addresses", "manageAddresses")}
-                  {this.listItem("Manage Payment Methods", "manageCards")}
-                  {this.listItem("Change Password", "changePassword")}
-                  {this.listItem("Technical Support")}
+                  <ListItem text={"Order History"} {...this.props} />
+                  <ListItem
+                    text={"Manage Addresses"}
+                    redirect={"manageAddresses"}
+                    {...this.props}
+                  />
+                  <ListItem
+                    text={"Manage Payment Methods"}
+                    redirect={"manageCards"}
+                    {...this.props}
+                  />
+                  <ListItem
+                    text={"Change Password"}
+                    redirect={"changePassword"}
+                    {...this.props}
+                  />
+                  <ListItem text={"Technical Support"} {...this.props} />
                 </ScrollView>
               </View>
             </View>
           </View>
         </View>
-      </>
+      </OsWrapper>
     );
-  };
-
-  render() {
-    return (
-      <>
-        {Platform.OS === "ios" ? (
-          <SafeAreaView style={{ flex: 1, flexDirection: "column" }}>
-            {this.props.auth.id ? this.profileContent() : <SignIn />}
-          </SafeAreaView>
-        ) : (
-          <View style={{ flex: 1, flexDirection: "column" }}>
-            {this.profileContent()}
-          </View>
-        )}
-      </>
-    );
-    // return <View style={{ flex: 1, flexDirection: "column" }} />;
   }
 }
 
 const styles = StyleSheet.create({
-  fixedView: {
-    position: "absolute",
-    marginRight: 16,
-    right: 0,
-    top: "0%",
-    flexDirection: "row",
-    justifyContent: "flex-start",
-  },
   container: {
     flex: 1,
     flexDirection: "column",
-    // justifyContent: "flex-start",
     alignItems: "center",
-    // paddingLeft: 30,
-    // paddingRight: 30,
     paddingTop: 30,
     paddingBottom: 10,
     borderTopLeftRadius: 20,
@@ -269,56 +178,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginBottom: 20,
   },
-  list_container: {
-    flex: 1,
-    width: "100%",
-    alignSelf: "center",
-  },
-  title_label: {
-    color: "#000",
-    fontSize: 18,
-    fontWeight: "bold",
-    alignSelf: "center",
-    marginLeft: 24,
-    marginBottom: 24,
-  },
-  title: {},
-  inputTxt: {
-    textAlignVertical: "center",
-    fontSize: 16,
-    height: "100%",
-    textAlign: "center",
-    borderRadius: 16,
-    borderWidth: 1,
-    flex: 1,
-    marginLeft: -40,
-  },
   searchBar: {
     flex: 1,
     flexDirection: "column",
     justifyContent: "flex-start",
     alignItems: "center",
   },
-  fab: {
-    backgroundColor: Main_color(),
-  },
-  formItem: {
-    width: "100%",
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-    padding: 10,
-    marginLeft: 10,
-  },
 });
 
-const mapStatetoProps = (state) => {
-  return {
-    auth: state.auth,
-  };
-};
-
-export default connect(
-  mapStatetoProps,
-  actions
-)(EditProfile);
+export default EditProfile;

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -6,13 +6,6 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from "react-native";
-import {
-  Main_color,
-  Primary_color,
-  Secondary_color,
-  Third_color,
-  Fourth_color,
-} from "../../Helper/Common";
 import { width } from "react-native-dimension";
 import { ScrollView } from "react-native-gesture-handler";
 import { connect } from "react-redux";
@@ -67,10 +60,18 @@ const AddAddress = (props) => {
         />
       </View>
       <TouchableOpacity
-        style={[styles.button, { backgroundColor: Primary_color() }]}
+        style={[
+          styles.button,
+          { backgroundColor: this.props.settings.colors.primary_color },
+        ]}
         onPress={() => AddAddressButton(props, street, city, county, country)}
       >
-        <Text style={[styles.buttonText, { color: Secondary_color() }]}>
+        <Text
+          style={[
+            styles.buttonText,
+            { color: this.props.settings.colors.secondary_color },
+          ]}
+        >
           Add
         </Text>
       </TouchableOpacity>
@@ -119,6 +120,7 @@ const styles = StyleSheet.create({
 const mapStatetoProps = (state) => {
   return {
     auth: state.auth,
+    settings: state.settings,
   };
 };
 

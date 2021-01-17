@@ -3,22 +3,20 @@ import { TouchableOpacity, StyleSheet } from "react-native";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import { width } from "react-native-dimension";
-import {
-  Secondary_color,
-  Primary_color,
-  Main_color,
-  Third_color,
-} from "../../Helper/Common";
 import OsWrapper from "./OsWrapper";
 import * as RootNavigation from "./RootNavigation";
+import { connect } from "react-redux";
+import * as actions from "../../actions";
+
+let colors = {};
 
 const BottomMenu = (props) => {
-  console.log("props", props);
+  colors = props.settings.colors;
   return (
     <OsWrapper
       styleIOS={styles.headerIos}
       styleAndroid={styles.headerAndroid}
-      backColor={Main_color()}
+      backColor={props.settings.colors.main_color}
     >
       <TouchableOpacity
         style={styles.drawerItem}
@@ -28,7 +26,7 @@ const BottomMenu = (props) => {
       >
         <MaterialIcons
           name="search"
-          color={Secondary_color()}
+          color={props.settings.colors.secondary_color}
           size={26}
           style={styles.drawerItem_icon}
         />
@@ -41,7 +39,7 @@ const BottomMenu = (props) => {
       >
         <MaterialIcons
           name="favorite-border"
-          color={Secondary_color()}
+          color={props.settings.colors.secondary_color}
           size={26}
           style={styles.drawerItem_icon}
         />
@@ -54,7 +52,7 @@ const BottomMenu = (props) => {
       >
         <MaterialIcons
           name="help"
-          color={Secondary_color()}
+          color={props.settings.colors.secondary_color}
           size={43}
           style={styles.drawerItem_icon}
         />
@@ -67,7 +65,7 @@ const BottomMenu = (props) => {
       >
         <AntDesign
           name="shoppingcart"
-          color={Secondary_color()}
+          color={props.settings.colors.secondary_color}
           size={26}
           style={styles.drawerItem_icon}
         />
@@ -75,12 +73,12 @@ const BottomMenu = (props) => {
       <TouchableOpacity
         style={styles.drawerItem}
         onPress={async () => {
-          RootNavigation.navigate("edit_profile");
+          RootNavigation.navigate("profile");
         }}
       >
         <MaterialIcons
           name="person-outline"
-          color={Secondary_color()}
+          color={props.settings.colors.secondary_color}
           size={26}
           style={styles.drawerItem_icon}
         />
@@ -100,7 +98,7 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     width: width(100),
     height: "9%",
-    backgroundColor: Main_color(),
+    backgroundColor: colors.main_color,
   },
   headerAndroid: {
     flexDirection: "row",
@@ -109,7 +107,7 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     width: width(100),
     height: "5%",
-    backgroundColor: Main_color(),
+    backgroundColor: colors.main_color,
   },
   drawerItem: {
     flexDirection: "row",
@@ -123,4 +121,13 @@ const styles = StyleSheet.create({
   },
 });
 
-export default BottomMenu;
+const mapStatetoProps = (state) => {
+  return {
+    settings: state.settings,
+  };
+};
+
+export default connect(
+  mapStatetoProps,
+  actions
+)(BottomMenu);

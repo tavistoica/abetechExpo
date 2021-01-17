@@ -83,7 +83,7 @@ class Product extends React.Component {
                     this.props.item.photos.length === 0 ||
                     this.props.item.photos[0] == null
                       ? ""
-                      : this.props.item.photos[0].original,
+                      : this.props.item.photos[0],
                 }}
                 indicatorProps={{
                   size: 30,

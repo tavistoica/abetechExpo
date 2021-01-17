@@ -107,18 +107,7 @@ const Favs = (props) => {
           />
         )}
       </View>
-      <Modal
-        isVisible={showModal}
-        style={{
-          width: width(100),
-          height: height(100),
-          backgroundColor: "#fff",
-          margin: 0,
-          padding: 0,
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
+      <Modal isVisible={showModal} style={styles.modal}>
         <Bottom
           item={currrentProduct}
           width={width(90)}
@@ -134,6 +123,15 @@ const Favs = (props) => {
 const styles = StyleSheet.create({
   menu: {
     paddingLeft: 10,
+  },
+  modal: {
+    width: width(100),
+    height: height(100),
+    backgroundColor: "#fff",
+    margin: 0,
+    padding: 0,
+    justifyContent: "center",
+    alignItems: "center",
   },
   header: {
     flex: 1,
@@ -153,42 +151,6 @@ const styles = StyleSheet.create({
     paddingLeft: 30,
     paddingRight: 30,
     width: width(100),
-  },
-  banner_container: {
-    flex: 1,
-    flexDirection: "column",
-    width: "100%",
-    justifyContent: "center",
-    alignItems: "center",
-    marginBottom: 20,
-  },
-  list_container: {
-    flex: 1,
-    width: "100%",
-    alignSelf: "center",
-  },
-  title_label: {
-    color: "#000",
-    fontSize: 18,
-    fontWeight: "bold",
-    alignSelf: "center",
-    marginLeft: 24,
-    marginBottom: 24,
-  },
-  title: {},
-  searchBar: {
-    flex: 1,
-    width: "100%",
-  },
-  formItem: {
-    flexDirection: "row",
-    width: "100%",
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 24,
-    borderRadius: 10,
-    borderWidth: 1,
-    borderColor: "#000",
   },
 });
 

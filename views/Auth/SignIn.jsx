@@ -1,25 +1,14 @@
-import React from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
   View,
   Text,
   StyleSheet,
-  ImageBackground,
-  StatusBar,
   TouchableOpacity,
-  Image,
   TextInput,
-  FlatList,
-  SafeAreaView,
 } from "react-native";
-import { Input, Button, Avatar } from "react-native-elements";
-import { GlobalImgs, HomeImgs } from "@assets/imgs";
 import AntDesignIcon from "react-native-vector-icons/AntDesign";
-import { width, height, totalSize } from "react-native-dimension";
-import {
-  api_base_url,
-  Msg_Login_Success,
-  Msg_Login_Failed,
-} from "../../Helper/Constant";
+import { width, height } from "react-native-dimension";
+import { Msg_Login_Success } from "../../Helper/Constant";
 import {
   _retrieveData,
   _storeData,
@@ -27,170 +16,153 @@ import {
   _getSemesterSlug,
 } from "../../Helper/Util";
 import Spinner from "react-native-loading-spinner-overlay";
-import HttpHelper from "../../Helper/HttpHelper";
-import {
-  Main_color,
-  Primary_color,
-  Secondary_color,
-  Third_color,
-  Fourth_color,
-} from "../../Helper/Common";
 import { connect } from "react-redux";
 import Register from "./Register";
 import RBSheet from "react-native-raw-bottom-sheet";
 import * as actions from "../../actions";
 
-class SignIn extends React.Component {
-  constructor(props) {
-    super(props);
-    this.props = props;
-    this.state = {
-      loading: false,
-      status: "",
-      email: "",
-      password: "",
-      err_msg: "",
-    };
-  }
+const SignIn = (props) => {
+  const [loading, setLoading] = useState(false);
+  const [status, setStatus] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
-  close = () => {
-    this.props.close();
+  const RegisterModal = useRef(null);
+
+  useEffect(() => {
+    setLoading(false);
+    setError(props.auth.errorMessage);
+  }, [props.auth.errorMessage]);
+
+  const close = () => {
+    props.close();
   };
 
-  openRegister = () => {
+  const openRegister = () => {
     this.RegisterModal.open();
   };
-  closeRegister = () => {
+  const closeRegister = () => {
     this.RegisterModal.close();
   };
 
-  doSign = async () => {
-    this.setState({
-      err_msg: "",
-      loading: true,
-    });
+  const doSign = async () => {
+    setError("");
+    setLoading(true);
 
-    await this.props.logUser(this.state.email, this.state.password);
-    if (this.props.auth.errorMessage !== null) {
-      this.setState({ loading: false });
-      this.setState({ err_msg: this.props.auth.errorMessage });
-    } else if (this.props.auth.userId !== null) {
-      await _storeData("user", this.props.auth);
-      this.props.goHome();
-      this.setState({ status: Msg_Login_Success, loading: false });
+    props.logUser(email, password);
+    if (props.auth.errorMessage !== null) {
+      setError(props.auth.errorMessage);
+    } else if (props.auth.userId !== null) {
+      await _storeData("user", props.auth);
+      props.goHome();
+      setStatus(Msg_Login_Success);
     } else {
-      this.setState({ status: this.props.auth.errorMessage, loading: false });
+      setLoading(false);
     }
   };
 
-  render() {
-    return (
-      <>
-        <Spinner visible={this.state.loading} />
-        <View style={styles.container}>
-          <View style={styles.banner_container}>
-            <View style={styles.title}>
-              <Text style={styles.title_label}>Sign In</Text>
+  return (
+    <>
+      <Spinner visible={loading} />
+      <View style={styles.container}>
+        <View style={styles.banner_container}>
+          <View style={styles.title}>
+            <Text style={styles.title_label}>Sign In</Text>
+          </View>
+          <View style={styles.title}>
+            <Text style={{ color: "#ff0000" }}>{status}</Text>
+          </View>
+          <View style={styles.searchBar}>
+            {error != "" ? (
+              <Text style={{ color: "#ff0000" }}>{error}</Text>
+            ) : null}
+            <View style={styles.formItem}>
+              <AntDesignIcon
+                style={{ marginHorizontal: -30 }}
+                size={24}
+                color="#3434ff77"
+                name="mail"
+              />
+              <TextInput
+                onChangeText={(value) => setEmail(value)}
+                placeholder="Your email"
+                autoCapitalize="none"
+                style={styles.inputTxt}
+              />
             </View>
-            <View style={styles.title}>
-              <Text style={{ color: "#ff0000" }}>{this.state.status}</Text>
+            <View style={styles.formItem}>
+              <AntDesignIcon
+                style={{ marginHorizontal: -30 }}
+                size={24}
+                color="#3434ff77"
+                name="lock"
+              />
+              <TextInput
+                onChangeText={(value) => setPassword(value)}
+                placeholder="Your password"
+                secureTextEntry={true}
+                autoCapitalize="none"
+                style={styles.inputTxt}
+              />
             </View>
-            <View style={styles.searchBar}>
-              {this.state.err_msg != "" ? (
-                <Text style={{ color: "#ff0000" }}>{this.state.err_msg}</Text>
-              ) : null}
-              <View style={styles.formItem}>
-                <AntDesignIcon
-                  style={{ marginHorizontal: -30 }}
-                  size={24}
-                  color="#3434ff77"
-                  name="mail"
-                />
-                <TextInput
-                  onChangeText={(value) => this.setState({ email: value })}
-                  placeholder="Your email"
-                  autoCapitalize="none"
-                  style={styles.inputTxt}
-                />
-              </View>
-              <View style={styles.formItem}>
-                <AntDesignIcon
-                  style={{ marginHorizontal: -30 }}
-                  size={24}
-                  color="#3434ff77"
-                  name="lock"
-                />
-                <TextInput
-                  onChangeText={(value) => this.setState({ password: value })}
-                  placeholder="Your password"
-                  secureTextEntry={true}
-                  autoCapitalize="none"
-                  style={styles.inputTxt}
-                />
-              </View>
-              {/* {this.state.err_msg != "" ? (
-                <Text style={{ color: "#ff0000" }}>{this.state.err_msg}</Text>
-              ) : null} */}
-
-              <View style={{ padding: 10, width: "100%" }}>
-                <TouchableOpacity
-                  onPress={() => this.doSign()}
-                  style={[styles.button, { backgroundColor: Primary_color() }]}
+            <View style={{ padding: 10, width: "100%" }}>
+              <TouchableOpacity
+                onPress={() => doSign()}
+                style={[
+                  styles.button,
+                  { backgroundColor: props.settings.colors.main_color },
+                ]}
+              >
+                <Text
+                  style={[
+                    styles.buttonText,
+                    { color: props.settings.colors.secondary_color },
+                  ]}
                 >
-                  <Text
-                    style={[styles.buttonText, { color: Secondary_color() }]}
-                  >
-                    Login
-                  </Text>
-                </TouchableOpacity>
-              </View>
-              <View style={{ padding: 10, width: "100%" }}>
-                <TouchableOpacity
-                  style={[styles.button, { backgroundColor: Primary_color() }]}
-                  onPress={() => this.openRegister()}
+                  Login
+                </Text>
+              </TouchableOpacity>
+            </View>
+            <View style={{ padding: 10, width: "100%" }}>
+              <TouchableOpacity
+                style={[
+                  styles.button,
+                  { backgroundColor: props.settings.colors.main_color },
+                ]}
+                onPress={() => openRegister()}
+              >
+                <Text
+                  style={[
+                    styles.buttonText,
+                    { color: props.settings.colors.secondary_color },
+                  ]}
                 >
-                  <Text
-                    style={[styles.buttonText, { color: Secondary_color() }]}
-                  >
-                    Sign Up
-                  </Text>
-                </TouchableOpacity>
-              </View>
+                  Sign Up
+                </Text>
+              </TouchableOpacity>
             </View>
           </View>
-          <RBSheet
-            ref={(ref) => {
-              this.RegisterModal = ref;
-            }}
-            height={height(93)}
-            openDuration={250}
-            customStyles={{
-              container: {
-                justifyContent: "center",
-                alignItems: "center",
-                borderTopLeftRadius: 20,
-                borderTopRightRadius: 20,
-              },
-            }}
-          >
-            <Register close={this.closeRegister} goHome={this.goHome} />
-          </RBSheet>
         </View>
-      </>
-    );
-  }
-}
-
-const mapStatetoProps = (state) => {
-  return {
-    auth: state.auth,
-  };
+        <RBSheet
+          ref={RegisterModal}
+          height={height(93)}
+          openDuration={250}
+          customStyles={{
+            container: {
+              justifyContent: "center",
+              alignItems: "center",
+              borderTopLeftRadius: 20,
+              borderTopRightRadius: 20,
+            },
+          }}
+        >
+          <Register close={closeRegister} goHome={props.goHome} {...props} />
+        </RBSheet>
+      </View>
+    </>
+  );
 };
-
-export default connect(
-  mapStatetoProps,
-  actions
-)(SignIn);
 
 const styles = StyleSheet.create({
   container: {
@@ -267,3 +239,5 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
 });
+
+export default SignIn;

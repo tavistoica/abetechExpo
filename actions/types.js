@@ -35,3 +35,5 @@ export const ADD_CARD = "ADD_CARD";
 export const DELETE_CARD = "DELETE_CARD";
 export const UPDATE_USER_ERROR = "UPDATE_USER_ERROR";
 export const UPDATE_USER = "UPDATE_USER";
+export const GET_APP_SETTINGS = "GET_APP_SETTINGS";
+export const SETTINGS_ERROR = "SETTINGS_ERROR";

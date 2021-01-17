@@ -157,7 +157,7 @@ const ChangeDetails = (props) => {
         >
           <SideViewHeader
             name="Change details"
-            redirect={"edit_profile"}
+            redirect={"profile"}
             navigation={props.navigation}
           />
           {renderContent()}
@@ -166,7 +166,7 @@ const ChangeDetails = (props) => {
         <View style={{ flex: 1, flexDirection: "column" }}>
           <SideViewHeader
             name="Change details"
-            redirect={"edit_profile"}
+            redirect={"profile"}
             navigation={props.navigation}
           />
           {renderContent()}

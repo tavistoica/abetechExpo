@@ -24,7 +24,6 @@ import {
   Header,
   Card,
 } from "react-native-elements";
-import { GlobalImgs, HomeImgs } from "@assets/imgs";
 import Feather from "react-native-vector-icons/Feather";
 import AntDesignIcon from "react-native-vector-icons/AntDesign";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";

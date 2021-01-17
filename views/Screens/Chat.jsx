@@ -22,11 +22,6 @@ import { _getAllMsgs } from "../../Helper/FirebaseHelper";
 import HttpHelper from "../../Helper/HttpHelper";
 import CustomModal from "../Component/CustomModal";
 import ImagePicker from "react-native-image-picker";
-import {
-  Main_color,
-  Primary_color,
-  Secondary_color,
-} from "../../Helper/Common";
 import { connect } from "react-redux";
 import * as actions from "../../actions";
 
@@ -198,7 +193,11 @@ class Chat extends React.Component {
           }}
           style={styles.menu}
         >
-          <Entypo name="menu" size={32} color={Secondary_color()} />
+          <Entypo
+            name="menu"
+            size={32}
+            color={this.props.settings.colors.secondary_color}
+          />
         </TouchableOpacity>
         <View
           style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
@@ -206,7 +205,7 @@ class Chat extends React.Component {
           <Text
             style={{
               fontSize: 20,
-              color: Secondary_color(),
+              color: this.props.settings.colors.secondary_color,
               fontWeight: "bold",
             }}
           >
@@ -227,7 +226,10 @@ class Chat extends React.Component {
         >
           <AntDesignIcon
             name="camera"
-            style={{ color: Secondary_color(), fontWeight: "bold" }}
+            style={{
+              color: this.props.settings.colors.secondary_color,
+              fontWeight: "bold",
+            }}
             size={32}
           />
         </TouchableOpacity>
@@ -240,12 +242,18 @@ class Chat extends React.Component {
           style={styles.inputTxt}
         />
         <TouchableOpacity
-          style={[styles.btn, { backgroundColor: Primary_color() }]}
+          style={[
+            styles.btn,
+            { backgroundColor: props.settings.colors.primary_color },
+          ]}
           onPress={() => this.sendMessage()}
         >
           <MaterialIcons
             name="send"
-            style={{ color: Secondary_color(), fontWeight: "bold" }}
+            style={{
+              color: props.settings.colors.secondary_color,
+              fontWeight: "bold",
+            }}
             size={32}
           />
         </TouchableOpacity>
@@ -263,9 +271,23 @@ class Chat extends React.Component {
           buttons={["Take Photo from Camera", "Select from Image Library"]}
         />
         {Platform.OS === "ios" ? (
-          <SafeAreaView style={styles.header}>{this.header()}</SafeAreaView>
+          <SafeAreaView
+            style={[
+              styles.header,
+              { backgroundColor: this.props.settings.colors.main_color },
+            ]}
+          >
+            {this.header()}
+          </SafeAreaView>
         ) : (
-          <View style={styles.header}>{this.header()}</View>
+          <View
+            style={[
+              styles.header,
+              { backgroundColor: this.props.settings.colors.main_color },
+            ]}
+          >
+            {this.header()}
+          </View>
         )}
         <View style={styles.container}>
           <Spinner visible={this.state.loading} />
@@ -291,9 +313,23 @@ class Chat extends React.Component {
           </ScrollView>
         </View>
         {Platform.OS === "ios" ? (
-          <SafeAreaView style={styles.msg_input}>{this.sendBar()}</SafeAreaView>
+          <SafeAreaView
+            style={[
+              styles.msg_input,
+              { backgroundColor: this.props.settings.colors.secondary_color },
+            ]}
+          >
+            {this.sendBar()}
+          </SafeAreaView>
         ) : (
-          <View style={styles.msg_input}>{this.sendBar()}</View>
+          <View
+            style={[
+              styles.msg_input,
+              { backgroundColor: this.props.settings.colors.secondary_color },
+            ]}
+          >
+            {this.sendBar()}
+          </View>
         )}
       </View>
     );
@@ -312,7 +348,6 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     width: width(100),
     height: 55,
-    backgroundColor: Main_color(),
   },
   container: {
     flex: 16,
@@ -327,7 +362,6 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
     marginBottom: 20,
-    // backgroundColor : '#00f'
   },
   msg_list: {
     flex: 1,
@@ -340,7 +374,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: Main_color(),
     width: width(100),
   },
   inputTxt: {
@@ -365,6 +398,7 @@ const styles = StyleSheet.create({
 const mapStatetoProps = (state) => {
   return {
     auth: state.auth,
+    settings: state.settings,
   };
 };
 

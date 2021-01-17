@@ -1,6 +1,5 @@
 import React from "react";
 import { Platform, SafeAreaView, View, StyleSheet } from "react-native";
-import { Main_color } from "../../Helper/Common";
 
 const OsWrapper = (props) => {
   const iosStyle = props.styleIOS ? props.styleIOS : styles.defaultStyle;
