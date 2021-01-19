@@ -29,7 +29,7 @@ const SideViewHeader = (props) => {
       </View>
       <TouchableOpacity
         onPress={() => {
-          props.navigation.navigate("profile");
+          props.navigation.navigate(props.redirect);
         }}
         style={{ marginLeft: "5%", position: "absolute" }}
       >

@@ -175,7 +175,6 @@ export default class Register extends React.Component {
           const source = { uri: response.uri };
           // You can also display the image using data:
           // const source = { uri: 'data:image/jpeg;base64,' + response.data };
-          // console.log(response.data)
           this.setState({
             photoUrl: source,
             base64Image: response.data,
@@ -205,7 +204,6 @@ export default class Register extends React.Component {
           const source = { uri: response.uri };
           // You can also display the image using data:
           // const source = { uri: 'data:image/jpeg;base64,' + response.data };
-          // console.log(response.data)
           this.setState({
             photoUrl: source,
             base64Image: response.data,

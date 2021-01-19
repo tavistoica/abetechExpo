@@ -16,10 +16,8 @@ import {
   _getSemesterSlug,
 } from "../../Helper/Util";
 import Spinner from "react-native-loading-spinner-overlay";
-import { connect } from "react-redux";
 import Register from "./Register";
 import RBSheet from "react-native-raw-bottom-sheet";
-import * as actions from "../../actions";
 
 const SignIn = (props) => {
   const [loading, setLoading] = useState(false);

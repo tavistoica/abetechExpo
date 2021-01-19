@@ -3,27 +3,14 @@ import {
   View,
   Text,
   StyleSheet,
-  ImageBackground,
-  StatusBar,
-  ScrollView,
   TouchableOpacity,
-  Image,
   TextInput,
-  Platform,
-  FlatList,
-  SafeAreaView,
 } from "react-native";
-import {
-  Main_color,
-  Primary_color,
-  Secondary_color,
-  Third_color,
-  Fourth_color,
-} from "../../../Helper/Common";
-import { width, height, totalSize } from "react-native-dimension";
+import { width } from "react-native-dimension";
 import { connect } from "react-redux";
 import * as actions from "../../../actions";
 import SideViewHeader from "../../Component/SideViewHeader";
+import OsWrapper from "../../Component/OsWrapper";
 
 class ChangePassword extends React.Component {
   constructor(props) {
@@ -251,32 +238,16 @@ class ChangePassword extends React.Component {
 
   render() {
     return (
-      <>
-        {Platform.OS === "ios" ? (
-          <SafeAreaView
-            style={{
-              flex: 1,
-              flexDirection: "column",
-            }}
-          >
-            <SideViewHeader
-              name="Change password"
-              redirect={"profile"}
-              navigation={this.props.navigation}
-            />
-            {this.renderContent()}
-          </SafeAreaView>
-        ) : (
-          <View style={{ flex: 1, flexDirection: "column" }}>
-            <SideViewHeader
-              name="Change password"
-              redirect={"profile"}
-              navigation={this.props.navigation}
-            />
-            {this.renderContent()}
-          </View>
-        )}
-      </>
+      <OsWrapper>
+        <View style={{ flex: 1, flexDirection: "column" }}>
+          <SideViewHeader
+            name="Change password"
+            redirect={"profile"}
+            navigation={props.navigation}
+          />
+          {renderContent()}
+        </View>
+      </OsWrapper>
     );
   }
 }

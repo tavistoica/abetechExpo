@@ -83,7 +83,6 @@ const FilterMenu = (props) => {
             }}
           >
             <Picker.Item key={255} label="All" value="all" selectedValue />
-            {console.log(props.category)}
             {props.category.map((item, i) => {
               return (
                 <Picker.Item

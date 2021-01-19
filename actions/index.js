@@ -83,7 +83,6 @@ export const searchProducts = (search) => {
   return async (dispatch) => {
     try {
       const response = await HttpHelper.doPost("product/search", { search });
-      console.log("response", response);
       dispatch({
         type: SEARCH_PRODUCTS,
         payload: response.data ? response.data : [],
@@ -131,11 +130,9 @@ export const getCategory = (body) => {
 export const getFavorite = (body) => {
   return async (dispatch) => {
     try {
-      console.log(body);
       const response = await HttpHelper.doPost("get_favorite", {
         user_id: body,
       });
-      console.log("praa", response);
       dispatch({
         type: GET_FAVORITE,
         payload: response.data,
@@ -163,11 +160,9 @@ export const setFavorite = (user, product) => {
         user_id: user,
         product_id: product,
       });
-      console.log("user", user);
       const response = await HttpHelper.doPost("get_favorite", {
         user_id: user,
       });
-      console.log("nope", response);
       dispatch({
         type: SET_FAVORITE,
         payload: response.data,
@@ -218,17 +213,9 @@ export const deleteFavorite = (user, body) => {
 export const getCart = () => {
   return async (dispatch) => {
     const currentCart = store.getState().cart.cart;
-    console.log("currentCart", currentCart);
-    // const currentCart = await AsyncStorage.getItem("@cartContent");
-    // await AsyncStorage.removeItem("@cartContent");
-
-    console.log("cart", currentCart);
     if (currentCart === undefined || currentCart === null) {
-      console.log("yep");
       dispatch({ type: GET_CART, payload: [] });
     } else {
-      console.log("yep2");
-
       dispatch({ type: GET_CART, payload: currentCart });
     }
   };
@@ -237,20 +224,22 @@ export const getCart = () => {
 export const setCart = (product, increment) => {
   return async (dispatch) => {
     let currentCart = store.getState().cart.cart;
-    // await AsyncStorage.clear();
-    if (currentCart === null) {
+    if (currentCart === []) {
       product.quantity = 1;
       currentCart = [product];
     } else {
       const lookForItem = currentCart.filter((item) => {
-        return item.id === product.id;
+        return (
+          item.title === product.title && item.createdAt === product.createdAt
+        );
       });
       if (lookForItem.length > 0) {
         const indexOfItem = currentCart.findIndex(
-          (item) => item.id === product.id
+          (item) =>
+            item.title === product.title && item.createdAt === product.createdAt
         );
         if (increment) currentCart[indexOfItem].quantity += 1;
-        else currentCart[indexOfItem].quantity -= 1;
+        else if (!increment) currentCart[indexOfItem].quantity -= 1;
         if (currentCart[indexOfItem].quantity <= 0)
           currentCart.splice(indexOfItem, 1);
       } else {
@@ -270,17 +259,20 @@ export const deleteCartItem = (product) => {
     try {
       let currentCart = store.getState().cart.cart;
       const lookForItem = currentCart.filter((item) => {
-        return item.id === product.id;
+        return (
+          item.title === product.title && item.createdAt === product.createdAt
+        );
       });
       if (lookForItem.length > 0) {
         const indexOfItem = currentCart.findIndex(
-          (item) => item.id === product.id
+          (item) =>
+            item.title === product.title && item.createdAt === product.createdAt
         );
         currentCart.splice(indexOfItem, 1);
       }
       dispatch({
         type: DELETE_CART_ITEM,
-        payload: response.data,
+        payload: currentCart,
       });
     } catch (error) {
       if (error.status === 400) {
@@ -403,7 +395,6 @@ export const logUser = (email, password) => {
         email: email,
         pass: password,
       });
-      console.log("rsp", response);
       if (response.err !== undefined) {
         return dispatch({
           type: AUTH_ERROR,
@@ -426,13 +417,11 @@ export const logUser = (email, password) => {
 export const deleteAddress = (user_id, address_id) => {
   return async (dispatch) => {
     try {
-      console.log(user_id);
       const response = await HttpHelper.doPost("users/deleteAddress", {
         user_id,
         address_id,
       });
       if (Array.isArray(response.data)) {
-        console.log("response.data", response.data);
         dispatch({
           type: DELETE_ADDRESS,
           payload: response.data,
@@ -641,7 +630,6 @@ export const getAppSettings = () => {
         payload: settings,
       });
     } catch (error) {
-      console.log("eroare?", error);
       return dispatch({
         type: SETTINGS_ERROR,
         payload: error,

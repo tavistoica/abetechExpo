@@ -54,12 +54,19 @@ export default (state = initialState, action) => {
       };
     case CART_TOTAL:
       const cart = [...state.cart];
+      console.log("cart_total", cart);
       let total = 0;
       cart.forEach((item) => {
         total +=
-          item.data.promotion_price !== ""
-            ? parseInt(item.data.promotion_price) * item.quantity
-            : parseInt(item.data.price) * item.quantity;
+          item.promotion_price !== ""
+            ? parseInt(item.promotion_price) * item.quantity
+            : parseInt(item.price) * item.quantity;
+        console.log(
+          "total_price",
+          item.promotion_price,
+          item.quantity,
+          item.price
+        );
       });
       return {
         ...state,

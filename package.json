@@ -7,7 +7,7 @@
     "web": "expo start --web",
     "eject": "expo eject",
     "lint": "eslint .",
-    "debug": "open 'rndebugger://set-debugger-loc?host=localhost&port=8081'"
+    "debug": "open 'rndebugger://set-debugger-loc?host=localhost&port=19001'"
   },
   "dependencies": {
     "@google-cloud/firestore": "^4.7.0",
@@ -92,9 +92,12 @@
     "@babel/core": "7.9.6",
     "@babel/runtime": "7.9.6",
     "@react-native-community/eslint-config": "0.0.5",
+    "@typescript-eslint/eslint-plugin": "^4.13.0",
+    "@typescript-eslint/parser": "^4.13.0",
     "babel-jest": "24.9.0",
     "credit-card-type": "^9.1.0",
     "eslint": "6.8.0",
+    "eslint-plugin-react": "^7.22.0",
     "jest": "24.9.0",
     "metro-react-native-babel-preset": "0.58.0",
     "react-native-shapes": "^0.1.0",

@@ -1,18 +1,17 @@
-import {api_base_url} from './Constant';
-import axios from 'axios';
+import { api_base_url } from "./Constant";
+import axios from "axios";
 
 const doPost = async (url, body) => {
   try {
     const response = await axios({
-      method: 'post',
+      method: "post",
       url: api_base_url + url,
       headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
+        Accept: "application/json",
+        "Content-Type": "application/json",
       },
       data: body,
     });
-    console.log(url, JSON.stringify(response.data));
     return response.data;
   } catch (err) {
     return err;
@@ -22,10 +21,10 @@ const doPost = async (url, body) => {
 const doPostFile = async (url, formData, onSuccess, onFail) => {
   try {
     let response = await axios({
-      method: 'post',
+      method: "post",
       url: api_base_url + url,
       headers: {
-        'Content-Type': 'multipart/form-data',
+        "Content-Type": "multipart/form-data",
       },
       data: formData,
     });
@@ -36,4 +35,4 @@ const doPostFile = async (url, formData, onSuccess, onFail) => {
   }
 };
 
-export default {doPost, doPostFile};
+export default { doPost, doPostFile };

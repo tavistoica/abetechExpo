@@ -21,13 +21,6 @@ import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import { width, height, totalSize } from "react-native-dimension";
 import Gallery from "react-native-image-gallery";
 import { LinearGradient } from "expo-linear-gradient";
-import {
-  Main_color,
-  Primary_color,
-  Secondary_color,
-  Third_color,
-  Fourth_color,
-} from "../../../Helper/Common";
 
 export default class Main extends React.Component {
   constructor(props) {
@@ -100,7 +93,10 @@ export default class Main extends React.Component {
           <View style={styles.info}>
             <View style={styles.row}>
               <Text
-                style={[styles.title, { color: Third_color() }]}
+                style={[
+                  styles.title,
+                  { color: this.props.settings.colors.main_color },
+                ]}
                 numberOfLines={1}
               >
                 {this.props.item.data.title}
@@ -109,16 +105,26 @@ export default class Main extends React.Component {
             <View style={styles.row}>
               {this.props.item.data.promotion_price == null ||
               this.props.item.data.promotion_price == "" ? (
-                <Text style={[styles.price, { color: Fourth_color() }]}>
+                <Text
+                  style={[
+                    styles.price,
+                    { color: this.props.settings.colors.fourth_color },
+                  ]}
+                >
                   ${this.props.item.data.price}
                 </Text>
               ) : (
-                <Text style={[styles.price, { color: Fourth_color() }]}>
+                <Text
+                  style={[
+                    styles.price,
+                    { color: this.props.settings.colors.fourth_color },
+                  ]}
+                >
                   <Text
                     style={[
                       styles.price,
                       {
-                        color: Fourth_color(),
+                        color: this.props.settings.colors.fourth_color,
                         textDecorationLine: "line-through",
                       },
                     ]}
@@ -132,7 +138,10 @@ export default class Main extends React.Component {
             <View style={styles.row}>
               <Text
                 numberOfLines={2}
-                style={[styles.desc, { color: Third_color() }]}
+                style={[
+                  styles.desc,
+                  { color: this.props.settings.colors.third_color },
+                ]}
               >
                 {this.props.item.data.description}
               </Text>
@@ -140,7 +149,10 @@ export default class Main extends React.Component {
           </View>
           <View style={styles.buttons}>
             <LinearGradient
-              colors={[Main_color(), Primary_color()]}
+              colors={[
+                this.props.settings.colors.main_color,
+                this.props.settings.colors.primary_color,
+              ]}
               style={{ borderRadius: 40 }}
             >
               <TouchableOpacity
@@ -150,7 +162,7 @@ export default class Main extends React.Component {
                 }
               >
                 <MaterialIcons
-                  color={Secondary_color()}
+                  color={this.props.settings.colors.secondary_color}
                   name="chat"
                   size={24}
                 />
@@ -160,35 +172,46 @@ export default class Main extends React.Component {
               style={{
                 padding: 16,
                 borderRadius: 40,
-                backgroundColor: Main_color(),
+                backgroundColor: this.props.settings.colors.main_color,
               }}
               onPress={() => this.props.onSwipedRight(this.props.item)}
             >
-              <AntDesignIcon color={Secondary_color()} name="heart" size={26} />
+              <AntDesignIcon
+                color={this.props.settings.colors.secondary_color}
+                name="heart"
+                size={26}
+              />
             </TouchableOpacity>
             <TouchableOpacity
               style={{
                 padding: 16,
                 borderRadius: 40,
-                backgroundColor: Primary_color(),
+                backgroundColor: this.props.settings.colors.primary_color,
               }}
               onPress={() => this.props.onSwipedBottom(this.props.item)}
             >
               <AntDesignIcon
-                color={Secondary_color()}
+                color={this.props.settings.colors.secondary_color}
                 name="shoppingcart"
                 size={26}
               />
             </TouchableOpacity>
             <LinearGradient
-              colors={[Main_color(), Primary_color()]}
+              colors={[
+                this.props.settings.colors.main_color,
+                this.props.settings.colors.primary_color,
+              ]}
               style={{ borderRadius: 40 }}
             >
               <TouchableOpacity
                 style={{ padding: 8, paddingLeft: 16, paddingRight: 16 }}
                 onPress={() => this.props.onSwipedTop(this.props.item)}
               >
-                <FontAwesome color={Secondary_color()} name="info" size={24} />
+                <FontAwesome
+                  color={this.props.settings.colors.secondary_color}
+                  name="info"
+                  size={24}
+                />
               </TouchableOpacity>
             </LinearGradient>
           </View>

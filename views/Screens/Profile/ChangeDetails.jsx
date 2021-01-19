@@ -1,26 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
   StyleSheet,
   TouchableOpacity,
   TextInput,
-  Platform,
-  SafeAreaView,
 } from "react-native";
-import {
-  Main_color,
-  Primary_color,
-  Secondary_color,
-  Third_color,
-  Fourth_color,
-} from "../../../Helper/Common";
-import { width, height } from "react-native-dimension";
+import { width } from "react-native-dimension";
 import AntDesignIcon from "react-native-vector-icons/AntDesign";
 import { connect } from "react-redux";
 import * as actions from "../../../actions";
 import SideViewHeader from "../../Component/SideViewHeader";
 import Toast from "react-native-toast-message";
+import OsWrapper from "../../Component/OsWrapper";
 
 const ChangeDetails = (props) => {
   const [firstName, setFirstName] = useState(props.auth.first_name);
@@ -37,7 +29,6 @@ const ChangeDetails = (props) => {
     if (email !== props.auth.email) obj["email"] = email;
     if (phone !== props.auth.phone) obj["phone"] = phone;
     if (Object.keys(obj).length !== 0) {
-      console.log(obj);
       obj["user_id"] = props.auth.id;
     }
     return obj;
@@ -45,7 +36,6 @@ const ChangeDetails = (props) => {
 
   const doUpdate = async () => {
     setError("");
-    console.log("firstname", firstName);
     if (firstName === "" || firstName === undefined) {
       setError("Please input first name.");
       return;
@@ -61,7 +51,6 @@ const ChangeDetails = (props) => {
     }
     setLoading(true);
     const bodyObject = setBodyObject();
-    console.log("bod", bodyObject);
     if (Object.keys(bodyObject).length !== 0) {
       await props.updateUser(bodyObject);
       if (!props.auth.updateUserErrorMessage)
@@ -147,32 +136,16 @@ const ChangeDetails = (props) => {
     );
   };
   return (
-    <>
-      {Platform.OS === "ios" ? (
-        <SafeAreaView
-          style={{
-            flex: 1,
-            flexDirection: "column",
-          }}
-        >
-          <SideViewHeader
-            name="Change details"
-            redirect={"profile"}
-            navigation={props.navigation}
-          />
-          {renderContent()}
-        </SafeAreaView>
-      ) : (
-        <View style={{ flex: 1, flexDirection: "column" }}>
-          <SideViewHeader
-            name="Change details"
-            redirect={"profile"}
-            navigation={props.navigation}
-          />
-          {renderContent()}
-        </View>
-      )}
-    </>
+    <OsWrapper>
+      <View style={{ flex: 1, flexDirection: "column" }}>
+        <SideViewHeader
+          name="Change details"
+          redirect={"profile"}
+          navigation={props.navigation}
+        />
+        {renderContent()}
+      </View>
+    </OsWrapper>
   );
 };
 

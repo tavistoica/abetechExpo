@@ -12,6 +12,8 @@ const CartProduct = (props) => {
     props.onPress(props.item);
   };
 
+  console.log("item", props.item);
+
   const onLoaded = () => {
     setLoading(false);
   };
@@ -30,7 +32,6 @@ const CartProduct = (props) => {
       onPress={onPress}
       elevation={2}
     >
-      <Spinner visible={loading} />
       <View
         style={{
           width: 110,
@@ -43,12 +44,12 @@ const CartProduct = (props) => {
         <Image
           source={{
             uri:
-              props.item.data.photos == null ||
-              props.item.data.photos.length == null ||
-              props.item.data.photos.length == 0 ||
-              props.item.data.photos[0] == null
+              props.item.photos == null ||
+              props.item.photos.length == null ||
+              props.item.photos.length == 0 ||
+              props.item.photos[0] == null
                 ? ""
-                : props.item.data.photos[0].original,
+                : props.item.photos[0].original,
           }}
           indicatorProps={{
             size: 30,
@@ -80,22 +81,22 @@ const CartProduct = (props) => {
             style={[styles.title, { color: props.settings.colors.third_color }]}
             numberOfLines={1}
           >
-            {props.item.data.title}
+            {props.item.title}
           </Text>
           <View style={{ flexDirection: "row" }}>
             <Text style={styles.brand} numberOfLines={1}>
-              {props.item.data.brand}
+              {props.item.brand}
             </Text>
             <View style={{ flex: 1 }} />
-            {props.item.data.promotion_price == null ||
-            props.item.data.promotion_price == "" ? (
+            {props.item.promotion_price == null ||
+            props.item.promotion_price == "" ? (
               <Text
                 style={[
                   styles.price,
                   { color: props.settings.colors.fourth_color },
                 ]}
               >
-                ${props.item.data.price}
+                ${props.item.price}
               </Text>
             ) : (
               <Text
@@ -104,7 +105,7 @@ const CartProduct = (props) => {
                   { color: props.settings.colors.fourth_color },
                 ]}
               >
-                ${props.item.data.promotion_price}
+                ${props.item.promotion_price}
               </Text>
             )}
           </View>

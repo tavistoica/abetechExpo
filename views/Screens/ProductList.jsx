@@ -12,15 +12,20 @@ import { Query } from "react-apollo";
 import gql from "graphql-tag";
 
 const ProductList = (props) => {
-  const [loading, setLoading] = useState(false);
+  const [loadingg, setLoading] = useState(true);
 
-  const goDetail = (item, index) => {
-    console.log(item, index);
-    props.changeSliderItemAndIndex(item, index);
-    props.navigation.navigate("product_detail", {
-      product_item: item,
-      product_index: index,
-      products: props.products.products,
+  useEffect(() => {
+    props.getProducts({});
+  }, []);
+
+  const goDetail = (item) => {
+    // props.changeSliderItemAndIndex(item, index);
+    props.navigation.navigate("detailshow", {
+      product: item,
+      btnflag: true,
+      close: () => {
+        props.navigation.navigate("product_list");
+      },
     });
   };
 
@@ -43,7 +48,7 @@ const ProductList = (props) => {
         // if (error) return <p>{error}</p>;
         return (
           <View style={{ flex: 1, flexDirection: "column" }}>
-            <Spinner visible={loading} />
+            {/* <Spinner visible={loading} /> */}
             <Header {...props} />
             <View style={styles.container}>
               {data.products.length === 0 ? (
@@ -54,7 +59,7 @@ const ProductList = (props) => {
                 </Text>
               ) : (
                 <FlatList
-                  data={data.products}
+                  data={props.products.products}
                   renderItem={({ item, index }) => (
                     <View
                       style={{
@@ -63,7 +68,7 @@ const ProductList = (props) => {
                       }}
                     >
                       <Product
-                        onPress={goDetail}
+                        onPress={() => goDetail(item)}
                         width={width(50)}
                         item={item}
                         index={index}
@@ -158,6 +163,7 @@ const styles = StyleSheet.create({
 
 const mapStatetoProps = (state) => {
   return {
+    cart: state.cart,
     products: state.products,
     settings: state.settings,
   };

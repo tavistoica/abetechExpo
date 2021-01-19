@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { View, Image, ImageBackground, StatusBar } from "react-native";
-import { _getAppSetting } from "../../Helper/FirebaseHelper";
 import Spinner from "react-native-loading-spinner-overlay";
 import { width, height } from "react-native-dimension";
 import { connect } from "react-redux";

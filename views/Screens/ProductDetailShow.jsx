@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -28,11 +28,12 @@ const ProductDetailShow = (props) => {
   const item = props.route.params.product;
   const tmpImages = [];
 
-  item.data.photos.map((photo, index) => {
-    tmpImages.push({ uri: photo.original });
-  });
-
-  setImages(tmpImages);
+  useEffect(() => {
+    item.data.photos.map((photo, index) => {
+      tmpImages.push({ uri: photo.original });
+    });
+    setImages(tmpImages);
+  }, []);
 
   focusListener = props.navigation.addListener("focus", () => {
     if (props.route.params.btnflag === false) {
@@ -43,7 +44,10 @@ const ProductDetailShow = (props) => {
   const header = () => {
     return (
       <>
-        <TouchableOpacity onPress={props.close} style={styles.menu}>
+        <TouchableOpacity
+          onPress={props.route.params.close}
+          style={styles.menu}
+        >
           <Feather name="arrow-left" size={32} color={Third_color()} />
         </TouchableOpacity>
         <View
@@ -69,113 +73,114 @@ const ProductDetailShow = (props) => {
       </>
     );
   };
-
-  <View style={{ flex: 1, flexDirection: "column" }}>
-    {Platform.OS === "ios" ? (
-      <SafeAreaView style={styles.header}>{header()}</SafeAreaView>
-    ) : (
-      <View style={styles.header}>{header()}</View>
-    )}
-    <View style={styles.info}>
-      <ScrollView>
-        <SliderBox
-          ImageComponentStyle={{
-            width: "100%",
-            height: height(40),
-            backgroundColor: "#fff",
-            marginTop: 5,
-          }}
-          images={images}
-          dotColor="#FFEE58"
-          inactiveDotColor="#90A4AE"
-          dotStyle={{
-            width: 12,
-            height: 12,
-            borderRadius: 12,
-            marginHorizontal: 10,
-            padding: 0,
-            margin: 0,
-          }}
-        />
-        <View style={styles.row}>
-          <Text style={[styles.info_title, { color: Fourth_color() }]}>
-            Title
-          </Text>
-          <Text style={[styles.info_data, { color: Third_color() }]}>
-            {item.data.title}
-          </Text>
-        </View>
-        <Divider />
-        <View style={styles.row}>
-          <Text style={[styles.info_title, { color: Fourth_color() }]}>
-            Price
-          </Text>
-          {item.data.promotion_price == null ||
-          item.data.promotion_price == "" ? (
-            <Text style={[styles.info_data, { color: Third_color() }]}>
-              ${item.data.price}
+  return (
+    <View style={{ flex: 1, flexDirection: "column" }}>
+      {Platform.OS === "ios" ? (
+        <SafeAreaView style={styles.header}>{header()}</SafeAreaView>
+      ) : (
+        <View style={styles.header}>{header()}</View>
+      )}
+      <View style={styles.info}>
+        <ScrollView>
+          <SliderBox
+            ImageComponentStyle={{
+              width: "100%",
+              height: height(40),
+              backgroundColor: "#fff",
+              marginTop: 5,
+            }}
+            images={images}
+            dotColor="#FFEE58"
+            inactiveDotColor="#90A4AE"
+            dotStyle={{
+              width: 12,
+              height: 12,
+              borderRadius: 12,
+              marginHorizontal: 10,
+              padding: 0,
+              margin: 0,
+            }}
+          />
+          <View style={styles.row}>
+            <Text style={[styles.info_title, { color: Fourth_color() }]}>
+              Title
             </Text>
-          ) : (
             <Text style={[styles.info_data, { color: Third_color() }]}>
-              <Text
-                style={[
-                  styles.info_data,
-                  {
-                    color: Third_color(),
-                    textDecorationLine: "line-through",
-                  },
-                ]}
-              >
+              {item.data.title}
+            </Text>
+          </View>
+          <Divider />
+          <View style={styles.row}>
+            <Text style={[styles.info_title, { color: Fourth_color() }]}>
+              Price
+            </Text>
+            {item.data.promotion_price == null ||
+            item.data.promotion_price == "" ? (
+              <Text style={[styles.info_data, { color: Third_color() }]}>
                 ${item.data.price}
               </Text>
-              / ${item.data.promotion_price}
+            ) : (
+              <Text style={[styles.info_data, { color: Third_color() }]}>
+                <Text
+                  style={[
+                    styles.info_data,
+                    {
+                      color: Third_color(),
+                      textDecorationLine: "line-through",
+                    },
+                  ]}
+                >
+                  ${item.data.price}
+                </Text>
+                / ${item.data.promotion_price}
+              </Text>
+            )}
+          </View>
+          <Divider />
+          <View style={styles.row}>
+            <Text style={[styles.info_title, { color: Fourth_color() }]}>
+              Brand
             </Text>
-          )}
-        </View>
-        <Divider />
-        <View style={styles.row}>
-          <Text style={[styles.info_title, { color: Fourth_color() }]}>
-            Brand
-          </Text>
-          <Text style={[styles.info_data, { color: Third_color() }]}>
-            {item.data.brand}
-          </Text>
-        </View>
-        <Divider />
-        <View style={styles.row}>
-          <Text style={[styles.info_title, { color: Fourth_color() }]}>
-            Color
-          </Text>
-          <Text style={[styles.info_data, { color: Third_color() }]}>
-            {item.data.color}
-          </Text>
-        </View>
-        <Divider />
-        <View style={styles.row}>
-          <Text style={[styles.info_title, { color: Fourth_color() }]}>
-            Size
-          </Text>
-          <View style={{ flex: 1 }} />
-          <Text style={[styles.info_data, { color: Third_color() }]}>
-            {item.data.size}
-          </Text>
-        </View>
-        <Divider />
-        <View style={styles.row}>
-          <Text style={[styles.info_title, { color: Fourth_color() }]}>
-            Description
-          </Text>
-        </View>
-        <Divider />
-        <View style={styles.row}>
-          <Text style={[styles.desc, { color: Third_color() }]}>
-            {item.data.description}
-          </Text>
-        </View>
-        <View style={{ marginBottom: 60 }} />
-      </ScrollView>
+            <Text style={[styles.info_data, { color: Third_color() }]}>
+              {item.data.brand}
+            </Text>
+          </View>
+          <Divider />
+          <View style={styles.row}>
+            <Text style={[styles.info_title, { color: Fourth_color() }]}>
+              Color
+            </Text>
+            <Text style={[styles.info_data, { color: Third_color() }]}>
+              {item.data.color}
+            </Text>
+          </View>
+          <Divider />
+          <View style={styles.row}>
+            <Text style={[styles.info_title, { color: Fourth_color() }]}>
+              Size
+            </Text>
+            <View style={{ flex: 1 }} />
+            <Text style={[styles.info_data, { color: Third_color() }]}>
+              {item.data.size}
+            </Text>
+          </View>
+          <Divider />
+          <View style={styles.row}>
+            <Text style={[styles.info_title, { color: Fourth_color() }]}>
+              Description
+            </Text>
+          </View>
+          <Divider />
+          <View style={styles.row}>
+            <Text style={[styles.desc, { color: Third_color() }]}>
+              {item.data.description}
+            </Text>
+          </View>
+          <View style={{ marginBottom: 60 }} />
+        </ScrollView>
+      </View>
     </View>
-  </View>;
+  );
 };
 
 const styles = StyleSheet.create({

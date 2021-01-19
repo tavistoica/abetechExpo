@@ -29,14 +29,14 @@ class ProductDetailCard extends React.Component {
       imgs: [],
       first_padding: 55,
       cur_product: {},
-      products: this.props.route.params.products,
-      product_item: this.props.route.params.product_item,
-      product_index: this.props.route.params.product_index,
+      products: this.props.products,
+      product_item: this.props.products[0],
+      product_index: 0,
     };
   }
 
   componentDidMount = () => {
-    this.getProducts(this.state.product_item);
+    this.getProducts({});
 
     this.focusListener = this.props.navigation.addListener("focus", () => {
       if (global.cur_page_name === "product_detail_show") {
@@ -50,13 +50,9 @@ class ProductDetailCard extends React.Component {
     });
   };
 
-  shouldComponentUpdate(nextProps, _nextState) {
-    console.log(this.state.product_index, nextProps.route.params.product_index);
-    console.log(
-      this.state.product_index != nextProps.route.params.product_index
-    );
-    return this.state.product_index != nextProps.route.params.product_index;
-  }
+  // shouldComponentUpdate(nextProps, _nextState) {
+  //   return this.state.product_index != nextProps.route.params.product_index;
+  // }
 
   componentDidUpdate() {
     console.log("Component re-rendered.");
@@ -240,6 +236,7 @@ class ProductDetailCard extends React.Component {
                   onSwipedTop={this.onShowDetailByButton}
                   item={product}
                   width={width(90)}
+                  {...this.props}
                 />
               </Card>
             ))}
@@ -250,8 +247,6 @@ class ProductDetailCard extends React.Component {
   }
 
   render() {
-    console.log("this.state.product_index", this.state.product_index);
-
     return (
       <View style={{ flex: 1, flexDirection: "column" }}>
         <Spinner visible={this.state.loading} />
@@ -357,6 +352,7 @@ const mapStateToProps = (state) => {
     sliderItem: state.products.sliderItem,
     cart: state.cart,
     auth: state.auth,
+    settings: state.settings,
   };
 };
 

@@ -92,7 +92,6 @@ class Bottom extends React.Component {
           <TouchableOpacity
             style={{ width: 30, marginRight: 10 }}
             onPress={() => {
-              console.log("props.item", this.props.item);
               this.props.setCart(this.props.item);
               this.props.cartTotal();
             }}

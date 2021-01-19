@@ -29,13 +29,13 @@ export default function Route() {
       >
         <Stack.Screen name="splash" component={Splash} />
         <Stack.Screen name="product_list" component={ProductList} />
-        <Stack.Screen name="product_detail" component={ProductDetailCard} />
+        {/* <Stack.Screen name="product_detail" component={ProductDetailCard} /> */}
         <Stack.Screen name="favs" component={Favs} />
         <Stack.Screen name="mycart" component={MyCart} />
         <Stack.Screen name="chat" component={Chat} />
         <Stack.Screen name="profile" component={Profile} />
         <Stack.Screen name="detailshow" component={ProductDetailShow} />
-        <Stack.Screen name="discoveryPage" component={DiscoveryPage} />
+        <Stack.Screen name="discoveryPage" component={ProductDetailCard} />
         <Stack.Screen name="changeDetails" component={ChangeDetails} />
         <Stack.Screen name="changePassword" component={ChangePassword} />
         <Stack.Screen name="manageAddresses" component={ManageAddresses} />
