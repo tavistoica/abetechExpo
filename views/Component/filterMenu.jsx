@@ -9,7 +9,6 @@ import {
 } from "react-native";
 import Modal from "react-native-modal";
 import { width } from "react-native-dimension";
-import { Secondary_color, Primary_color } from "../../Helper/Common";
 import { connect } from "react-redux";
 import * as actions from "../../actions";
 
@@ -100,12 +99,17 @@ const FilterMenu = (props) => {
             {
               marginTop: 15,
               marginBottom: 15,
-              backgroundColor: Primary_color(),
+              backgroundColor: props.settings.colors.primary_color,
             },
           ]}
           onPress={() => filterCategory(props, category.category)}
         >
-          <Text style={[styles.signUpTxt, { color: Secondary_color() }]}>
+          <Text
+            style={[
+              styles.signUpTxt,
+              { color: props.settings.colors.secondary_color },
+            ]}
+          >
             Filter
           </Text>
         </TouchableOpacity>

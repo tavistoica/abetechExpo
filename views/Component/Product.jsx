@@ -7,7 +7,6 @@ import {
   ImageBackground,
 } from "react-native";
 import { Card, Button, Icon } from "react-native-elements";
-import { Third_color, Fourth_color } from "../../Helper/Common";
 import { connect } from "react-redux";
 import * as actions from "../../actions";
 import Toast from "react-native-toast-message";
@@ -109,13 +108,21 @@ const Product = (props) => {
           </View>
           <View style={{ flex: 1 }}>
             <View style={styles.titleInfo}>
-              <Text style={[styles.title, { color: Third_color() }]}>
+              <Text
+                style={[
+                  styles.title,
+                  { color: props.settings.colors.third_color },
+                ]}
+              >
                 {props.item.data.title}
               </Text>
             </View>
             <View style={[styles.info, { paddingTop: "5%" }]}>
               <Text
-                style={[styles.brand, { color: Third_color() }]}
+                style={[
+                  styles.brand,
+                  { color: props.settings.colors.third_color },
+                ]}
                 numberOfLines={1}
               >
                 {props.item.data.brand}
@@ -139,7 +146,7 @@ const Product = (props) => {
                   <Text
                     style={[
                       {
-                        color: Fourth_color(),
+                        color: props.settings.colors.fourth_color,
                         textDecorationLine: "line-through",
                       },
                     ]}
@@ -149,7 +156,7 @@ const Product = (props) => {
                   <Text
                     style={[
                       {
-                        color: Fourth_color(),
+                        color: props.settings.colors.fourth_color,
                       },
                     ]}
                   >

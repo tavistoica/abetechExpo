@@ -18,49 +18,42 @@ const ManageCards = (props) => {
   const closeModal = () => {
     AddressModal.close();
   };
+
   return (
     <OsWrapper>
       <SideViewHeader
         name="Manage Cards"
         redirect={"profile"}
         navigation={props.navigation}
+        {...props}
       />
-      <ScrollView style={{ height: "100%" }}>
-        <FlatList
-          data={props.auth.cards}
-          renderItem={({ item, index }) => (
-            <View
-              style={{
-                flexDirection: "column",
-                margin: 1,
-                marginHorizontal: 10,
-              }}
-            >
-              <CardComponent
-                card={{
-                  id: item.id,
-                  cardNumber: item.cardNumber,
-                  cardName: item.cardName,
-                  month: item.month,
-                  year: item.year,
-                  type: item.type,
-                }}
-              />
-            </View>
-          )}
-          keyExtractor={(item, index) => index.toString()}
-        />
-        <View
-          style={{
-            marginTop: 20,
-            width: "100%",
-            flexDirection: "row",
-            justifyContent: "center",
-          }}
-        >
-          <Button title="+ Add Card" onPress={() => openModal()} />
-        </View>
-      </ScrollView>
+      <FlatList
+        data={props.auth.cards}
+        renderItem={({ item }) => (
+          <CardComponent
+            card={{
+              id: item.id,
+              cardNumber: item.cardNumber,
+              cardName: item.cardName,
+              month: item.month,
+              year: item.year,
+              type: item.type,
+            }}
+          />
+        )}
+        keyExtractor={(_item, index) => index.toString()}
+      />
+      <View
+        style={{
+          marginTop: 20,
+          marginBottom: "5%",
+          width: "100%",
+          flexDirection: "row",
+          justifyContent: "center",
+        }}
+      >
+        <Button title="+ Add Card" onPress={() => openModal()} />
+      </View>
       <RBSheet
         ref={(ref) => {
           AddressModal = ref;
@@ -84,6 +77,7 @@ const ManageCards = (props) => {
 const mapStatetoProps = (state) => {
   return {
     auth: state.auth,
+    settings: state.settings,
   };
 };
 

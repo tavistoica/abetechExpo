@@ -72,6 +72,7 @@ const ProductList = (props) => {
                         width={width(50)}
                         item={item}
                         index={index}
+                        {...props}
                       />
                     </View>
                   )}

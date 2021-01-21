@@ -1,15 +1,6 @@
 import React, { useState, useEffect } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  FlatList,
-} from "react-native";
+import { View, Text, StyleSheet, FlatList } from "react-native";
 import { width, height } from "react-native-dimension";
-import Entypo from "react-native-vector-icons/Entypo";
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import { Main_color, Secondary_color } from "../../Helper/Common";
 import Spinner from "react-native-loading-spinner-overlay";
 import Modal from "react-native-modal";
 import Product from "../Component/Product";
@@ -28,51 +19,13 @@ const Favs = (props) => {
     setLoading(false);
   }, []);
 
-  const clearFavs = () => {
-    props.deleteFavorite(props.auth.id, null);
-  };
+  // const clearFavs = () => {
+  //   props.deleteFavorite(props.auth.id, null);
+  // };
 
   const goDetail = (product) => {
     setShowModal(true);
     setCurrentProduct(product);
-  };
-
-  header = () => {
-    return (
-      <>
-        <TouchableOpacity
-          onPress={() => {
-            props.navigation.openDrawer();
-          }}
-          style={styles.menu}
-        >
-          <Entypo name="menu" size={32} color={Secondary_color()} />
-        </TouchableOpacity>
-        <View
-          style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
-        >
-          <Text
-            style={{
-              fontSize: 20,
-              color: Secondary_color(),
-              fontWeight: "bold",
-            }}
-          >
-            Favorites
-          </Text>
-        </View>
-        <TouchableOpacity
-          style={{ width: 30, marginRight: 10 }}
-          onPress={() => props.deleteFavorite(props.auth.id, null)}
-        >
-          <MaterialCommunityIcons
-            name="layers-remove"
-            size={32}
-            color={Secondary_color()}
-          />
-        </TouchableOpacity>
-      </>
-    );
   };
 
   return (
@@ -93,6 +46,7 @@ const Favs = (props) => {
                   width={width(45)}
                   item={item}
                   index={index}
+                  {...props}
                 />
               </View>
             )}
@@ -103,7 +57,7 @@ const Favs = (props) => {
             }}
             style={{ width: width(100) }}
             numColumns={2}
-            keyExtractor={(item, index) => index.toString()}
+            keyExtractor={(_item, index) => index.toString()}
           />
         )}
       </View>
@@ -114,6 +68,7 @@ const Favs = (props) => {
           page="favs"
           onAddCart={props.setCart(currrentProduct)}
           close={() => setShowModal(false)}
+          {...props}
         />
       </Modal>
     </OsWrapper>
@@ -121,9 +76,6 @@ const Favs = (props) => {
 };
 
 const styles = StyleSheet.create({
-  menu: {
-    paddingLeft: 10,
-  },
   modal: {
     width: width(100),
     height: height(100),
@@ -132,16 +84,6 @@ const styles = StyleSheet.create({
     padding: 0,
     justifyContent: "center",
     alignItems: "center",
-  },
-  header: {
-    flex: 1,
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-    paddingLeft: 10,
-    width: width(100),
-    height: 55,
-    backgroundColor: Main_color(),
   },
   container: {
     flex: 16,
@@ -158,6 +100,7 @@ const mapStateToProps = (state) => {
   return {
     favorite: state.products.favorite,
     auth: state.auth,
+    settings: state.settings,
   };
 };
 

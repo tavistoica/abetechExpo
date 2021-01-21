@@ -19,6 +19,7 @@ const FilterButton = (props) => {
         IsFilterModalVisible={isFilterModalVisible}
         category={props.products.category}
         setIsFilterModalVisible={setIsFilterModalVisible}
+        {...props}
       />
     </View>
   );

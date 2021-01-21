@@ -3,7 +3,6 @@ import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { connect } from "react-redux";
 import * as actions from "../../../actions";
 import Feather from "react-native-vector-icons/Feather";
-import PropTypes from "prop-types";
 
 const CardComponent = (props) => {
   return (
@@ -52,7 +51,6 @@ const styles = StyleSheet.create({
 
 const mapStatetoProps = (state) => {
   return {
-    category: state.products.category,
     auth: state.auth,
     settings: state.settings,
   };
@@ -62,10 +60,3 @@ export default connect(
   mapStatetoProps,
   actions
 )(CardComponent);
-
-CardComponent.propTypes = {
-  auth: PropTypes.func.isRequired,
-  category: PropTypes.object.isRequired,
-  settings: PropTypes.object.isRequired,
-  card: PropTypes.object.isRequired,
-};

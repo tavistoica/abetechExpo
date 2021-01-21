@@ -39,7 +39,6 @@ const CartContent = (props: Props) => {
     props.deleteCartItem(item);
     props.cartTotal();
   };
-  console.log("caaart", props.cart);
 
   return (
     <View style={styles.container}>

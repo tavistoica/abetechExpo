@@ -142,6 +142,7 @@ const ChangeDetails = (props) => {
           name="Change details"
           redirect={"profile"}
           navigation={props.navigation}
+          {...props}
         />
         {renderContent()}
       </View>
@@ -223,6 +224,7 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state) => {
   return {
     auth: state.auth,
+    settings: state.settings,
   };
 };
 

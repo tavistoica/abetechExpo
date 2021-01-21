@@ -5,18 +5,9 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
-  Picker,
   FlatList,
-  Platform,
-  SafeAreaView,
 } from "react-native";
-import { width, height } from "react-native-dimension";
-import {
-  Primary_color,
-  Secondary_color,
-  Main_color,
-  Third_color,
-} from "../../Helper/Common";
+import { width } from "react-native-dimension";
 import Spinner from "react-native-loading-spinner-overlay";
 import Header from "../Component/header";
 import { connect } from "react-redux";
@@ -50,7 +41,8 @@ class DiscoveryPage extends React.Component {
                   <View
                     style={{
                       flexDirection: "row",
-                      backgroundColor: Secondary_color(),
+                      backgroundColor: this.props.settings.colors
+                        .secondary_color,
                       width: "100%",
                       marginBottom: 1,
                       paddingVertical: 20,
@@ -108,7 +100,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
   },
   fab: {
-    backgroundColor: Main_color(),
+    backgroundColor: this.props.settings.colors.main_color,
   },
   banner_container: {
     flex: 1,

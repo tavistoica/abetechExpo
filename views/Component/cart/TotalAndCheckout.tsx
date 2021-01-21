@@ -1,7 +1,7 @@
-import React, { useState, useEffect, FunctionComponent } from "react";
+import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import stripe from "tipsi-stripe";
-import { Button, Icon, Divider } from "react-native-elements";
+import { Button, Icon } from "react-native-elements";
 
 interface Colors {
   third_color: string;
@@ -68,7 +68,6 @@ const styles = StyleSheet.create({
   totalText: {
     fontSize: 15,
     flex: 1,
-    // justifyContent: "flex-start",
     fontWeight: "bold",
     marginTop: 1,
     paddingBottom: 16,
@@ -76,7 +75,6 @@ const styles = StyleSheet.create({
   },
   container: {
     flexDirection: "row",
-    // justifyContent: "space-between",
     fontSize: 15,
     fontWeight: "bold",
     marginTop: 5,

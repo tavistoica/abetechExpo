@@ -244,6 +244,7 @@ class ChangePassword extends React.Component {
             name="Change password"
             redirect={"profile"}
             navigation={props.navigation}
+            {...props}
           />
           {renderContent()}
         </View>
@@ -330,6 +331,7 @@ const mapStateToProps = (state) => {
   return {
     favorite: state.products,
     auth: state.auth,
+    settings: state.settings,
   };
 };
 

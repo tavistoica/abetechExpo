@@ -13,7 +13,6 @@ import Main from "./ProductDetails/Main";
 import HttpHelper from "../../Helper/HttpHelper";
 import { _storeData } from "../../Helper/Util";
 import CardStack, { Card } from "react-native-card-stack-swiper";
-import { Main_color, Secondary_color, Third_color } from "../../Helper/Common";
 import { connect } from "react-redux";
 import * as actions from "../../actions";
 import Feather from "react-native-vector-icons/Feather";
@@ -38,16 +37,16 @@ class ProductDetailCard extends React.Component {
   componentDidMount = () => {
     this.getProducts({});
 
-    this.focusListener = this.props.navigation.addListener("focus", () => {
-      if (global.cur_page_name === "product_detail_show") {
-        try {
-          this.swiper.goBackFromTop();
-        } catch (err) {
-          console.log("go_back_top_err", err);
-        }
-      }
-      global.cur_page_name = "product_card_show";
-    });
+    // this.focusListener = this.props.navigation.addListener("focus", () => {
+    //   if (global.cur_page_name === "product_detail_show") {
+    //     try {
+    //       this.swiper.goBackFromTop();
+    //     } catch (err) {
+    //       console.log("go_back_top_err", err);
+    //     }
+    //   }
+    //   global.cur_page_name = "product_card_show";
+    // });
   };
 
   // shouldComponentUpdate(nextProps, _nextState) {

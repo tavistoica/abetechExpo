@@ -130,12 +130,16 @@ export const getCategory = (body) => {
 export const getFavorite = (body) => {
   return async (dispatch) => {
     try {
-      const response = await HttpHelper.doPost("get_favorite", {
-        user_id: body,
-      });
+      let response = [];
+      if (body !== undefined) {
+        response = await HttpHelper.doPost("get_favorite", {
+          user_id: body,
+        });
+      }
+      console.log("response", response);
       dispatch({
         type: GET_FAVORITE,
-        payload: response.data,
+        payload: response.data ? response.data : response,
       });
     } catch (error) {
       if (error.status === 400) {

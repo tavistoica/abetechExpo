@@ -25,6 +25,7 @@ const ManageAddresses = (props) => {
         name="Manage Cards"
         redirect={"profile"}
         navigation={props.navigation}
+        {...props}
       />
       <ScrollView style={{ height: "100%" }}>
         <FlatList
@@ -77,7 +78,7 @@ const ManageAddresses = (props) => {
           },
         }}
       >
-        <AddAddress closeModal={closeModal} />
+        <AddAddress closeModal={closeModal} {...props} />
       </RBSheet>
     </OsWrapper>
   );
@@ -86,6 +87,7 @@ const ManageAddresses = (props) => {
 const mapStatetoProps = (state) => {
   return {
     auth: state.auth,
+    settings: state.settings,
   };
 };
 

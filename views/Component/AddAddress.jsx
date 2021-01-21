@@ -62,14 +62,14 @@ const AddAddress = (props) => {
       <TouchableOpacity
         style={[
           styles.button,
-          { backgroundColor: this.props.settings.colors.primary_color },
+          { backgroundColor: props.settings.colors.primary_color },
         ]}
         onPress={() => AddAddressButton(props, street, city, county, country)}
       >
         <Text
           style={[
             styles.buttonText,
-            { color: this.props.settings.colors.secondary_color },
+            { color: props.settings.colors.secondary_color },
           ]}
         >
           Add
