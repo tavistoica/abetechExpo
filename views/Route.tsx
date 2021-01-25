@@ -29,7 +29,6 @@ export default function Route() {
       >
         <Stack.Screen name="splash" component={Splash} />
         <Stack.Screen name="product_list" component={ProductList} />
-        {/* <Stack.Screen name="product_detail" component={ProductDetailCard} /> */}
         <Stack.Screen name="favs" component={Favs} />
         <Stack.Screen name="mycart" component={MyCart} />
         <Stack.Screen name="chat" component={Chat} />

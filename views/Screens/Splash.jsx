@@ -6,14 +6,13 @@ import { connect } from "react-redux";
 import * as actions from "../../actions";
 
 const Splash = (props) => {
-  const [logo, setLogo] = useState("");
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     props.getCategory();
     props.getAppSettings();
+    props.getFavorite(props.auth.id);
     if (props.settings.errorMessage !== null) return;
-    setLogo(props.settings.logo);
     setLoading(false);
     setTimeout(() => {
       props.navigation.replace("product_list");
@@ -22,11 +21,9 @@ const Splash = (props) => {
 
   return (
     <>
-      <Spinner visible={true} loading={loading} />
-      <StatusBar hidden />
       <ImageBackground
         style={{ width: "100%", height: "100%", resizeMode: "contain" }}
-        // source={GlobalImgs.bg}
+        source={{ uri: null }}
       >
         <View
           style={{
@@ -43,7 +40,7 @@ const Splash = (props) => {
               marginBottom: height(20),
               resizeMode: "cover",
             }}
-            source={{ uri: logo }}
+            source={{ uri: props.settings.logo }}
           />
         </View>
       </ImageBackground>
@@ -53,9 +50,8 @@ const Splash = (props) => {
 
 const mapStatetoProps = (state) => {
   return {
-    auth: state.auth,
-    products: state.products,
     settings: state.settings,
+    auth: state.auth,
   };
 };
 

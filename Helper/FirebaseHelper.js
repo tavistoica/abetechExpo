@@ -6,29 +6,6 @@ if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
 }
 
-const _getAppSetting = async () => {
-  try {
-    const color = await firebase
-      .firestore()
-      .collection("setting")
-      .doc("color")
-      .get();
-    const logo = await firebase
-      .firestore()
-      .collection("setting")
-      .doc("logo")
-      .get();
-    let setting = {
-      color: color.data(),
-      logo: logo.data(),
-    };
-    return setting;
-  } catch (error) {
-    console.log(error);
-    return null;
-  }
-};
-
 const _getAllMsgs = async (contact_id) => {
   try {
     const msg_list_ref = await firebase
@@ -71,4 +48,4 @@ const setStripeConf = async () => {
   }
 };
 
-export { _getAppSetting, _getAllMsgs, setStripeConf };
+export { _getAllMsgs, setStripeConf };

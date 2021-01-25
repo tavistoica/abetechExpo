@@ -14,7 +14,6 @@ import AntDesignIcon from "react-native-vector-icons/AntDesign";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import { width, height } from "react-native-dimension";
 import Entypo from "react-native-vector-icons/Entypo";
-import { _retrieveData, _storeData } from "../../Helper/Util";
 import Spinner from "react-native-loading-spinner-overlay";
 import LeftMsg from "../Component/LeftMsg";
 import RightMsg from "../Component/RightMsg";

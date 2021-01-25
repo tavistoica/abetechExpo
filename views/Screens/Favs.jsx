@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { View, Text, StyleSheet, FlatList } from "react-native";
 import { width, height } from "react-native-dimension";
 import Spinner from "react-native-loading-spinner-overlay";
 import Modal from "react-native-modal";
-import Product from "../Component/Product";
+import ProductCard from "../Component/product-card/ProductCard";
 import Bottom from "./ProductDetails/Bottom";
 import { connect } from "react-redux";
 import * as actions from "../../actions";
@@ -13,6 +14,7 @@ const Favs = (props) => {
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [currrentProduct, setCurrentProduct] = useState({});
+  const favorites = useSelector((state) => state.products.favorite);
 
   useEffect(() => {
     props.getFavorite(props.auth.id);
@@ -38,11 +40,10 @@ const Favs = (props) => {
           </Text>
         ) : (
           <FlatList
-            data={props.favorite}
+            data={favorites}
             renderItem={({ item, index }) => (
               <View style={{ flexDirection: "column", margin: 5 }}>
-                <Product
-                  onPress={goDetail}
+                <ProductCard
                   width={width(45)}
                   item={item}
                   index={index}
@@ -66,7 +67,7 @@ const Favs = (props) => {
           item={currrentProduct}
           width={width(90)}
           page="favs"
-          onAddCart={props.setCart(currrentProduct)}
+          onAddCart={() => props.setCart(currrentProduct)}
           close={() => setShowModal(false)}
           {...props}
         />

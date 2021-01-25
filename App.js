@@ -11,11 +11,10 @@ import { Ionicons } from "@expo/vector-icons";
 import Toast from "react-native-toast-message";
 import ApolloClient from "apollo-boost";
 import { ApolloProvider } from "react-apollo";
-import BottomMenu from "./views/Component/BottomMenu";
 
-const client = new ApolloClient({
-  uri: "http://192.168.1.5:3000",
-});
+// const client = new ApolloClient({
+//   uri: "http://192.168.1.5:3000",
+// });
 
 Icon.loadFont();
 class App extends Component {
@@ -29,7 +28,8 @@ class App extends Component {
 
   render() {
     return (
-      <ApolloProvider client={client}>
+      // <ApolloProvider client={client}>
+      <>
         <StatusBar hidden />
         <Provider store={store}>
           <PersistGate loading={null} persistor={persistor}>
@@ -37,7 +37,8 @@ class App extends Component {
             <Toast ref={(ref) => Toast.setRef(ref)} />
           </PersistGate>
         </Provider>
-      </ApolloProvider>
+      </>
+      // </ApolloProvider>
     );
   }
 }

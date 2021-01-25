@@ -190,13 +190,13 @@ export const setFavorite = (user, product) => {
 export const deleteFavorite = (user, body) => {
   return async (dispatch) => {
     try {
-      await HttpHelper.doPost("clear_favorite", {
+      const response = await HttpHelper.doPost("del_favorite", {
         user_id: user,
         product_id: body,
       });
       dispatch({
         type: DELETE_FAVORITE,
-        payload: [],
+        payload: response.data,
       });
     } catch (error) {
       if (error.status === 400) {

@@ -101,7 +101,7 @@ class ChangePassword extends React.Component {
 
       if (data.user != null && data.user !== 0) {
         // success
-        let user_detail = await _getUserDetail(data.user);
+        let user_detail = null; // this code needs checking
         if (user_detail != null) {
           global.username = user_detail.username;
           global.email = user_detail.youremail;

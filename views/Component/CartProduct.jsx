@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { Icon, Button } from "react-native-elements";
-import Image from "react-native-image-progress";
 import { width } from "react-native-dimension";
-import Spinner from "react-native-loading-spinner-overlay";
+import ProductImage from "./product-card/ProductImage";
 
 const CartProduct = (props) => {
   const [loading, setLoading] = useState(true);
@@ -11,8 +10,6 @@ const CartProduct = (props) => {
   const onPress = () => {
     props.onPress(props.item);
   };
-
-  console.log("item", props.item);
 
   const onLoaded = () => {
     setLoading(false);
@@ -32,41 +29,7 @@ const CartProduct = (props) => {
       onPress={onPress}
       elevation={2}
     >
-      <View
-        style={{
-          width: 110,
-          height: 110,
-          borderRadius: 20,
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <Image
-          source={{
-            uri:
-              props.item.photos == null ||
-              props.item.photos.length == null ||
-              props.item.photos.length == 0 ||
-              props.item.photos[0] == null
-                ? ""
-                : props.item.photos[0].original,
-          }}
-          indicatorProps={{
-            size: 30,
-            borderWidth: 0,
-            color: "rgba(150, 150, 150, 1)",
-            unfilledColor: "rgba(200, 200, 200, 0.2)",
-          }}
-          style={{
-            flex: 1,
-            width: 110,
-            height: 110,
-            aspectRatio: 1,
-            borderRadius: 20,
-            resizeMode: "contain",
-          }}
-        />
-      </View>
+      <ProductImage photo={props.item.photos[0].original} {...props} />
       <View
         style={{
           flex: 1,

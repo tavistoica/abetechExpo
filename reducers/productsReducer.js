@@ -42,7 +42,8 @@ export default (state = initialState, action) => {
     case SET_FAVORITE:
       return { ...state, favorite: action.payload };
     case DELETE_FAVORITE:
-      return { ...state, favorite: [] };
+      console.log("DELETE", action.payload);
+      return { ...state, favorite: action.payload };
     case CHANGE_SLIDER_INDEX:
       return {
         ...state,

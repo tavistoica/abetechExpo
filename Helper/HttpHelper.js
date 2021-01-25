@@ -20,7 +20,7 @@ const doPost = async (url, body) => {
 
 const doPostFile = async (url, formData, onSuccess, onFail) => {
   try {
-    let response = await axios({
+    const response = await axios({
       method: "post",
       url: api_base_url + url,
       headers: {
@@ -28,8 +28,7 @@ const doPostFile = async (url, formData, onSuccess, onFail) => {
       },
       data: formData,
     });
-    let data = await response.data;
-    onSuccess(data);
+    onSuccess(response.data);
   } catch (err) {
     onFail(err);
   }

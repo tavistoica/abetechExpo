@@ -33,9 +33,7 @@ const BottomMenu = (props) => {
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.drawerItem}
-        onPress={async () => {
-          RootNavigation.navigate("favs");
-        }}
+        onPress={() => RootNavigation.navigate("favs")}
       >
         <MaterialIcons
           name="favorite-border"

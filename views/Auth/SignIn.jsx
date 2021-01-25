@@ -9,12 +9,6 @@ import {
 import AntDesignIcon from "react-native-vector-icons/AntDesign";
 import { width, height } from "react-native-dimension";
 import { Msg_Login_Success } from "../../Helper/Constant";
-import {
-  _retrieveData,
-  _storeData,
-  _getUserDetail,
-  _getSemesterSlug,
-} from "../../Helper/Util";
 import Spinner from "react-native-loading-spinner-overlay";
 import Register from "./Register";
 import RBSheet from "react-native-raw-bottom-sheet";
@@ -52,7 +46,6 @@ const SignIn = (props) => {
     if (props.auth.errorMessage !== null) {
       setError(props.auth.errorMessage);
     } else if (props.auth.userId !== null) {
-      await _storeData("user", props.auth);
       props.goHome();
       setStatus(Msg_Login_Success);
     } else {
@@ -194,7 +187,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold",
     alignSelf: "center",
-    // marginLeft: 24,
     marginBottom: 24,
   },
   title: {},

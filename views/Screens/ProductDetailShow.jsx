@@ -19,13 +19,6 @@ const ProductDetailShow = (props) => {
     });
     setImages(tmpImages);
   }, []);
-
-  // focusListener = props.navigation.addListener("focus", () => {
-  //   if (props.route.params.btnflag === false) {
-  //     global.cur_page_name = "product_detail_show";
-  //   }
-  // });
-
   return (
     <View style={{ flex: 1, flexDirection: "column" }}>
       <OsWrapper>

@@ -31,12 +31,6 @@ import {
   Msg_Register_Success,
   Msg_Register_Failed,
 } from "../../Helper/Constant";
-import {
-  _retrieveData,
-  _storeData,
-  _getUserDetail,
-  _getSemesterSlug,
-} from "../../Helper/Util";
 import Spinner from "react-native-loading-spinner-overlay";
 import Modal from "react-native-modal";
 import axios from "axios";
