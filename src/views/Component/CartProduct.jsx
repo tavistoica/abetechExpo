@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { Icon, Button } from "react-native-elements";
 import { width } from "react-native-dimension";
-import ProductImage from "./product-card/ProductImage";
+import ProductImage from "./product-card/components/ProductImage";
 
 const CartProduct = (props) => {
   const [loading, setLoading] = useState(true);

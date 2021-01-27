@@ -596,11 +596,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginBottom: 20,
   },
-  list_container: {
-    flex: 1,
-    width: "100%",
-    alignSelf: "center",
-  },
   title_label: {
     color: "#000",
     fontSize: 18,

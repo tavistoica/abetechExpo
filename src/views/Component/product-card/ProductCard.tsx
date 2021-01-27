@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
 import { Card, Button, Icon } from "react-native-elements";
-import AddToCartButton from "./AddToCartButton";
-import ProductImage from "./ProductImage";
+import AddToCartButton from "./components/AddToCartButton";
+import ProductImage from "./components/ProductImage";
 import AddToFavorite from "../AddToFavorite";
-import OnSaleTag from "./OnSaleTag";
-import ProductCardDetails from "./ProductCardDetails";
+import OnSaleTag from "./components/OnSaleTag";
+import ProductCardDetails from "./components/ProductCardDetails";
 
 const ProductCard = (props) => {
   const onPress = () => {
