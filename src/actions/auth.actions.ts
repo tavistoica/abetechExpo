@@ -15,10 +15,18 @@ import {
   UPDATE_USER,
   UPDATE_USER_ERROR,
 } from "./types";
-import HttpHelper from "../Helper/HttpHelper";
+import HttpHelper from "../utils/HttpHelper";
 
-export const updateUser = (body) => {
-  return async (dispatch) => {
+interface updateBody {
+  first_name?: any;
+  last_name?: any;
+  email?: any;
+  phone?: any;
+  user_id?: any;
+}
+
+export const updateUser = (body: updateBody) => {
+  return async (dispatch: any) => {
     try {
       const respone = await HttpHelper.doPost("users/update", body);
       dispatch({
@@ -41,8 +49,8 @@ export const updateUser = (body) => {
   };
 };
 
-export const incrementCartItem = (i) => {
-  return async (dispatch) => {
+export const incrementCartItem = (i: number) => {
+  return async (dispatch: any) => {
     dispatch({
       type: INCREMENT_CART_ITEM,
       payload: i,
@@ -50,8 +58,8 @@ export const incrementCartItem = (i) => {
   };
 };
 
-export const decrementCartItem = (i) => {
-  return async (dispatch) => {
+export const decrementCartItem = (i: number) => {
+  return async (dispatch: any) => {
     dispatch({
       type: DECREMENT_CART_ITEM,
       payload: i,
@@ -60,15 +68,15 @@ export const decrementCartItem = (i) => {
 };
 
 export const cartTotal = () => {
-  return async (dispatch) => {
+  return async (dispatch: any) => {
     dispatch({
       type: CART_TOTAL,
     });
   };
 };
 
-export const updateCart = (array) => {
-  return async (dispatch) => {
+export const updateCart = (array: object[]) => {
+  return async (dispatch: any) => {
     dispatch({
       type: UPDATE_CART,
       payload: array,
@@ -76,8 +84,8 @@ export const updateCart = (array) => {
   };
 };
 
-export const logUser = (email, password) => {
-  return async (dispatch) => {
+export const logUser = (email: string, password: string) => {
+  return async (dispatch: any) => {
     if (email === "") {
       return dispatch({
         type: AUTH_ERROR,
@@ -116,16 +124,16 @@ export const logUser = (email, password) => {
 };
 
 export const registerUser = (
-  first_name,
-  last_name,
-  phone,
-  pass,
-  confirmpass,
-  term_checked,
-  email,
-  base64Image
+  first_name: string,
+  last_name: string,
+  phone: string,
+  pass: string,
+  confirmpass: string,
+  term_checked: boolean,
+  email: string,
+  base64Image: string
 ) => {
-  return async (dispatch) => {
+  return async (dispatch: any) => {
     if (first_name === "") {
       return dispatch({
         type: AUTH_ERROR,
@@ -162,7 +170,7 @@ export const registerUser = (
         payload: "Please confirm password.",
       });
     }
-    if (confirmpass !== this.state.pass) {
+    if (confirmpass !== pass) {
       return dispatch({
         type: AUTH_ERROR,
         payload: "Please confirm password.",
@@ -205,19 +213,19 @@ export const registerUser = (
 };
 
 export const removeUser = () => {
-  return async (dispatch) => {
+  return async (dispatch: any) => {
     return dispatch({ type: REMOVE_USER });
   };
 };
 
-export const setContactId = (contactId) => {
-  return async (dispatch) => {
+export const setContactId = (contactId: string) => {
+  return async (dispatch: any) => {
     return dispatch({ type: SET_USER_CONTACTID, payload: contactId });
   };
 };
 
-export const addCard = (user_id, card) => {
-  return async (dispatch) => {
+export const addCard = (user_id: string, card: string) => {
+  return async (dispatch: any) => {
     try {
       const response = await HttpHelper.doPost("users/addCard", {
         user_id,
@@ -238,8 +246,8 @@ export const addCard = (user_id, card) => {
   };
 };
 
-export const deleteAddress = (user_id, address_id) => {
-  return async (dispatch) => {
+export const deleteAddress = (user_id: string, address_id: string) => {
+  return async (dispatch: any) => {
     try {
       const response = await HttpHelper.doPost("users/deleteAddress", {
         user_id,
@@ -260,8 +268,8 @@ export const deleteAddress = (user_id, address_id) => {
   };
 };
 
-export const deleteCard = (user_id, card_id) => {
-  return async (dispatch) => {
+export const deleteCard = (user_id: string, card_id: string) => {
+  return async (dispatch: any) => {
     try {
       const response = await HttpHelper.doPost("users/deleteCard", {
         user_id,
@@ -282,8 +290,8 @@ export const deleteCard = (user_id, card_id) => {
   };
 };
 
-export const addAddress = (user_id, address) => {
-  return async (dispatch) => {
+export const addAddress = (user_id: string, address: string) => {
+  return async (dispatch: any) => {
     try {
       const response = await HttpHelper.doPost("users/addAddress", {
         user_id,

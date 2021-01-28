@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import AntDesignIcon from "react-native-vector-icons/AntDesign";
 import { width, height } from "react-native-dimension";
-import { Msg_Login_Success } from "../../Helper/Constant";
+import { Msg_Login_Success } from "../../utils/Constant";
 import Spinner from "react-native-loading-spinner-overlay";
 import Register from "./Register";
 import RBSheet from "react-native-raw-bottom-sheet";

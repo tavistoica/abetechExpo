@@ -4,6 +4,7 @@ import reducers from "./reducers";
 import reduxThunk from "redux-thunk";
 import { AsyncStorage } from "react-native";
 import { composeWithDevTools } from "redux-devtools-extension";
+import { PersistPartial } from "redux-persist/es/persistReducer";
 
 const persistConfig = {
   key: "root",
@@ -13,7 +14,7 @@ const persistConfig = {
 
 const persistedReducer = persistReducer(persistConfig, reducers);
 
-let store = createStore(
+let store = createStore<any, any, any, any>(
   persistedReducer,
   undefined,
   composeWithDevTools(applyMiddleware(reduxThunk))

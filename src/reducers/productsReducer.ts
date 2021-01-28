@@ -18,7 +18,12 @@ const initialState = {
   errorMessage: null,
 };
 
-export default (state = initialState, action) => {
+interface Action {
+  payload: any;
+  type: string;
+}
+
+export default (state = initialState, action: Action) => {
   switch (action.type) {
     case GET_PRODUCTS:
       return {
@@ -42,7 +47,6 @@ export default (state = initialState, action) => {
     case SET_FAVORITE:
       return { ...state, favorite: action.payload };
     case DELETE_FAVORITE:
-      console.log("DELETE", action.payload);
       return { ...state, favorite: action.payload };
     case CHANGE_SLIDER_INDEX:
       return {

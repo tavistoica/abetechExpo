@@ -1,13 +1,13 @@
 import { GET_APP_SETTINGS, SETTINGS_ERROR } from "./types";
 import * as firebase from "firebase";
 import "firebase/firestore";
-import { firebaseConfig } from "../Helper/Constant";
+import { firebaseConfig } from "../utils/Constant";
 
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
 }
 export const getAppSettings = () => {
-  return async (dispatch) => {
+  return async (dispatch: any) => {
     try {
       const colors = await firebase
         .firestore()

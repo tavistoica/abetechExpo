@@ -10,13 +10,33 @@ import {
   CART_TOTAL,
 } from "../actions/types";
 
-const initialState = {
+interface Product {
+  id: string;
+  quantity: number;
+  title: string;
+  createdAt: string;
+  promotion_price: string;
+  price: string;
+}
+
+interface InitialState {
+  cart: Product[];
+  cartTotal: number;
+  errorMessage: string;
+}
+
+const initialState: InitialState = {
   cart: [],
   cartTotal: 0,
-  errorMessage: null,
+  errorMessage: "",
 };
 
-export default (state = initialState, action) => {
+interface Action {
+  payload: any;
+  type: string;
+}
+
+export default (state = initialState, action: Action) => {
   switch (action.type) {
     case GET_CART:
       return {
@@ -40,7 +60,7 @@ export default (state = initialState, action) => {
       };
     case DECREMENT_CART_ITEM:
       const indexDecrement = state.cart.findIndex(
-        (item) => item.id === action.payload.id
+        (item: Product) => item.id === action.payload.id
       );
       state.cart[indexDecrement].quantity += 1;
       return {

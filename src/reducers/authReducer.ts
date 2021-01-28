@@ -11,7 +11,6 @@ import {
   SET_USER_PASSWORDENCRYPTED,
   SET_USER_EMAIL,
   SET_USER_PHONE,
-  SET_USER_CREATED_DATE,
   ADD_ADDRESS,
   GET_ADDRESSES,
   DELETE_ADDRESS,
@@ -38,7 +37,12 @@ const initialState = {
   updateUserErrorMessage: null,
 };
 
-export default (state = initialState, action) => {
+interface Action {
+  payload: any;
+  type: string;
+}
+
+export default (state = initialState, action: Action) => {
   switch (action.type) {
     case LOG_USER:
       return {
@@ -148,8 +152,6 @@ export default (state = initialState, action) => {
       return { ...state, favorite: action.payload, errorMessage: null };
     case SET_USER_PHONE:
       return { ...state, phone: action.payload, errorMessage: null };
-    case SET_USER_CREATED_DATE:
-      return { ...state, createdAt: action.payload, errorMessage: null };
     case AUTH_ERROR:
       return { ...(state = initialState), errorMessage: action.payload };
     default:

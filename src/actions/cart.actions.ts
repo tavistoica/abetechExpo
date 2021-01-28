@@ -5,12 +5,19 @@ import {
   DELETE_CART_ITEM,
   CART_ERROR,
 } from "./types";
-import HttpHelper from "../Helper/HttpHelper";
+import HttpHelper from "../utils/HttpHelper";
 import { store } from "../configureStore";
 
+interface Product {
+  quantity: number;
+  title: string;
+  createdAt: string;
+}
+
 export const getCart = () => {
-  return async (dispatch) => {
-    const currentCart = store.getState().cart.cart;
+  return async (dispatch: any) => {
+    const state = store.getState();
+    const currentCart = state.cart.cart;
     if (currentCart === undefined || currentCart === null) {
       dispatch({ type: GET_CART, payload: [] });
     } else {
@@ -19,21 +26,21 @@ export const getCart = () => {
   };
 };
 
-export const setCart = (product, increment) => {
-  return async (dispatch) => {
+export const setCart = (product: Product, increment: number) => {
+  return async (dispatch: any) => {
     let currentCart = store.getState().cart.cart;
     if (currentCart === []) {
       product.quantity = 1;
       currentCart = [product];
     } else {
-      const lookForItem = currentCart.filter((item) => {
+      const lookForItem = currentCart.filter((item: Product) => {
         return (
           item.title === product.title && item.createdAt === product.createdAt
         );
       });
       if (lookForItem.length > 0) {
         const indexOfItem = currentCart.findIndex(
-          (item) =>
+          (item: Product) =>
             item.title === product.title && item.createdAt === product.createdAt
         );
         if (increment) currentCart[indexOfItem].quantity += 1;
@@ -52,18 +59,18 @@ export const setCart = (product, increment) => {
   };
 };
 
-export const deleteCartItem = (product) => {
-  return async (dispatch) => {
+export const deleteCartItem = (product: Product) => {
+  return async (dispatch: any) => {
     try {
       let currentCart = store.getState().cart.cart;
-      const lookForItem = currentCart.filter((item) => {
+      const lookForItem = currentCart.filter((item: Product) => {
         return (
           item.title === product.title && item.createdAt === product.createdAt
         );
       });
       if (lookForItem.length > 0) {
         const indexOfItem = currentCart.findIndex(
-          (item) =>
+          (item: Product) =>
             item.title === product.title && item.createdAt === product.createdAt
         );
         currentCart.splice(indexOfItem, 1);
@@ -88,11 +95,11 @@ export const deleteCartItem = (product) => {
   };
 };
 
-export const clearCart = (body) => {
-  return async (dispatch) => {
+export const clearCart = (user_id: string) => {
+  return async (dispatch: any) => {
     try {
       await HttpHelper.doPost("clear_cart", {
-        user_id: body,
+        user_id,
       });
       dispatch({
         type: CLEAR_CART,

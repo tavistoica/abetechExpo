@@ -30,7 +30,7 @@ import {
   api_base_url,
   Msg_Register_Success,
   Msg_Register_Failed,
-} from "../../Helper/Constant";
+} from "../../utils/Constant";
 import Spinner from "react-native-loading-spinner-overlay";
 import Modal from "react-native-modal";
 import axios from "axios";

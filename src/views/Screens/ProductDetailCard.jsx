@@ -3,7 +3,7 @@ import { Text } from "react-native";
 import { width } from "react-native-dimension";
 import Spinner from "react-native-loading-spinner-overlay";
 import Main from "./ProductDetails/Main";
-import HttpHelper from "../../Helper/HttpHelper";
+import HttpHelper from "../../utils/HttpHelper";
 import CardStack, { Card } from "react-native-card-stack-swiper";
 import { connect } from "react-redux";
 import * as actions from "../../actions";

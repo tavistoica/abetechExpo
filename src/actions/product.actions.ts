@@ -8,10 +8,10 @@ import {
   DELETE_FAVORITE,
   CHANGE_SLIDER_INDEX,
 } from "./types";
-import HttpHelper from "../Helper/HttpHelper";
+import HttpHelper from "../utils/HttpHelper";
 
-export const getProducts = (body) => {
-  return async (dispatch) => {
+export const getProducts = (body: object) => {
+  return async (dispatch: any) => {
     try {
       const response = await HttpHelper.doPost("product/get", body);
       if (response.data === null || response.data === undefined) {
@@ -40,8 +40,8 @@ export const getProducts = (body) => {
   };
 };
 
-export const searchProducts = (search) => {
-  return async (dispatch) => {
+export const searchProducts = (search: string) => {
+  return async (dispatch: any) => {
     try {
       const response = await HttpHelper.doPost("product/search", { search });
       dispatch({
@@ -64,14 +64,14 @@ export const searchProducts = (search) => {
   };
 };
 
-export const changeSliderItemAndIndex = (item, index) => {
-  return async (dispatch) => {
-    return dispatch({ type: CHANGE_SLIDER_INDEX, payload: { item, index } });
-  };
-};
+// export const changeSliderItemAndIndex = (item, index) => {
+//   return async (dispatch: any) => {
+//     return dispatch({ type: CHANGE_SLIDER_INDEX, payload: { item, index } });
+//   };
+// };
 
-export const getCategory = (body) => {
-  return async (dispatch) => {
+export const getCategory = (body: object) => {
+  return async (dispatch: any) => {
     try {
       const response = await HttpHelper.doPost("category/get", body);
       dispatch({
@@ -94,16 +94,15 @@ export const getCategory = (body) => {
   };
 };
 
-export const getFavorite = (body) => {
-  return async (dispatch) => {
+export const getFavorite = (user_id: string) => {
+  return async (dispatch: any) => {
     try {
       let response = [];
-      if (body !== undefined) {
+      if (user_id !== undefined) {
         response = await HttpHelper.doPost("get_favorite", {
-          user_id: body,
+          user_id,
         });
       }
-      console.log("response", response);
       dispatch({
         type: GET_FAVORITE,
         payload: response.data ? response.data : response,
@@ -124,15 +123,15 @@ export const getFavorite = (body) => {
   };
 };
 
-export const setFavorite = (user, product) => {
-  return async (dispatch) => {
+export const setFavorite = (user_id: string, product_id: string) => {
+  return async (dispatch: any) => {
     try {
       await HttpHelper.doPost("add_favorite", {
-        user_id: user,
-        product_id: product,
+        user_id,
+        product_id,
       });
       const response = await HttpHelper.doPost("get_favorite", {
-        user_id: user,
+        user_id,
       });
       dispatch({
         type: SET_FAVORITE,
@@ -154,12 +153,12 @@ export const setFavorite = (user, product) => {
   };
 };
 
-export const deleteFavorite = (user, body) => {
-  return async (dispatch) => {
+export const deleteFavorite = (user_id: string, product_id: string) => {
+  return async (dispatch: any) => {
     try {
       const response = await HttpHelper.doPost("del_favorite", {
-        user_id: user,
-        product_id: body,
+        user_id,
+        product_id,
       });
       dispatch({
         type: DELETE_FAVORITE,

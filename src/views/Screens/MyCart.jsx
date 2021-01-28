@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { width } from "react-native-dimension";
 import Entypo from "react-native-vector-icons/Entypo";
-import { setStripeConf } from "../../Helper/FirebaseHelper";
+import { setStripeConf } from "../../utils/FirebaseHelper";
 import stripe from "tipsi-stripe";
 import { connect } from "react-redux";
 import * as actions from "../../actions";
