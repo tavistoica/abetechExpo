@@ -6,7 +6,7 @@ const OsWrapper = (props) => {
   const androidStyle = props.styleAndroid
     ? props.styleAndroid
     : styles.defaultStyle;
-  const backColor = props.backColor ? props.backColor : "#fff";
+  const backColor = props.backColor ? props.backColor : "transparent";
 
   return (
     <>

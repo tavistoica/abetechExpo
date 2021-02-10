@@ -11,6 +11,7 @@
     "debug": "open 'rndebugger://set-debugger-loc?host=localhost&port=19001'"
   },
   "dependencies": {
+    "@expo/vector-icons": "^12.0.3",
     "@google-cloud/firestore": "^4.7.0",
     "@react-native-community/async-storage": "^1.12.1",
     "@react-native-community/masked-view": "^0.1.10",
@@ -29,6 +30,8 @@
     "@types/node": "^14.14.20",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
+    "@types/react-native": "^0.63.46",
+    "@types/react-redux": "^7.1.16",
     "apollo-boost": "^0.4.9",
     "axios": "^0.19.2",
     "caller-path": "^3.0.0",
@@ -71,7 +74,6 @@
     "react-native-raw-bottom-sheet": "^2.2.0",
     "react-native-reanimated": "^1.13.1",
     "react-native-screens": "^2.9.0",
-    "react-native-simple-toast": "^1.1.2",
     "react-native-slider": "^0.11.0",
     "react-native-speedometer": "^1.0.3",
     "react-native-svg": "^12.1.0",
@@ -93,6 +95,7 @@
     "@babel/core": "7.9.6",
     "@babel/runtime": "7.9.6",
     "@react-native-community/eslint-config": "0.0.5",
+    "@types/react-native-loading-spinner-overlay": "^0.5.2",
     "@typescript-eslint/eslint-plugin": "^4.13.0",
     "@typescript-eslint/parser": "^4.13.0",
     "babel-jest": "24.9.0",

@@ -3,15 +3,10 @@ import {
   View,
   Text,
   StyleSheet,
-  ImageBackground,
   ScrollView,
-  StatusBar,
   TouchableOpacity,
   Image,
   TextInput,
-  PermissionsAndroid,
-  FlatList,
-  SafeAreaView,
   Linking,
 } from "react-native";
 import {

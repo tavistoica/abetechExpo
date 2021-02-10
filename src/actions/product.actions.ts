@@ -7,6 +7,7 @@ import {
   SET_FAVORITE,
   DELETE_FAVORITE,
   CHANGE_SLIDER_INDEX,
+  PRODUCTS_LOADING,
 } from "./types";
 import HttpHelper from "../utils/HttpHelper";
 
@@ -37,6 +38,12 @@ export const getProducts = (body: object) => {
         });
       }
     }
+  };
+};
+
+export const productsLoading = () => {
+  return async (dispatch: any) => {
+    dispatch({ type: PRODUCTS_LOADING });
   };
 };
 

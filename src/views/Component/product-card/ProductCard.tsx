@@ -44,6 +44,7 @@ const ProductCard = (props) => {
 
 const styles = StyleSheet.create({
   containerStyle: {
+    borderColor: "white",
     justifyContent: "center",
     alignItems: "center",
     margin: 0,

@@ -44,7 +44,6 @@ const AddToFavorite = (props: Props) => {
         } else {
           props.deleteFavorite(props.auth.id, props.item.id);
         }
-        console.log("una bucata", props.favorite);
         props.getProducts({});
         setIcon(icon === "favorite" ? "favorite-border" : "favorite");
       }}

@@ -1,17 +1,22 @@
 import React from "react";
+import Spinner from "react-native-loading-spinner-overlay";
 import { StyleSheet, View, ImageBackground } from "react-native";
 
 const ProductImage = (props) => {
   return (
     <View style={[styles.container, { width: props.width }]}>
-      <ImageBackground
-        source={{
-          uri: props.photo && props.photo,
-        }}
-        style={styles.image}
-      >
-        {props.children}
-      </ImageBackground>
+      {props.photo ? (
+        <ImageBackground
+          source={{
+            uri: props.photo && props.photo,
+          }}
+          style={styles.image}
+        >
+          {props.children}
+        </ImageBackground>
+      ) : (
+        <Spinner visible={true} />
+      )}
     </View>
   );
 };
