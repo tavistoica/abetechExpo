@@ -15,6 +15,7 @@ import ProductDetailShow from "./Screens/product-detail-page/ProductDetailShow";
 import Chat from "./Screens/chat-page/Chat";
 import Profile from "./Screens/profile-page/Profile";
 import { navigationRef } from "./Component/RootNavigation";
+import StripeCheckout from "./Screens/cart-page/components/StripeCheckout";
 
 const Stack = createStackNavigator();
 export default function Route() {
@@ -39,6 +40,7 @@ export default function Route() {
           <Stack.Screen name="changePassword" component={ChangePassword} />
           <Stack.Screen name="manageAddresses" component={ManageAddresses} />
           <Stack.Screen name="manageCards" component={ManageCards} />
+          <Stack.Screen name="stripeCheckout" component={StripeCheckout} />
         </Stack.Navigator>
       </NavigationContainer>
       <BottomMenu />

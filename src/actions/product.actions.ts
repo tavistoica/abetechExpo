@@ -9,12 +9,13 @@ import {
   CHANGE_SLIDER_INDEX,
   PRODUCTS_LOADING,
 } from "./types";
-import HttpHelper from "../utils/HttpHelper";
+import { doPost } from "../utils/HttpHelper";
 
 export const getProducts = (body: object) => {
   return async (dispatch: any) => {
     try {
-      const response = await HttpHelper.doPost("product/get", body);
+      const response = await doPost("product/get", body);
+      console.log("ressssss", JSON.stringify(response.data));
       if (response.data === null || response.data === undefined) {
         dispatch({
           type: GET_PRODUCTS,
@@ -50,7 +51,7 @@ export const productsLoading = () => {
 export const searchProducts = (search: string) => {
   return async (dispatch: any) => {
     try {
-      const response = await HttpHelper.doPost("product/search", { search });
+      const response = await doPost("product/search", { search });
       dispatch({
         type: SEARCH_PRODUCTS,
         payload: response.data ? response.data : [],
@@ -80,7 +81,7 @@ export const searchProducts = (search: string) => {
 export const getCategory = (body: object) => {
   return async (dispatch: any) => {
     try {
-      const response = await HttpHelper.doPost("category/get", body);
+      const response = await doPost("category/get", body);
       dispatch({
         type: GET_CATEGORY,
         payload: response.data,
@@ -106,7 +107,7 @@ export const getFavorite = (user_id: string) => {
     try {
       let response = [];
       if (user_id !== undefined) {
-        response = await HttpHelper.doPost("get_favorite", {
+        response = await doPost("get_favorite", {
           user_id,
         });
       }
@@ -133,11 +134,11 @@ export const getFavorite = (user_id: string) => {
 export const setFavorite = (user_id: string, product_id: string) => {
   return async (dispatch: any) => {
     try {
-      await HttpHelper.doPost("add_favorite", {
+      await doPost("add_favorite", {
         user_id,
         product_id,
       });
-      const response = await HttpHelper.doPost("get_favorite", {
+      const response = await doPost("get_favorite", {
         user_id,
       });
       dispatch({
@@ -163,7 +164,7 @@ export const setFavorite = (user_id: string, product_id: string) => {
 export const deleteFavorite = (user_id: string, product_id: string) => {
   return async (dispatch: any) => {
     try {
-      const response = await HttpHelper.doPost("del_favorite", {
+      const response = await doPost("del_favorite", {
         user_id,
         product_id,
       });

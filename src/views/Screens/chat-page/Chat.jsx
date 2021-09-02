@@ -18,7 +18,7 @@ import Spinner from "react-native-loading-spinner-overlay";
 import LeftMsg from "../../Component/LeftMsg";
 import RightMsg from "../../Component/RightMsg";
 import { _getAllMsgs } from "../../../utils/FirebaseHelper";
-import HttpHelper from "../../../utils/HttpHelper";
+import { doPost } from "../../../utils/HttpHelper";
 import CustomModal from "../../Component/CustomModal";
 import ImagePicker from "react-native-image-picker";
 import { connect } from "react-redux";
@@ -61,7 +61,7 @@ class Chat extends React.Component {
   sendMessage = async () => {
     if (this.state.msg === "") return;
     Keyboard.dismiss();
-    HttpHelper.doPost(
+    doPost(
       "write_msg",
       {
         user_id: this.props.auth.id,
@@ -81,7 +81,7 @@ class Chat extends React.Component {
 
   sendImage = (photo) => {
     this.setState({ loading: true });
-    HttpHelper.doPost(
+    doPost(
       "write_msg",
       {
         user_id: this.props.auth.id,
@@ -103,7 +103,7 @@ class Chat extends React.Component {
 
   uploadImage = (base64Image) => {
     this.setState({ loading: true });
-    HttpHelper.doPost(
+    doPost(
       "image_upload_base64",
       {
         base64Image: base64Image,

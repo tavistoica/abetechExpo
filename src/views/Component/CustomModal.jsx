@@ -1,20 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { Button } from "react-native-elements";
 import Modal from "react-native-modal";
 
 const CustomModal = (props) => {
-  const [isModalVisible, setIsModalVisibile] = useState(props.isModalVisible);
-
   const onModalResult = (res) => {
-    setIsModalVisibile(false);
-    this.props.onModalResult(res);
+    // props.setIsModalVisible(false);
+    props.onModalResult(res);
   };
 
   return (
     <Modal
-      isVisible={isModalVisible}
-      onBackdropPress={() => this.onModalResult(-1)}
+      isVisible={props.isModalVisible}
+      onBackdropPress={() => props.setIsModalVisible(false)}
     >
       <View
         style={{

@@ -22,7 +22,6 @@ const _getAllMsgs = async (contact_id: string) => {
     });
     return msg_list;
   } catch (error) {
-    console.log(error);
     return null;
   }
 };
@@ -34,17 +33,18 @@ const setStripeConf = async () => {
       .collection("setting")
       .doc("payment")
       .get();
-    let payment_enabled = paymentInfoRef.data().enabled;
+    const payment_enabled: Boolean = paymentInfoRef.data().enabled;
 
     const stripeInfoRef: any = await firebase
       .firestore()
       .collection("setting")
       .doc("stripe")
       .get();
-    let stripe_pub_key = stripeInfoRef.data().pub_key;
+    const stripe_pub_key: String = stripeInfoRef.data().pub_key;
     return { payment_enabled, stripe_pub_key };
   } catch (err) {
     alert(err);
+    return {};
   }
 };
 

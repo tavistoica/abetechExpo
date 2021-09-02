@@ -19,9 +19,15 @@ export const getAppSettings = () => {
         .collection("setting")
         .doc("logo")
         .get();
+      const stripe = await firebase
+        .firestore()
+        .collection("setting")
+        .doc("stripe")
+        .get();
       let settings = {
         colors: colors.data(),
         logo: logo.data(),
+        stripe: stripe.data(),
       };
       return dispatch({
         type: GET_APP_SETTINGS,

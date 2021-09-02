@@ -7,7 +7,7 @@ import AddToFavorite from "../AddToFavorite";
 import OnSaleTag from "./components/OnSaleTag";
 import ProductCardDetails from "./components/ProductCardDetails";
 
-const ProductCard = (props) => {
+const ProductCard = (props: any) => {
   const onPress = () => {
     props.navigation.navigate("detailshow", {
       product: props.item,

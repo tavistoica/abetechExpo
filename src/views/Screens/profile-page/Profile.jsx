@@ -5,6 +5,7 @@ import SignIn from "../../Auth/SignIn";
 import EditProfile from "./components/EditProfile";
 
 const Profile = (props) => {
+  console.log("props.auth.id", props.auth.id);
   return props.auth.id ? <EditProfile {...props} /> : <SignIn {...props} />;
 };
 

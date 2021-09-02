@@ -3,7 +3,14 @@ import { TouchableOpacity, StyleSheet } from "react-native";
 import IonIcons from "react-native-vector-icons/Ionicons";
 import * as RootNavigation from "../../RootNavigation";
 
-const BottomMenuElement = ({ settings, route, size, icon }) => {
+interface Props {
+  settings: any;
+  route: string;
+  size: number;
+  icon: string;
+}
+
+const BottomMenuElement = ({ settings, route, size, icon }: Props) => {
   return (
     <TouchableOpacity
       style={styles.drawerItem}

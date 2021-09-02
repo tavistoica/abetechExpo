@@ -18,6 +18,7 @@ export default (state = initialState, action: Action) => {
         ...state,
         colors: action.payload.colors,
         logo: action.payload.logo.original,
+        stripe: action.payload.stripe,
         errorMessage: null,
       };
     case SETTINGS_ERROR:

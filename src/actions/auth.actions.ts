@@ -15,7 +15,7 @@ import {
   UPDATE_USER,
   UPDATE_USER_ERROR,
 } from "./types";
-import HttpHelper from "../utils/HttpHelper";
+import { doPost } from "../utils/HttpHelper";
 
 interface updateBody {
   first_name?: any;
@@ -28,7 +28,7 @@ interface updateBody {
 export const updateUser = (body: updateBody) => {
   return async (dispatch: any) => {
     try {
-      const respone = await HttpHelper.doPost("users/update", body);
+      const respone = await doPost("users/update", body);
       dispatch({
         type: UPDATE_USER,
         payload: respone.data,
@@ -100,7 +100,7 @@ export const logUser = (email: string, password: string) => {
     }
 
     try {
-      const response = await HttpHelper.doPost("Auth/login", {
+      const response = await doPost("Auth/login", {
         email: email,
         pass: password,
       });
@@ -184,7 +184,7 @@ export const registerUser = (
     }
 
     try {
-      const response = await HttpHelper.doPost("Auth/signup", {
+      const response = await doPost("Auth/signup", {
         first_name,
         last_name,
         email,
@@ -227,7 +227,7 @@ export const setContactId = (contactId: string) => {
 export const addCard = (user_id: string, card: string) => {
   return async (dispatch: any) => {
     try {
-      const response = await HttpHelper.doPost("users/addCard", {
+      const response = await doPost("users/addCard", {
         user_id,
         card,
       });
@@ -249,7 +249,7 @@ export const addCard = (user_id: string, card: string) => {
 export const deleteAddress = (user_id: string, address_id: string) => {
   return async (dispatch: any) => {
     try {
-      const response = await HttpHelper.doPost("users/deleteAddress", {
+      const response = await doPost("users/deleteAddress", {
         user_id,
         address_id,
       });
@@ -271,7 +271,7 @@ export const deleteAddress = (user_id: string, address_id: string) => {
 export const deleteCard = (user_id: string, card_id: string) => {
   return async (dispatch: any) => {
     try {
-      const response = await HttpHelper.doPost("users/deleteCard", {
+      const response = await doPost("users/deleteCard", {
         user_id,
         card_id,
       });
@@ -293,7 +293,7 @@ export const deleteCard = (user_id: string, card_id: string) => {
 export const addAddress = (user_id: string, address: string) => {
   return async (dispatch: any) => {
     try {
-      const response = await HttpHelper.doPost("users/addAddress", {
+      const response = await doPost("users/addAddress", {
         user_id,
         address,
       });

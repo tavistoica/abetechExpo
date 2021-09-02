@@ -1,7 +1,14 @@
 import React from "react";
 import { Platform, SafeAreaView, View, StyleSheet } from "react-native";
 
-const OsWrapper = (props) => {
+interface Props {
+  styleIOS: object;
+  styleAndroid: object;
+  children: any;
+  backColor: string;
+}
+
+const OsWrapper = (props: Props) => {
   const iosStyle = props.styleIOS ? props.styleIOS : styles.defaultStyle;
   const androidStyle = props.styleAndroid
     ? props.styleAndroid

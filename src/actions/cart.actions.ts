@@ -5,7 +5,7 @@ import {
   DELETE_CART_ITEM,
   CART_ERROR,
 } from "./types";
-import HttpHelper from "../utils/HttpHelper";
+import { doPost } from "../utils/HttpHelper";
 import { store } from "../configureStore";
 
 interface Product {
@@ -98,7 +98,7 @@ export const deleteCartItem = (product: Product) => {
 export const clearCart = (user_id: string) => {
   return async (dispatch: any) => {
     try {
-      await HttpHelper.doPost("clear_cart", {
+      await doPost("clear_cart", {
         user_id,
       });
       dispatch({

@@ -7,35 +7,38 @@ import {
   TextInput,
 } from "react-native";
 import AntDesignIcon from "react-native-vector-icons/AntDesign";
+//  @ts-ignore
 import { width, height } from "react-native-dimension";
 import { Msg_Login_Success } from "../../utils/Constant";
 import Spinner from "react-native-loading-spinner-overlay";
 import Register from "./Register";
 import RBSheet from "react-native-raw-bottom-sheet";
+import { object } from "prop-types";
 
-const SignIn = (props) => {
+const SignIn = (props: any) => {
+  console.log("props", props);
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  const RegisterModal = useRef(null);
+  let RegisterModal = useRef(null);
 
   useEffect(() => {
     setLoading(false);
-    setError(props.auth.errorMessage);
+    console.log("props.auth.errorMessage", typeof props.auth.errorMessage);
+    if (typeof props.auth.errorMessage !== "object")
+      setError(props.auth.errorMessage);
   }, [props.auth.errorMessage]);
 
-  const close = () => {
-    props.close();
-  };
-
   const openRegister = () => {
-    this.RegisterModal.open();
+    //  @ts-ignore
+    RegisterModal.open();
   };
   const closeRegister = () => {
-    this.RegisterModal.close();
+    //  @ts-ignore
+    RegisterModal.close();
   };
 
   const doSign = async () => {
@@ -65,9 +68,7 @@ const SignIn = (props) => {
             <Text style={{ color: "#ff0000" }}>{status}</Text>
           </View>
           <View style={styles.searchBar}>
-            {error != "" ? (
-              <Text style={{ color: "#ff0000" }}>{error}</Text>
-            ) : null}
+            {error !== "" && <Text style={{ color: "#ff0000" }}>{error}</Text>}
             <View style={styles.formItem}>
               <AntDesignIcon
                 style={{ marginHorizontal: -30 }}
@@ -136,7 +137,10 @@ const SignIn = (props) => {
           </View>
         </View>
         <RBSheet
-          ref={RegisterModal}
+          ref={(ref) => {
+            //  @ts-ignore
+            RegisterModal = ref;
+          }}
           height={height(93)}
           openDuration={250}
           customStyles={{

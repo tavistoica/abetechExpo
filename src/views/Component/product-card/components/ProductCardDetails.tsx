@@ -1,6 +1,9 @@
 import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import { width, height } from "react-native-dimension";
+import {
+  width,
+  height,
+} from "../../../Screens/cart-page/components/node_modules/react-native-dimension";
 import DiscountPrice from "./DiscountPrice";
 
 const ProductCardDetails = (props) => {

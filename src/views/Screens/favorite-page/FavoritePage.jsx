@@ -10,6 +10,10 @@ import OsWrapper from "../../Component/OsWrapper";
 
 const FavoritePage = (props) => {
   const favorites = useSelector((state) => state.products.favorite);
+  const filteredFavorites = favorites.filter((item) => {
+    if (item.data) return item;
+  });
+  console.log("filteredFavorites ", filteredFavorites);
 
   // useEffect(() => {
   //   props.productsLoading();
@@ -31,7 +35,8 @@ const FavoritePage = (props) => {
           </Text>
         ) : (
           <FlatList
-            data={favorites}
+            data={filteredFavorites}
+            refreshControl={<Spinner visible={props.productsStore.loading} />}
             renderItem={({ item, index }) => (
               <View style={{ flexDirection: "column" }}>
                 <ProductCard
@@ -67,6 +72,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   container: {
+    backgroundColor: "white",
     flex: 16,
     flexDirection: "column",
     justifyContent: "flex-start",

@@ -11,8 +11,6 @@ import Toast from "react-native-toast-message";
 import { width, height } from "react-native-dimension";
 
 const Product = (props) => {
-  const [showModal, setShowModal] = useState(false);
-
   const onPress = () => {
     props.onPress(props.item, props.index);
   };
@@ -29,6 +27,7 @@ const Product = (props) => {
     props.cartTotal();
   };
 
+  console.log("props.item,", JSON.stringify(props.item));
   return (
     <Card
       containerStyle={{
@@ -130,7 +129,9 @@ const Product = (props) => {
           paddingBottom: 15,
           justifyContent: "flex-end",
         }}
-        onPress={() => onAddCart(props.item.data)}
+        onPress={() =>
+          onAddCart({ ...props.item.data, product_id: props.item.id })
+        }
         icon={
           <Icon
             name="shopping-cart"

@@ -1,17 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet } from "react-native";
-import { width } from "react-native-dimension";
 import OsWrapper from "../OsWrapper";
 import { connect } from "react-redux";
 import * as actions from "../../../actions";
 import BottomMenuElement from "./components/BottomMenuElement";
-import * as RootNavigation from "../RootNavigation";
+// import * as RootNavigation from "../RootNavigation";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { NavigationContainer } from "@react-navigation/native";
+// import { NavigationContainer } from "@react-navigation/native";
 
 let colors = {};
 
-const BottomMenu = (props) => {
+interface Props {
+  settings: any;
+}
+
+const BottomMenu = (props: Props) => {
   const Tab = createBottomTabNavigator();
   const [activeScreen, setActiveScreen] = useState("");
   colors = props.settings.colors;
@@ -20,7 +23,6 @@ const BottomMenu = (props) => {
   //   setActiveScreen(
   //     RootNavigation.navigationRef.current.getCurrentRoute().name
   //   );
-  //   console.log("activeScreen", activeScreen);
   // }, [RootNavigation.navigationRef.current.getCurrentRoute()]);
 
   return (
@@ -66,15 +68,15 @@ const BottomMenu = (props) => {
 const styles = StyleSheet.create({
   headerIos: {
     flexDirection: "row",
-    width: width(100),
+    width: "100%",
   },
   headerAndroid: {
     flexDirection: "row",
-    width: width(100),
+    width: "100%",
   },
 });
 
-const mapStatetoProps = (state) => {
+const mapStatetoProps = (state: any) => {
   return {
     settings: state.settings,
   };

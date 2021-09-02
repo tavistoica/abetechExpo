@@ -29,10 +29,11 @@ interface State {
 }
 
 const Splash = (props: Props) => {
+  console.log("props", props);
   useEffect(() => {
+    props.getProducts({});
     props.getCategory({});
     props.productsLoading();
-    props.getProducts({});
     props.getAppSettings();
     props.getFavorite(props.auth.id);
     if (props.settings.errorMessage !== null) return;
@@ -67,13 +68,13 @@ const Splash = (props: Props) => {
   );
 };
 
-const styles = StyleSheet.create({
-  image: {
-    width: "100%",
-    height: "100%",
-    resizeMode: "contain",
-  },
-});
+// const styles = StyleSheet.create({
+//   image: {
+//     width: "100%",
+//     height: "100%",
+//     resizeMode: "contain",
+//   },
+// });
 
 const mapStatetoProps = (state: State) => {
   return {
